@@ -22,19 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
         // hello Bogdan
         // hello Oleksandr
-        // gyfyyy
-
-        // hello Bogdan
-        // hello Andrey
-        // hello Oleksandr
-
-        // hello Bogdan
-        // hello Andrey
-        // hello Oleksandr
-
-        // hello Bogdan
-        // hello Andrey
-        // hello Oleksandr
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
