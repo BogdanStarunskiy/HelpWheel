@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         // hello Bogdan
         // hello Andrey
         // hello Oleksandr
+        // gyfyyy
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
