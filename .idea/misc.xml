@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Bogdan/AndroidStudioProjects/HelpWheel/app/src/main/res/drawable-v24/ic_fuel.xml" value="0.1755" />
+        <entry key="..\:/Users/Bogdan/AndroidStudioProjects/HelpWheel/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Bogdan/AndroidStudioProjects/HelpWheel/app/src/main/res/menu/bottom_nav_menu.xml" value="0.26871794871794874" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21105072463768115" />
       </map>
     </option>
