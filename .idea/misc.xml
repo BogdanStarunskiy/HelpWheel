@@ -3,11 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/1/AndroidStudioProjects/HelpWheel_own/app/src/main/res/layout/activity_main.xml" value="0.20471014492753623" />
-        <entry key="..\:/Users/1/AndroidStudioProjects/HelpWheel_own/app/src/main/res/layout/fragment_dashboard.xml" value="0.2694746376811594" />
-        <entry key="..\:/Users/1/AndroidStudioProjects/HelpWheel_own/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/Users/1/AndroidStudioProjects/HelpWheel_own/app/src/main/res/layout/fragment_notifications.xml" value="0.26268115942028986" />
+        <entry key="..\:/Users/Bogdan/AndroidStudioProjects/HelpWheel/app/src/main/res/drawable-v24/ic_fuel.xml" value="0.1755" />
+        <entry key="..\:/Users/Bogdan/AndroidStudioProjects/HelpWheel/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Bogdan/AndroidStudioProjects/HelpWheel/app/src/main/res/menu/bottom_nav_menu.xml" value="0.26871794871794874" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21105072463768115" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.21105072463768115" />
       </map>
     </option>
   </component>
