@@ -3,4 +3,7 @@
     <string name="title_home">Notes</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Fuel</string>
+    <string name="enter_city">Please, enter your city</string>
+    <string name="weather_btn">Check</string>
+    <string name="current_weather">Here will be displayed current weather</string>
 </resources>
