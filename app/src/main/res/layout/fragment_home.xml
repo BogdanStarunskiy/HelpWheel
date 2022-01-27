@@ -12,6 +12,14 @@
         android:layout_height="match_parent">
 
         <!-- Main content -->
+        <ScrollView
+            android:id="@+id/notes_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_action_button"
@@ -24,7 +32,7 @@
             app:srcCompat="@drawable/ic_plus"
             app:tint="@color/white"
             app:borderWidth = "0dp"
-            android:contentDescription="@string/todo" />
+            android:contentDescription="@string/add_a_note" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
