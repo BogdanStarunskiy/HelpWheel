@@ -7,4 +7,5 @@
     <string name="weather_btn">Check</string>
     <string name="current_weather">Here will be displayed current weather</string>
     <string name="add_a_note">Add a note</string>
+    <string name="hello_user">Hello, User!</string>
 </resources>
