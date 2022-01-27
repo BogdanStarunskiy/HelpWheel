@@ -6,16 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 <!--Фрагмент заметок-->
+<!--Плавающая кнопка "добавить"-->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Main content -->
+        <!--для заметок, весь контент здесь-->
         <ScrollView
             android:id="@+id/notes_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <!--RecyclerView для самих заметок-->
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.DashboardFragment">
     <!--Главный фрагмент-->
+    <!-- Привет, ползователь! card view   -->
     <androidx.cardview.widget.CardView
         android:id="@+id/user_greeting"
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
+        <!--Текст с приветсвием-->
         <TextView
             android:id="@+id/greeting_text"
             android:layout_width="match_parent"
@@ -28,7 +29,7 @@
             android:textColor="@color/white"
             android:textSize="35sp" />
     </androidx.cardview.widget.CardView>
-
+    <!--Обёртка погоды в card view-->
     <androidx.cardview.widget.CardView
         android:id="@+id/weather_card_view"
         android:layout_width="match_parent"
