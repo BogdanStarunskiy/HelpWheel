@@ -34,9 +34,13 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        try{
+            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         NavigationUI.setupWithNavController(binding.navView, navController);
-        Objects.requireNonNull(this.getSupportActionBar()).hide(); //спрятать ActionBar
+//        Objects.requireNonNull(this.getSupportActionBar()).hide(); //спрятать ActionBar
 
     }
 
