@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HelpWheel">
         <activity
+            android:name=".updateNotesActivity.UpdateNotesActivity"
+            android:exported="false" />
+        <activity
             android:name=".notesActivity.AddNotesActivity"
             android:exported="false" />
         <activity

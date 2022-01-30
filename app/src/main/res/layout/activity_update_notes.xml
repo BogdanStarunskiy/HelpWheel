@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".notesActivity.AddNotesActivity">
+    tools:context=".updateNotesActivity.UpdateNotesActivity">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,15 +22,16 @@
 
         android:layout_below="@+id/title"/>
 
-   <Button
-       android:layout_width="match_parent"
-       android:layout_height="60dp"
-       android:layout_margin="8dp"
-       android:layout_alignParentBottom="true"
-       android:backgroundTint="@color/dark"
-       android:text="@string/save_a_note"
-       android:textColor="@color/white"
-       android:textSize="26sp"
-       android:id="@+id/addNote"
-       />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="8dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/dark"
+        android:text="@string/update_note"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:id="@+id/updateNote"
+        />
+
 </RelativeLayout>

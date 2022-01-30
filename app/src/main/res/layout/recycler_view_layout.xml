@@ -8,9 +8,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        app:cardCornerRadius="3dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
-        android:backgroundTint="@color/dark">
+        android:backgroundTint="@color/darker">
        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content" >

@@ -1,7 +1,9 @@
 package com.example.helpwheel;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.helpwheel.updateNotesActivity.UpdateNotesActivity;
 
 import java.util.List;
 
@@ -32,10 +36,22 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.title.setText(notesList.get(position).getTitle());
         holder.description.setText(notesList.get(position).getDescription());
-        
+
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, UpdateNotesActivity.class);
+                intent.putExtra("title", notesList.get(position).getTitle());
+                intent.putExtra("description", notesList.get(position).getDescription());
+                intent.putExtra("id", notesList.get(position).getId());
+
+                activity.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -53,5 +69,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             description = itemView.findViewById(R.id.description);
             layout = itemView.findViewById(R.id.note_layout);
         }
+    }
+    public List<Model> getList(){
+        return notesList;
+    }
+
+    public void removeItem(int position){
+        notesList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Model item, int position){
+        notesList.add(position, item);
+        notifyItemInserted(position);
     }
 }
