@@ -1,30 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
-<!--Фрагмент заметок-->
-<!--Плавающая кнопка "добавить"-->
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    tools:context=".ui.home.HomeFragment"
+    app:layout_behavior="@string/fab_transformation_scrim_behavior"
+    android:id="@+id/notes_layout">
 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <!--для заметок, весь контент здесь-->
-        <ScrollView
-            android:id="@+id/notes_scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <!--RecyclerView для самих заметок-->
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        </ScrollView>
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
@@ -34,9 +22,13 @@
             app:srcCompat="@drawable/ic_plus"
             app:tint="@color/white"
             app:borderWidth = "0dp"
-            android:contentDescription="@string/add_a_note" />
+            android:contentDescription="@string/add_a_note"
+            app:rippleColor="@color/white"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycler_view"/>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
