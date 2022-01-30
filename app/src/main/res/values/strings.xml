@@ -10,4 +10,5 @@
     <string name="hello_user">Hello, User!</string>
     <string name="this_is_the_title">This is the Title</string>
     <string name="description">description</string>
+    <string name="title">Title</string>
 </resources>

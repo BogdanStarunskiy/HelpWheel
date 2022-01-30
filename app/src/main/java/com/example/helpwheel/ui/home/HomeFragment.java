@@ -1,11 +1,13 @@
 package com.example.helpwheel.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,9 +18,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.helpwheel.Adapter;
+import com.example.helpwheel.MainActivity;
 import com.example.helpwheel.Model;
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentHomeBinding;
+import com.example.helpwheel.notesActivity.AddNotesActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -38,17 +42,17 @@ public class HomeFragment extends Fragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), AddNotesActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.recyclerView.setAdapter(adapter);
         return binding.getRoot();
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.recycler_view_layout, container, false);
 
-        // Add the following lines to create RecyclerView
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(adapter);
 
-        return view;
     }
 
     @Override
