@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment {
             Snackbar snackbar = Snackbar.make(binding.notesLayout, "Item Deleted", Snackbar.LENGTH_LONG)
                     .setAction("UNDO", view -> {
                         adapter.restoreItem(item, position);
-                        recyclerView.scrollToPosition(position);
+                        binding.recyclerView.scrollToPosition(position);
                     }).addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
                         @Override
                         public void onDismissed(Snackbar transientBottomBar, int event) {
