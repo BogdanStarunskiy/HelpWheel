@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".notesActivity.AddNotesActivity">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/title"
+        android:id="@+id/title"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/description"
+        android:id="@+id/description"
+
+        android:layout_below="@+id/title"/>
+
+   <Button
+       android:layout_width="match_parent"
+       android:layout_height="60dp"
+       android:layout_margin="8dp"
+       android:layout_alignParentBottom="true"
+       android:backgroundTint="@color/dark"
+       android:text="@string/save_a_note"
+       android:textColor="@color/white"
+       android:textSize="26sp"
+       android:id="@+id/addNote"
+       />
+</RelativeLayout>
