@@ -14,23 +14,23 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import androidx.fragment.app.Fragment;
 
-import androidx.lifecycle.ViewModelProvider;
+
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.helpwheel.Adapter;
 
-import com.example.helpwheel.MainActivity;
+
 import com.example.helpwheel.Model;
-import com.example.helpwheel.R;
+
 import com.example.helpwheel.databases.DatabaseClass;
 import com.example.helpwheel.databinding.FragmentHomeBinding;
 import com.example.helpwheel.notesActivity.AddNotesActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -41,34 +41,31 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     RecyclerView recyclerView;
-    FloatingActionButton fab;
+
     Adapter adapter;
     List<Model> notesList;
     DatabaseClass databaseClass;
-    CoordinatorLayout coordinatorLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         binding.fab.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), AddNotesActivity.class);
             startActivity(intent);
         });
-
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(binding.recyclerView);
 
         notesList = new ArrayList<>();
         databaseClass = new DatabaseClass(getContext());
         fetchAllNotesFromDatabase();
 
-        coordinatorLayout = findViewById(R.id.notes_layout); //Here is the problem
-
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new Adapter(getContext(), getActivity(), notesList);
         binding.recyclerView.setAdapter(adapter);
-        ItemTouchHelper helper = new ItemTouchHelper(callback);
-        helper.attachToRecyclerView(recyclerView);
+
 
         return binding.getRoot();
     }
@@ -92,6 +89,7 @@ public class HomeFragment extends Fragment {
             return false;
         }
 
+
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
@@ -99,7 +97,7 @@ public class HomeFragment extends Fragment {
 
             adapter.removeItem(viewHolder.getAdapterPosition());
 
-            Snackbar snackbar = Snackbar.make(coordinatorLayout, "Item Deleted", Snackbar.LENGTH_LONG)
+            Snackbar snackbar = Snackbar.make(binding.notesLayout, "Item Deleted", Snackbar.LENGTH_LONG)
                     .setAction("UNDO", view -> {
                         adapter.restoreItem(item, position);
                         recyclerView.scrollToPosition(position);

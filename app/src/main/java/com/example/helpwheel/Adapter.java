@@ -40,16 +40,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.title.setText(notesList.get(position).getTitle());
         holder.description.setText(notesList.get(position).getDescription());
 
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, UpdateNotesActivity.class);
-                intent.putExtra("title", notesList.get(position).getTitle());
-                intent.putExtra("description", notesList.get(position).getDescription());
-                intent.putExtra("id", notesList.get(position).getId());
+        holder.layout.setOnClickListener(view -> {
+            Intent intent = new Intent(context, UpdateNotesActivity.class);
+            intent.putExtra("title", notesList.get(position).getTitle());
+            intent.putExtra("description", notesList.get(position).getDescription());
+            intent.putExtra("id", notesList.get(position).getId());
 
-                activity.startActivity(intent);
-            }
+            activity.startActivity(intent);
         });
 
     }
@@ -59,7 +56,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         return notesList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView title, description;
         RelativeLayout layout;
         public MyViewHolder(@NonNull View itemView) {
