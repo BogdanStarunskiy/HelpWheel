@@ -7,7 +7,7 @@
     android:id="@+id/note_layout">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
         android:backgroundTint="@color/darker">
