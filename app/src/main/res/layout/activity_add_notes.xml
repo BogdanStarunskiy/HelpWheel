@@ -12,7 +12,6 @@
         android:hint="@string/title"
         android:textSize="22sp"
         android:id="@+id/title"
-        android:textColorHint="@color/black"
         />
 
     <EditText
@@ -21,7 +20,6 @@
         android:layout_margin="8dp"
         android:hint="@string/description"
         android:id="@+id/description"
-        android:textColorHint="@color/dark"
         android:layout_below="@+id/title"/>
 
    <Button
