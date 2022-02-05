@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -67,7 +68,9 @@ public class DashboardViewModel extends ViewModel {
                 return scanner.next();
             }else{
                 return null;
-            }}
+            }}catch (UnknownHostException e){
+            return null;
+        }
         // в любом случае надо закрыть конект
         finally{
             urlConnection.disconnect();
