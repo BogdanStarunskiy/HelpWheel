@@ -33,7 +33,6 @@ public class DashboardFragment extends Fragment {
     Button weather_btn;
     TextView current_weather;
     EditText enter_city;
-    @SuppressLint("StaticFieldLeak")
     class WeatherQueryTask extends AsyncTask<URL,Void,String> {
 
         @Override
