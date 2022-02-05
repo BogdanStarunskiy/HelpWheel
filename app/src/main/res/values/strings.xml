@@ -6,6 +6,8 @@
     <string name="enter_city">Please, enter your city</string>
     <string name="weather_btn">Check</string>
     <string name="current_weather">Here will be displayed current weather</string>
+    <string name="error_weather">Something broke, try again</string>
+    <string name="api_key">a98ca7720a8fd711bb8548bf2373e263</string>
     <string name="add_a_note">Add a note</string>
     <string name="hello_user">Hello, User!</string>
     <string name="this_is_the_title">This is the Title</string>
