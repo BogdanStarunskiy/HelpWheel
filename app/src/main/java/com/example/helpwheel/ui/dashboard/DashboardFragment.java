@@ -9,22 +9,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDashboardBinding;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
@@ -74,7 +66,7 @@ public class DashboardFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
                     temperature = "Temperature in your city is " + jsonObject.getJSONObject("main").getDouble("temp") + "℃";
                     feel_temperature = "Feels like: " + jsonObject.getJSONObject("main").getDouble("feels_like") + "℃";
-                    wind = "Wind`s speed: " + jsonObject.getJSONObject("wind").getDouble("speed") + R.string.degree_cels;
+                    wind = "Wind`s speed: " + jsonObject.getJSONObject("wind").getDouble("speed") + " KM/H";
                     JSONArray jsonArray = jsonObject.getJSONArray("weather");
                     JSONObject Json_description = jsonArray.getJSONObject(0);
                     main_description = Json_description.getString("main");

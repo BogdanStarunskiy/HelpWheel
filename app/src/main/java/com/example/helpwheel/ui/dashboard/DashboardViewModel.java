@@ -1,27 +1,15 @@
 package com.example.helpwheel.ui.dashboard;
 
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import javax.net.ssl.HttpsURLConnection;
-
 public class DashboardViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
