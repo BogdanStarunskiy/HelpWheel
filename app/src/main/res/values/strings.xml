@@ -1,13 +1,22 @@
 <resources>
-    <string name="app_name">HelpWheel</string>
+    <string name="app_name" translatable="false">HelpWheel</string>
+    <!--bnb -->
     <string name="title_home">Notes</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Fuel</string>
+    <!--weather -->
     <string name="enter_city">Please, enter your city</string>
     <string name="weather_btn">Check</string>
     <string name="current_weather">Here will be displayed current weather</string>
     <string name="error_weather">Something broke, try again</string>
     <string name="api_key">a98ca7720a8fd711bb8548bf2373e263</string>
+    <string name="temperature_is">Temperature in your city is </string>
+    <string name="feels_like">Feels like: </string>
+    <string name="wind_speed">Wind`s speed: </string>
+    <string name="weather_desc">Description: </string>
+    <string name="degree_cels">℃</string>
+
+    <!--notes -->
     <string name="add_a_note">Add a note</string>
     <string name="hello_user">Hello, User!</string>
     <string name="this_is_the_title">This is the Title</string>

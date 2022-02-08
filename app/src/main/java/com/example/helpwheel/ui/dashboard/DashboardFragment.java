@@ -74,7 +74,7 @@ public class DashboardFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
                     temperature = "Temperature in your city is " + jsonObject.getJSONObject("main").getDouble("temp") + "℃";
                     feel_temperature = "Feels like: " + jsonObject.getJSONObject("main").getDouble("feels_like") + "℃";
-                    wind = "Wind`s speed: " + jsonObject.getJSONObject("wind").getDouble("speed") + " Km/Hour";
+                    wind = "Wind`s speed: " + jsonObject.getJSONObject("wind").getDouble("speed") + R.string.degree_cels;
                     JSONArray jsonArray = jsonObject.getJSONArray("weather");
                     JSONObject Json_description = jsonArray.getJSONObject(0);
                     main_description = Json_description.getString("main");
