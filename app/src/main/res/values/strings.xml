@@ -15,6 +15,7 @@
     <string name="wind_speed">Wind`s speed: </string>
     <string name="weather_desc">Description: </string>
     <string name="degree_cels">℃</string>
+    <string name="speed">KM/H</string>
 
     <!--notes -->
     <string name="add_a_note">Add a note</string>
