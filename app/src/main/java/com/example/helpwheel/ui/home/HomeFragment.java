@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 
 
@@ -22,10 +20,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.helpwheel.Adapter;
+import com.example.helpwheel.adapters.NotesAdapter;
 
 
-import com.example.helpwheel.Model;
+import com.example.helpwheel.Models.NotesModel;
 
 import com.example.helpwheel.databases.DatabaseClass;
 import com.example.helpwheel.databinding.FragmentHomeBinding;
@@ -41,9 +39,8 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
-
-    Adapter adapter;
-    List<Model> notesList;
+    NotesAdapter adapter;
+    List<NotesModel> notesList;
     DatabaseClass databaseClass;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,10 +48,12 @@ public class HomeFragment extends Fragment {
 
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        //Запуск активити для добавления заметок через плавающую кнопку
         binding.fab.setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), AddNotesActivity.class);
             startActivity(intent);
         });
+
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(binding.recyclerView);
 
@@ -63,38 +62,41 @@ public class HomeFragment extends Fragment {
         fetchAllNotesFromDatabase();
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new Adapter(getContext(), getActivity(), notesList);
+
+        adapter = new NotesAdapter(getContext(), getActivity(), notesList);
         binding.recyclerView.setAdapter(adapter);
+
         return binding.getRoot();
     }
-
+    //достаём данные (заметки) из бд
     void fetchAllNotesFromDatabase() {
+        //переменная с данными с бд
         Cursor cursor = databaseClass.readAllData();
-
+        //проверка количества заметок
         if (cursor.getCount() == 0) {
             binding.emptyText.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
-                notesList.add(new Model(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+                notesList.add(new NotesModel(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
             }
         }
 
     }
-
+    //обработка свайпов
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
         }
 
-
+        //удаление заметки
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-            Model item = adapter.getList().get(position);
+            NotesModel item = adapter.getList().get(position);
 
             adapter.removeItem(position);
-
+            //Snack bar для отмены удаления
             Snackbar snackbar = Snackbar.make(binding.notesLayout, "Item Deleted", Snackbar.LENGTH_LONG)
                     .setAction("UNDO", view -> {
                         adapter.restoreItem(item, position);
@@ -109,6 +111,7 @@ public class HomeFragment extends Fragment {
                             }
                         }
                     });
+
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
 

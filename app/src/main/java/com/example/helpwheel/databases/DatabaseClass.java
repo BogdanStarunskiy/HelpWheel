@@ -9,14 +9,12 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.google.android.material.tabs.TabLayout;
 
 public class DatabaseClass extends SQLiteOpenHelper {
 
     Context context;
     private static final String DatabaseName = "MyNotes";
     private static final int DatabaseVersion = 1;
-
     private static final String TableName = "mynotes";
     private static final String ColumnId = "id";
     private static final String ColumnTitle = "title";
@@ -52,13 +50,8 @@ public class DatabaseClass extends SQLiteOpenHelper {
         cv.put(ColumnTitle, title);
         cv.put(ColumnDescription, description);
         long resultValue = db.insert(TableName, null, cv);
-        if (resultValue == -1) {
-            Toast.makeText(context, "Data Not Added", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Data Added Successfully", Toast.LENGTH_SHORT).show();
-        }
     }
-
+    //Cursor содержит все заметки
     public Cursor readAllData() {
         String query = "SELECT * FROM " + TableName;
         SQLiteDatabase database = this.getReadableDatabase();
@@ -78,12 +71,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
         cv.put(ColumnDescription, description);
 
         long result = database.update(TableName, cv, "id=?", new String[]{id});
-        if (result == -1)
-        {
-            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-        } else{
-            Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.helpwheel;
+package com.example.helpwheel.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,16 +13,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.helpwheel.Models.NotesModel;
+import com.example.helpwheel.R;
 import com.example.helpwheel.updateNotesActivity.UpdateNotesActivity;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
+public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder> {
     Context context;
     Activity activity;
-    List<Model> notesList;
+    List<NotesModel> notesList;
 
-    public Adapter(Context context, Activity activity, List<Model> notesList) {
+    public NotesAdapter(Context context, Activity activity, List<NotesModel> notesList) {
         this.context = context;
         this.activity = activity;
         this.notesList = notesList;
@@ -50,11 +52,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         });
 
     }
-
+    //получить количество заметок
     @Override
     public int getItemCount() {
         return notesList.size();
     }
+
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView title, description;
@@ -67,16 +71,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             layout = itemView.findViewById(R.id.note_layout);
         }
     }
-    public List<Model> getList(){
+
+
+    //получить список заметок
+    public List<NotesModel> getList(){
         return notesList;
     }
 
+    //удаление заметок
     public void removeItem(int position){
         notesList.remove(position);
         notifyItemRemoved(position);
     }
 
-    public void restoreItem(Model item, int position){
+    //восстановление заметок
+    public void restoreItem(NotesModel item, int position){
         notesList.add(position, item);
         notifyItemInserted(position);
     }

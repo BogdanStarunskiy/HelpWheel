@@ -1,4 +1,4 @@
-package com.example.helpwheel;
+package com.example.helpwheel.Models;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -17,12 +17,12 @@ import com.example.helpwheel.updateNotesActivity.UpdateNotesActivity;
 
 import java.util.List;
 
-public class Model {
+public class NotesModel {
     String title;
     String description;
     String id;
 
-    public Model(String id, String title, String description) {
+    public NotesModel(String id, String title, String description) {
         this.title = title;
         this.description = description;
         this.id = id;
