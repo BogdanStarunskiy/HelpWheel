@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -50,8 +51,10 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         //Запуск активити для добавления заметок через плавающую кнопку
         binding.fab.setOnClickListener(view -> {
+
             Intent intent = new Intent(getContext(), AddNotesActivity.class);
             startActivity(intent);
+
         });
 
         ItemTouchHelper helper = new ItemTouchHelper(callback);

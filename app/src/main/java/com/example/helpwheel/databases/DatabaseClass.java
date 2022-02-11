@@ -76,11 +76,14 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
 
     public void deleteSingleItem(String id){
-        SQLiteDatabase database = this.getWritableDatabase();
+        try {
+            SQLiteDatabase database = this.getWritableDatabase();
 
-        long result = database.delete(TableName, "id=?",new String[]{id});
-        if (result==-1){
-            Toast.makeText(context, "Item Not Deleted", Toast.LENGTH_SHORT).show();
+            long result = database.delete(TableName, "id=?", new String[]{id});
+            if (result == -1) {
+                Toast.makeText(context, "Item Not Deleted", Toast.LENGTH_SHORT).show();
+            }
+        }catch (NullPointerException ignored){
         }
     }
 
