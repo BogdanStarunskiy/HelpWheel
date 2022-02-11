@@ -40,7 +40,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    RecyclerView recyclerView;
+
 
     Adapter adapter;
     List<Model> notesList;
@@ -65,8 +65,6 @@ public class HomeFragment extends Fragment {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new Adapter(getContext(), getActivity(), notesList);
         binding.recyclerView.setAdapter(adapter);
-
-
         return binding.getRoot();
     }
 
@@ -74,7 +72,7 @@ public class HomeFragment extends Fragment {
         Cursor cursor = databaseClass.readAllData();
 
         if (cursor.getCount() == 0) {
-            Toast.makeText(getContext(), "No Data to show", Toast.LENGTH_SHORT).show();
+            binding.emptyText.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
                 notesList.add(new Model(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
@@ -95,7 +93,7 @@ public class HomeFragment extends Fragment {
             int position = viewHolder.getAdapterPosition();
             Model item = adapter.getList().get(position);
 
-            adapter.removeItem(viewHolder.getAdapterPosition());
+            adapter.removeItem(position);
 
             Snackbar snackbar = Snackbar.make(binding.notesLayout, "Item Deleted", Snackbar.LENGTH_LONG)
                     .setAction("UNDO", view -> {

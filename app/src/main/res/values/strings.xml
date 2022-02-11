@@ -19,9 +19,10 @@
     <!--notes -->
     <string name="add_a_note">Add a note</string>
     <string name="hello_user">Hello, User!</string>
-    <string name="this_is_the_title">This is the Title</string>
-    <string name="description">Description</string>
-    <string name="title">Title</string>
+    <string name="description">When?</string>
+    <string name="title">what has been repaired?</string>
     <string name="save_a_note">Add Note</string>
     <string name="update_note">Update Note</string>
+    <string name="wow_such_empty">wow, such empty!</string>
+    <string name="web_site">Web site</string>
 </resources>

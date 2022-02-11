@@ -14,17 +14,24 @@
        <RelativeLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content" >
+
            <TextView
-               android:layout_width="wrap_content"
+               android:id="@+id/title"
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:text="@string/this_is_the_title"
-               android:textStyle="bold"
+               android:layout_marginStart="6dp"
+               android:layout_marginTop="6dp"
+               android:layout_marginEnd="6dp"
+               android:layout_marginBottom="6dp"
+               android:text="@string/title"
                android:textColor="@color/white"
-               android:layout_margin="6dp"
                android:textSize="18sp"
-               android:id="@+id/title"/>
+               android:textStyle="bold" />
+
+
+
            <TextView
-               android:layout_width="wrap_content"
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text="@string/description"
                android:textStyle="bold"
@@ -33,6 +40,19 @@
                android:textSize="18sp"
                android:id="@+id/description"
                android:layout_below="@+id/title"/>
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="@string/web_site"
+               android:textStyle="bold"
+               android:textColor="@color/white"
+               android:layout_margin="6dp"
+               android:textSize="18sp"
+               android:id="@+id/web_url"
+               android:layout_below="@+id/description"
+               android:visibility="visible"/>
+
+
        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

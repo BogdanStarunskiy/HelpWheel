@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".notesActivity.AddNotesActivity">
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +14,6 @@
         android:textSize="22sp"
         android:id="@+id/title"
         />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +21,13 @@
         android:hint="@string/description"
         android:id="@+id/description"
         android:layout_below="@+id/title"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/web_site"
+        android:id="@+id/web_ulr"
+        android:layout_below="@+id/description"/>
 
    <Button
        android:layout_width="match_parent"

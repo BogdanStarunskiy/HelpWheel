@@ -28,6 +28,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/wow_such_empty"
+        android:id="@+id/empty_text"
+        android:textAlignment="center"
+        android:layout_marginTop="290dp"
+        android:textSize="35sp"
+        android:visibility="gone"
+        />
 
 
 
