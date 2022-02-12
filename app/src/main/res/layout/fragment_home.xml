@@ -9,7 +9,12 @@
     app:layout_behavior="@string/fab_transformation_scrim_behavior"
     android:id="@+id/notes_layout">
 
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/notes_fragment_place"
+        android:elevation="10dp"
+        />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -38,6 +43,7 @@
         android:textSize="35sp"
         android:visibility="gone"
         />
+
 
 
 
