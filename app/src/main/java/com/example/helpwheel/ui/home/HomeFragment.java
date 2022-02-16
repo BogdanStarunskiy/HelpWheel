@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.helpwheel.R;
 import com.example.helpwheel.adapters.NotesAdapter;
 
 
@@ -71,7 +72,16 @@ public class HomeFragment extends Fragment {
 
         adapter = new NotesAdapter(getContext(), getActivity(), notesList);
         binding.recyclerView.setAdapter(adapter);
-
+        FragmentManager fm = getChildFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        AddNotesActivity fr = new AddNotesActivity();
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ft.replace(R.id.notes_fragment_place, fr);
+                ft.commit();
+            }
+        });
 
         return binding.getRoot();
     }
@@ -121,6 +131,7 @@ public class HomeFragment extends Fragment {
 
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
+
 
         }
     };

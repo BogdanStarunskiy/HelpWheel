@@ -31,18 +31,18 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        AddNotesActivity fr = new AddNotesActivity();
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                ft.replace(R.id.nav_host_fragment_activity_main, fr);
-                ft.commit();
-            }
-        });
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        FragmentManager fm = getSupportFragmentManager();
+//        FragmentTransaction ft = fm.beginTransaction();
+//        AddNotesActivity fr = new AddNotesActivity();
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                ft.replace(R.id.notes_fragment_place, fr);
+//                ft.commit();
+//            }
+//        });
 
 
 
