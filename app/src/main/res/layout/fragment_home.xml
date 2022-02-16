@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/notes_fragment_place"
-        android:elevation="10dp"
+        android:elevation="999dp"
         />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

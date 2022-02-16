@@ -45,7 +45,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     public void addNotes(String title, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues cv = new ContentValues();
         cv.put(ColumnTitle, title);
         cv.put(ColumnDescription, description);

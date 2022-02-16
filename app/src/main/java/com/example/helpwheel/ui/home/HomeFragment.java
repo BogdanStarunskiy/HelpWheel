@@ -1,42 +1,26 @@
 package com.example.helpwheel.ui.home;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
-
 import androidx.fragment.app.Fragment;
-
-
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.helpwheel.R;
 import com.example.helpwheel.adapters.NotesAdapter;
-
-
 import com.example.helpwheel.Models.NotesModel;
-
 import com.example.helpwheel.databases.DatabaseClass;
 import com.example.helpwheel.databinding.FragmentHomeBinding;
-import com.example.helpwheel.notesActivity.AddNotesActivity;
-
-import com.example.helpwheel.ui.dashboard.DashboardFragment;
+import com.example.helpwheel.notesFragments.AddNotesFragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,14 +37,6 @@ public class HomeFragment extends Fragment {
 
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        //Запуск активити для добавления заметок через плавающую кнопку
-//        binding.fab.setOnClickListener(view -> {
-//
-//            Intent intent = new Intent(getContext(), AddNotesActivity.class);
-//            startActivity(intent);
-//
-//        });
-
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(binding.recyclerView);
 
@@ -72,17 +48,14 @@ public class HomeFragment extends Fragment {
 
         adapter = new NotesAdapter(getContext(), getActivity(), notesList);
         binding.recyclerView.setAdapter(adapter);
+        //Запуск Фрагмента для добавления заметок через плавающую кнопку
         FragmentManager fm = getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        AddNotesActivity fr = new AddNotesActivity();
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ft.replace(R.id.notes_fragment_place, fr);
-                ft.commit();
-            }
+        AddNotesFragment fr = new AddNotesFragment();
+        binding.fab.setOnClickListener(view -> {
+            ft.replace(R.id.notes_fragment_place, fr);
+            ft.commit();
         });
-
         return binding.getRoot();
     }
     //достаём данные (заметки) из бд

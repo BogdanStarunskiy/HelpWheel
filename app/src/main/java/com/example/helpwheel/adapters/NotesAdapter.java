@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.helpwheel.Models.NotesModel;
 import com.example.helpwheel.R;
-import com.example.helpwheel.updateNotesActivity.UpdateNotesActivity;
+import com.example.helpwheel.notesFragments.UpdateNotesFragment;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
         holder.description.setText(notesList.get(position).getDescription());
 
         holder.layout.setOnClickListener(view -> {
-            Intent intent = new Intent(context, UpdateNotesActivity.class);
+            Intent intent = new Intent(context, UpdateNotesFragment.class);
             intent.putExtra("title", notesList.get(position).getTitle());
             intent.putExtra("description", notesList.get(position).getDescription());
             intent.putExtra("id", notesList.get(position).getId());
