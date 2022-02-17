@@ -3,47 +3,48 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/notes_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment"
     app:layout_behavior="@string/fab_transformation_scrim_behavior"
-    android:id="@+id/notes_layout">
+    tools:context=".ui.home.HomeFragment">
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/notes_fragment_place"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/dark"
-            app:srcCompat="@drawable/ic_plus"
-            app:tint="@color/white"
-            app:borderWidth = "0dp"
-            android:contentDescription="@string/add_a_note"
-            app:rippleColor="@color/white"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/dark"
+        android:contentDescription="@string/add_a_note"
+        app:borderWidth="0dp"
+        app:rippleColor="@color/white"
+        app:srcCompat="@drawable/ic_plus"
+        app:tint="@color/white" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_view"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="3"
+        tools:listitem="@layout/notes_recycler_view_layout" />
+
     <TextView
+        android:id="@+id/empty_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/wow_such_empty"
-        android:id="@+id/empty_text"
-        android:textAlignment="center"
         android:layout_marginTop="290dp"
+        android:text="@string/wow_such_empty"
+        android:textAlignment="center"
         android:textSize="35sp"
-        android:visibility="gone"
-        />
-
-
+        android:visibility="gone" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
