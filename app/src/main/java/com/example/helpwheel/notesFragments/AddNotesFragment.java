@@ -19,7 +19,7 @@ import com.example.helpwheel.databinding.FragmentAddNotesBinding;
 
 
 public class AddNotesFragment extends Fragment {
-    EditText title, description;
+    EditText title, description, webURL;
     Button addNote;
     FragmentAddNotesBinding binding;
     @Override
@@ -30,7 +30,7 @@ public class AddNotesFragment extends Fragment {
         title = binding.title;
         description = binding.description;
         addNote = binding.addNote;
-
+        webURL = binding.webUlr;
         addNote.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(title.getText().toString()) && !TextUtils.isEmpty(description.getText().toString()))
             {

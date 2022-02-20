@@ -1,15 +1,14 @@
 package com.example.helpwheel.Models;
 
 public class NotesModel {
-    String title;
-    String description;
-    String id;
+    String title, description, id, webUrl;
 
     public NotesModel(String id, String title, String description) {
         this.title = title;
         this.description = description;
         this.id = id;
     }
+
 
     public String getTitle() {
         return title;

@@ -11,11 +11,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.helpwheel.MainActivity;
 import com.example.helpwheel.Models.NotesModel;
 import com.example.helpwheel.R;
 import com.example.helpwheel.notesFragments.UpdateNotesFragment;
+import com.example.helpwheel.ui.home.HomeFragment;
 
 import java.util.List;
 
@@ -43,6 +47,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
         holder.description.setText(notesList.get(position).getDescription());
 
         holder.layout.setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_updateNotesFragment);
             Intent intent = new Intent(context, UpdateNotesFragment.class);
             intent.putExtra("title", notesList.get(position).getTitle());
             intent.putExtra("description", notesList.get(position).getDescription());
@@ -61,11 +66,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView title, description;
+        TextView title, description, webURL;
         RelativeLayout layout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            webURL = itemView.findViewById(R.id.web_url);
             title = itemView.findViewById(R.id.title);
             description = itemView.findViewById(R.id.description);
             layout = itemView.findViewById(R.id.note_layout);

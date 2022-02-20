@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -48,7 +49,10 @@ public class DatabaseClass extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(ColumnTitle, title);
         cv.put(ColumnDescription, description);
+
+
         long resultValue = db.insert(TableName, null, cv);
+
     }
     //Cursor содержит все заметки
     public Cursor readAllData() {

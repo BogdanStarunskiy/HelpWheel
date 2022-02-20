@@ -1,5 +1,6 @@
 package com.example.helpwheel.notesFragments;
 
+import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.example.helpwheel.MainActivity;
 import com.example.helpwheel.databases.DatabaseClass;
+import com.example.helpwheel.databinding.FragmentHomeBinding;
 import com.example.helpwheel.databinding.FragmentUpdateNotesBinding;
 
 
@@ -20,7 +22,8 @@ public class UpdateNotesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        Intent i = getIntent();
+        binding = FragmentUpdateNotesBinding.inflate(inflater, container, false);
+//        Intent i = getIntent(MainActivity.class);
 //        binding.title.setText(i.getStringExtra("title"));
 //        binding.description.setText(i.getStringExtra("description"));
 //        id = i.getStringExtra("id");

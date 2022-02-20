@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_addNotesFragment"
             app:destination="@id/addNotesFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_updateNotesFragment"
+            app:destination="@id/updateNotesFragment" />
     </fragment>
 
     <fragment
@@ -31,4 +34,9 @@
         android:name="com.example.helpwheel.notesFragments.AddNotesFragment"
         android:label="AddNotesFragment"
         tools:layout="@layout/fragment_add_notes"/>
+    <fragment
+        android:id="@+id/updateNotesFragment"
+        android:name="com.example.helpwheel.notesFragments.UpdateNotesFragment"
+        android:label="UpdateNotesFragment"
+        tools:layout="@layout/fragment_update_notes"/>
 </navigation>

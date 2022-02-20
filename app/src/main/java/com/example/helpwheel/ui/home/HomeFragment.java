@@ -47,19 +47,9 @@ public class HomeFragment extends Fragment {
         databaseClass = new DatabaseClass(getContext());
         fetchAllNotesFromDatabase();
 
-//        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         adapter = new NotesAdapter(getContext(), getActivity(), notesList);
         binding.recyclerView.setAdapter(adapter);
         //Запуск Фрагмента для добавления заметок через плавающую кнопку
-//        FragmentManager fm = getParentFragmentManager();
-//        FragmentTransaction ft = fm.beginTransaction();
-//        AddNotesFragment fr = new AddNotesFragment();
-//        binding.fab.setOnClickListener(view -> {
-//            ft.replace(R.id.notes_fragment_place, fr);
-//            ft.commit();
-//        });
-
         binding.fab.setOnClickListener(view ->{
             NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment);
         });
