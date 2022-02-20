@@ -1,76 +1,91 @@
 package com.example.helpwheel.ui.dashboard;
 
-import static com.example.helpwheel.ui.dashboard.DashboardViewModel.generateURL;
-import static com.example.helpwheel.ui.dashboard.DashboardViewModel.getResponseFromURL;
-
 import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+
 import androidx.fragment.app.Fragment;
+
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDashboardBinding;
+
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.IOException;
-import java.net.URL;
+
 import java.util.Locale;
 
 public class DashboardFragment extends Fragment {
-
     private DashboardViewModel dashboardViewModel;
     private FragmentDashboardBinding binding;
+    private String currentTemperature = "";
+    private String feels_like = "";
+    private String wind_speed = "";
+    private String weather_desc = "";
+    private String degree_cels = "";
+    private String speed = "";
+
+    private void showSuccessMessage() {
+        binding.currentWeather.setVisibility(View.VISIBLE);
+    }
 
     private void showErrorMessage() {
         binding.currentWeather.setVisibility(View.VISIBLE);
         binding.currentWeather.setText(R.string.error_weather);
     }
 
-    private void showSuccessMessage() {
-        binding.currentWeather.setVisibility(View.VISIBLE);
-    }
+    @SuppressLint("SetTextI18n")
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        dashboardViewModel =
+                new ViewModelProvider(this).get(DashboardViewModel.class);
 
-    class WeatherQueryTask extends AsyncTask<URL, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            binding.weatherLoading.setVisibility(View.VISIBLE);
-        }
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+        initStrings();
 
-        @Override
-        protected String doInBackground(URL... urls) {
-            String response = null;
-            try {
-                response = getResponseFromURL(urls[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
+        binding.weatherBtn.setOnClickListener(v -> {
+            if (binding.enterCity.getText().toString().trim().equals("")) {
+                Toast toast = Toast.makeText(binding.getRoot().getContext(), "Enter city!", Toast.LENGTH_LONG);
+                toast.show();
+            } else {
+                String user_city = binding.enterCity.getText().toString().trim();
+                String key = "a98ca7720a8fd711bb8548bf2373e263";
+                String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
+                dashboardViewModel.getTemperature(url);
+                binding.weatherLoading.setVisibility(View.VISIBLE);
             }
-            return response;
-        }
+        });
 
-        @SuppressLint("SetTextI18n")
-        @Override
-        protected void onPostExecute(String response) {
-            if (response != null && !response.equals("")) {
+
+
+        dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
+            binding.weatherLoading.setVisibility(View.INVISIBLE);
+            if (s != null && !s.equals("")) {
                 String temperature = null;
                 String main_description = null;
                 String description = null;
                 String wind = null;
                 String feel_temperature = null;
+
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    temperature = "Temperature in your city is " + jsonObject.getJSONObject("main").getDouble("temp") + "℃";
-                    feel_temperature = "Feels like: " + jsonObject.getJSONObject("main").getDouble("feels_like") + "℃";
-                    wind = "Wind`s speed: " + jsonObject.getJSONObject("wind").getDouble("speed") + " KM/H";
+                    JSONObject jsonObject = new JSONObject(s);
+                    temperature = currentTemperature + " " + jsonObject.getJSONObject("main").getDouble("temp") + degree_cels;
+                    feel_temperature = feels_like + " " + jsonObject.getJSONObject("main").getDouble("feels_like") + degree_cels;
+                    wind = wind_speed + " " + jsonObject.getJSONObject("wind").getDouble("speed") + " "+ speed;
                     JSONArray jsonArray = jsonObject.getJSONArray("weather");
                     JSONObject Json_description = jsonArray.getJSONObject(0);
                     main_description = Json_description.getString("main");
-                    description = "Description: " + Json_description.getString("description");
+                    description = weather_desc + " " + Json_description.getString("description");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -99,26 +114,19 @@ public class DashboardFragment extends Fragment {
 
             }
 
-        }
 
+        });
+        return root;
     }
 
+    private void initStrings() {
+        currentTemperature = requireContext().getResources().getString(R.string.temperature_is);
+        feels_like = requireContext().getResources().getString(R.string.feels_like);
+        wind_speed = requireContext().getResources().getString(R.string.wind_speed);
+        weather_desc = requireContext().getResources().getString(R.string.weather_desc);
+        degree_cels = requireContext().getResources().getString(R.string.degree_cels);
+        speed = requireContext().getResources().getString(R.string.speed);
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        binding.weatherBtn.setOnClickListener(v -> {
-            //присваиваю преременной generatedURL значение, которое возвращает метод
-            URL generatedURL = generateURL(binding.enterCity.getText().toString().trim());
-            new WeatherQueryTask().execute(generatedURL);
-        });
-
-        return root;
     }
 
     @Override
@@ -126,4 +134,5 @@ public class DashboardFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }

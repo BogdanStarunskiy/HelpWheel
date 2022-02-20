@@ -15,6 +15,11 @@
     <string name="wind_speed">Wind`s speed: </string>
     <string name="weather_desc">Description: </string>
     <string name="degree_cels">℃</string>
+    <string name="speed">KM/H</string>
+    <!--   auth -->
+    <string name="greeting_auth">Greeting!</string>
+    <string name="enter_name_auth">Please, type your name</string>
+    <string name="btn_auth">Go</string>
 
     <!--notes -->
     <string name="add_a_note">Add a note</string>
@@ -25,4 +30,15 @@
     <string name="update_note">Update Note</string>
     <string name="wow_such_empty">wow, such empty!</string>
     <string name="web_site">Web site</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
