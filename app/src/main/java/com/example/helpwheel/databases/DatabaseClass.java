@@ -35,6 +35,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
                 ColumnTitle + " TEXT, " +
                 ColumnDescription + " TEXT);";
         db.execSQL(query);
+
     }
 
     @Override

@@ -3,31 +3,28 @@ package com.example.helpwheel.ui.home;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.helpwheel.interfaces.NotesInterface;
 import com.example.helpwheel.R;
 import com.example.helpwheel.adapters.NotesAdapter;
 import com.example.helpwheel.Models.NotesModel;
 import com.example.helpwheel.databases.DatabaseClass;
 import com.example.helpwheel.databinding.FragmentHomeBinding;
-import com.example.helpwheel.notesFragments.AddNotesFragment;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements NotesInterface {
 
     private FragmentHomeBinding binding;
 
@@ -47,7 +44,7 @@ public class HomeFragment extends Fragment {
         databaseClass = new DatabaseClass(getContext());
         fetchAllNotesFromDatabase();
 
-        adapter = new NotesAdapter(getContext(), getActivity(), notesList);
+        adapter = new NotesAdapter(getContext(), getActivity(), notesList, this);
         binding.recyclerView.setAdapter(adapter);
         //Запуск Фрагмента для добавления заметок через плавающую кнопку
         binding.fab.setOnClickListener(view ->{
@@ -64,7 +61,7 @@ public class HomeFragment extends Fragment {
             binding.emptyText.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
-                notesList.add(new NotesModel(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+                notesList.add(new NotesModel(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(2)));
             }
         }
 
@@ -105,6 +102,17 @@ public class HomeFragment extends Fragment {
 
         }
     };
+
+    @Override
+    public void fragmentChange(String title, String description, String id) {
+        HomeFragmentDirections.ActionNavigationHomeToUpdateNotesFragment action = HomeFragmentDirections.actionNavigationHomeToUpdateNotesFragment();
+        action.setTitle(title);
+        action.setDescription(description);
+        action.setId(id);
+        NavHostFragment.findNavController(this).navigate(action);
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
