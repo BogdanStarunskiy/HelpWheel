@@ -3,7 +3,6 @@ package com.example.helpwheel.adapters;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +10,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.helpwheel.MainActivity;
+import com.example.helpwheel.interfaces.NotesInterface;
 import com.example.helpwheel.Models.NotesModel;
 import com.example.helpwheel.R;
-import com.example.helpwheel.notesFragments.UpdateNotesFragment;
-import com.example.helpwheel.ui.home.HomeFragment;
 
 import java.util.List;
 
@@ -27,8 +22,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
     Context context;
     Activity activity;
     List<NotesModel> notesList;
+    NotesInterface callback;
 
-    public NotesAdapter(Context context, Activity activity, List<NotesModel> notesList) {
+    public NotesAdapter(Context context, Activity activity, List<NotesModel> notesList, NotesInterface mcallback) {
+        this.callback = mcallback;
         this.context = context;
         this.activity = activity;
         this.notesList = notesList;
@@ -47,13 +44,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
         holder.description.setText(notesList.get(position).getDescription());
 
         holder.layout.setOnClickListener(view -> {
-            Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_updateNotesFragment);
-            Intent intent = new Intent(context, UpdateNotesFragment.class);
-            intent.putExtra("title", notesList.get(position).getTitle());
-            intent.putExtra("description", notesList.get(position).getDescription());
-            intent.putExtra("id", notesList.get(position).getId());
-
-            activity.startActivity(intent);
+           callback.fragmentChange(notesList.get(position).getTitle(), notesList.get(position).getDescription(), notesList.get(position).getId());
         });
 
     }

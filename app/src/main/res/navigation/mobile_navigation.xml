@@ -38,5 +38,18 @@
         android:id="@+id/updateNotesFragment"
         android:name="com.example.helpwheel.notesFragments.UpdateNotesFragment"
         android:label="UpdateNotesFragment"
-        tools:layout="@layout/fragment_update_notes"/>
+        tools:layout="@layout/fragment_update_notes">
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue=" " />
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue=" " />
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue=" " />
+    </fragment>
 </navigation>

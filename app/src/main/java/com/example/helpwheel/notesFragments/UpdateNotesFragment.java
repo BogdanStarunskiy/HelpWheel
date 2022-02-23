@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,12 @@ public class UpdateNotesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        UpdateNotesFragmentArgs args = UpdateNotesFragmentArgs.fromBundle(getArguments());
+        String title = args.getTitle();
         binding = FragmentUpdateNotesBinding.inflate(inflater, container, false);
-//        Intent i = getIntent(MainActivity.class);
-//        binding.title.setText(i.getStringExtra("title"));
-//        binding.description.setText(i.getStringExtra("description"));
-//        id = i.getStringExtra("id");
+        binding.title.setText(title);
+        binding.description.setText(args.getDescription());
+        id = args.getId();
         binding.updateNote.setOnClickListener(view -> {
             if(!TextUtils.isEmpty(binding.title.getText().toString()) && !TextUtils.isEmpty(binding.description.getText().toString())){
                 DatabaseClass db = new DatabaseClass(getContext());
