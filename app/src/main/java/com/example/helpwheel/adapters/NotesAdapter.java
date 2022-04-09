@@ -41,8 +41,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.title.setText(notesList.get(position).getTitle());
-        holder.description.setText(notesList.get(position).getDescription());
-
+        String[] splitDesc = notesList.get(position).getDescription().split(" ");
+        String descParsed = splitDesc[0];
+        String webUrlParser = splitDesc[1];
+        holder.description.setText(descParsed);
+        holder.webURL.setText(webUrlParser);
         holder.layout.setOnClickListener(view -> {
            callback.fragmentChange(notesList.get(position).getTitle(), notesList.get(position).getDescription(), notesList.get(position).getId());
         });

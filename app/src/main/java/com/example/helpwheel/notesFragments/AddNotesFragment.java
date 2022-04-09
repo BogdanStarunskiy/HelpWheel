@@ -34,8 +34,9 @@ public class AddNotesFragment extends Fragment {
         addNote.setOnClickListener(view -> {
             if (!TextUtils.isEmpty(title.getText().toString()) && !TextUtils.isEmpty(description.getText().toString()))
             {
+                String descUrl = description.getText().toString().trim() + " " + webURL.getText().toString().trim();
                 DatabaseClass db = new DatabaseClass(getContext());
-                db.addNotes(title.getText().toString(), description.getText().toString());
+                db.addNotes(title.getText().toString(), descUrl);
                 Intent intent = new Intent(getContext(), MainActivity.class);
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -19,7 +19,8 @@
         android:layout_margin="8dp"
         android:hint="@string/description"
         android:id="@+id/description"
-        android:layout_below="@+id/title"/>
+        android:layout_below="@+id/title"
+        android:inputType="date"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
