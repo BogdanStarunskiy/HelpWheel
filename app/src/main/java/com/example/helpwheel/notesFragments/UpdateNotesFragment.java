@@ -24,15 +24,20 @@ public class UpdateNotesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         UpdateNotesFragmentArgs args = UpdateNotesFragmentArgs.fromBundle(getArguments());
-        String title = args.getTitle();
         binding = FragmentUpdateNotesBinding.inflate(inflater, container, false);
-        binding.title.setText(title);
-        binding.description.setText(args.getDescription());
+        binding.title.setText(args.getTitle());
+        String[] splitDesc = args.getDescription().split(" ");
+        String descParser = splitDesc[0];
+        String webUrlParser = splitDesc[1];
+        binding.description.setText(descParser);
+        binding.webUlr.setText(webUrlParser);
+
         id = args.getId();
         binding.updateNote.setOnClickListener(view -> {
             if(!TextUtils.isEmpty(binding.title.getText().toString()) && !TextUtils.isEmpty(binding.description.getText().toString())){
+                String descWebUrlCombined = binding.description.getText().toString().trim() + " " + binding.webUlr.getText().toString().trim();
                 DatabaseClass db = new DatabaseClass(getContext());
-                db.updateNotes(binding.title.getText().toString(), binding.description.getText().toString(), id);
+                db.updateNotes(binding.title.getText().toString(), descWebUrlCombined, id);
                 Intent i1 = new Intent(getContext(), MainActivity.class);
                 i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i1);
