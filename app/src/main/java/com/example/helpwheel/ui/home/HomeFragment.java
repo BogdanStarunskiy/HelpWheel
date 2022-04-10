@@ -1,18 +1,23 @@
 package com.example.helpwheel.ui.home;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.helpwheel.databinding.NotesRecyclerViewLayoutBinding;
 import com.example.helpwheel.interfaces.NotesInterface;
 import com.example.helpwheel.R;
 import com.example.helpwheel.adapters.NotesAdapter;
@@ -34,7 +39,6 @@ public class HomeFragment extends Fragment implements NotesInterface {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         ItemTouchHelper helper = new ItemTouchHelper(callback);

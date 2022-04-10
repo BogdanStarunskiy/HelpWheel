@@ -28,9 +28,12 @@ public class UpdateNotesFragment extends Fragment {
         binding.title.setText(args.getTitle());
         String[] splitDesc = args.getDescription().split(" ");
         String descParser = splitDesc[0];
-        String webUrlParser = splitDesc[1];
+        if (splitDesc.length != 1){
+            String webUrlParser = splitDesc[1];
+            binding.webUlr.setText(webUrlParser);
+        };
         binding.description.setText(descParser);
-        binding.webUlr.setText(webUrlParser);
+
 
         id = args.getId();
         binding.updateNote.setOnClickListener(view -> {
