@@ -12,12 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HelpWheel">
         <activity
-            android:name=".notesFragments.UpdateNotesFragment"
-            android:exported="false" />
-        <activity
-            android:name=".notesFragments.AddNotesFragment"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">

@@ -5,42 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.notifications.NotificationsFragment">
-<!--Фрагмент контроля топлива -->
+    <!--Фрагмент контроля топлива -->
+
     <androidx.cardview.widget.CardView
-        android:layout_margin="8dp"
         android:id="@+id/fuel_card_view"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="8dp"
         android:backgroundTint="@color/dark"
         app:cardCornerRadius="10dp"
-        app:cardElevation="2dp">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fuel_percent"
-        android:text="@string/fifty_percents"
-        android:textSize="85sp"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        />
+        app:cardElevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/fuel_percent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/fifty_percents"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="85sp" />
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_fuel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/fuel_input_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@color/dark"
-        android:contentDescription="@string/add_a_note"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:rippleColor="@color/white"
-        app:srcCompat="@drawable/ic_plus"
-        app:tint="@color/white" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fuel_card_view">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/odometer_input"
+                android:layout_width="158dp"
+                android:layout_height="61dp"
+                android:hint="@string/odometer_km"
+                android:imeOptions="actionNext"
+                android:nextFocusRight="@id/gas_price"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/gas_price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="40dp"
+                android:hint="@string/gas_price_per_liter"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/odometer_input"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

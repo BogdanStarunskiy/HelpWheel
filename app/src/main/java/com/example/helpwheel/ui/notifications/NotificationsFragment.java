@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentNotificationsBinding;
@@ -26,10 +27,8 @@ public class NotificationsFragment extends Fragment {
                 new ViewModelProvider(this).get(NotificationsViewModel.class);
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
-
-        return root;
+        return binding.getRoot();
     }
 
     @Override

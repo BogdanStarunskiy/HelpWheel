@@ -23,8 +23,12 @@
         <entry key="..\:/Users/Bogdan/AndroidStudioProjects/HelpWheel/app/src/main/res/menu/bottom_nav_menu.xml" value="0.26871794871794874" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_add_notes.xml" value="0.12158054711246201" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_dashboard.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_fuel_control.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_fuel_managment.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_home.xml" value="0.12158054711246201" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_notifications.xml" value="0.2" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_update_notes.xml" value="0.22826086956521738" />
-        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/notes_recycler_view_layout.xml" value="0.12158054711246201" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/notes_recycler_view_layout.xml" value="0.264" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21105072463768115" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.21105072463768115" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.333786231884058" />
