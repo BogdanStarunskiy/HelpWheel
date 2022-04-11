@@ -29,7 +29,7 @@
     <string name="save_a_note">Add Note</string>
     <string name="update_note">Update Note</string>
     <string name="wow_such_empty">wow, such empty!</string>
-    <string name="web_site">Web site</string>
+    <string name="web_site">Web site (optional)</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
