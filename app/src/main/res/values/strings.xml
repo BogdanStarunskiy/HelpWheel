@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name" translatable="false">HelpWheel</string>
-    <!--bnb -->
-    <string name="title_home">Notes</string>
+    <!-- bnb -->
+    <string name="title_notes">Notes</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Fuel</string>
-    <!--weather -->
+    <!-- weather -->
     <string name="enter_city">Please, enter your city</string>
     <string name="weather_btn">Check</string>
     <string name="current_weather">Here will be displayed current weather</string>
@@ -16,12 +16,12 @@
     <string name="weather_desc">Description: </string>
     <string name="degree_cels">℃</string>
     <string name="speed">KM/H</string>
-    <!--   auth -->
+    <!-- auth -->
     <string name="greeting_auth">Greeting!</string>
     <string name="enter_name_auth">Please, type your name</string>
     <string name="btn_auth">Go</string>
 
-    <!--notes -->
+    <!-- notes -->
     <string name="add_a_note">Add a note</string>
     <string name="hello_user">Hello, User!</string>
     <string name="description">When?</string>
@@ -30,7 +30,8 @@
     <string name="update_note">Update Note</string>
     <string name="wow_such_empty">wow, such empty!</string>
     <string name="web_site">Web site (optional)</string>
-    <!-- Strings related to login -->
+    <string name="both_fields_required">Both Fields Required</string>
+    <!-- strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -39,9 +40,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- fuel manager -->
     <string name="fifty_percents">50%</string>
-    <string name="odometer_km">Odometer (km)</string>
-    <string name="gas_price_per_liter">Gas price (per liter)</string>
+    <string name="add_refueling">New refueling</string>
+
 </resources>

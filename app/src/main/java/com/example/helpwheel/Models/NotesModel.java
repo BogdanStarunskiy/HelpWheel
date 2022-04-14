@@ -10,13 +10,6 @@ public class NotesModel {
         this.webUrl = webUrl;
     }
 
-    public String getWebUrl() {
-        return webUrl;
-    }
-
-    public void setWebUrl(String webUrl) {
-        this.webUrl = webUrl;
-    }
 
     public String getTitle() {
         return title;
