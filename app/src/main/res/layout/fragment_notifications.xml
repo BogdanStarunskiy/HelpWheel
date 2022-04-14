@@ -29,56 +29,23 @@
             android:textSize="85sp" />
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/fuel_input_card_view"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/fuel_input_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/dark"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
+        android:backgroundTint="@color/dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fuel_card_view">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/odometer_input"
-                android:layout_width="158dp"
-                android:layout_height="61dp"
-                android:hint="@string/odometer_km"
-                android:imeOptions="actionNext"
-                android:nextFocusRight="@id/gas_price"
-                android:inputType="number"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textColorHint="@color/grey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/gas_price"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="40dp"
-                android:hint="@string/gas_price_per_liter"
-                android:inputType="number"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textColorHint="@color/grey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/odometer_input"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@id/fuel_card_view"
+        android:text="@string/add_refueling"
+        android:textSize="25sp"
+        android:textAllCaps="false"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,11 @@
 package com.example.helpwheel.ui.home;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,15 +13,15 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.helpwheel.databinding.NotesRecyclerViewLayoutBinding;
-import com.example.helpwheel.interfaces.NotesInterface;
+import com.example.helpwheel.Models.NotesModel;
 import com.example.helpwheel.R;
 import com.example.helpwheel.adapters.NotesAdapter;
-import com.example.helpwheel.Models.NotesModel;
 import com.example.helpwheel.databases.DatabaseClass;
 import com.example.helpwheel.databinding.FragmentHomeBinding;
+import com.example.helpwheel.interfaces.NotesInterface;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,10 +46,9 @@ public class HomeFragment extends Fragment implements NotesInterface {
 
         adapter = new NotesAdapter(getContext(), getActivity(), notesList, this);
         binding.recyclerView.setAdapter(adapter);
+
         //Запуск Фрагмента для добавления заметок через плавающую кнопку
-        binding.fab.setOnClickListener(view ->{
-            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment);
-        });
+        binding.fab.setOnClickListener(view -> NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment));
         return binding.getRoot();
     }
     //достаём данные (заметки) из бд
@@ -61,9 +56,9 @@ public class HomeFragment extends Fragment implements NotesInterface {
         //переменная с данными с бд
         Cursor cursor = databaseClass.readAllData();
         //проверка количества заметок
-        if (cursor.getCount() == 0) {
+        if (cursor.getCount() == 0)
             binding.emptyText.setVisibility(View.VISIBLE);
-        } else {
+        else {
             while (cursor.moveToNext()) {
                 notesList.add(new NotesModel(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(2)));
             }
@@ -82,8 +77,8 @@ public class HomeFragment extends Fragment implements NotesInterface {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
             NotesModel item = adapter.getList().get(position);
-
             adapter.removeItem(position);
+
             //Snack bar для отмены удаления
             Snackbar snackbar = Snackbar.make(binding.notesLayout, "Item Deleted", Snackbar.LENGTH_LONG)
                     .setAction("UNDO", view -> {

@@ -44,23 +44,27 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.title.setText(notesList.get(position).getTitle());
+
         String[] splitDesc = notesList.get(position).getDescription().split(" ");
         String descParsed = splitDesc[0];
-        if (splitDesc.length != 1){
+
+        //обработка web site EditText
+        if (splitDesc.length != 1) {
             holder.button.setVisibility(View.VISIBLE);
+
             holder.openUrl.setOnClickListener(view -> {
                 String parsedWebUrl = splitDesc[1];
                 if (!parsedWebUrl.startsWith("http://") && !parsedWebUrl.startsWith("https://")) {
                     parsedWebUrl = "http://" + parsedWebUrl;
                 }
+
+                //открытие ссылки
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(parsedWebUrl));
                 context.startActivity(intent);
             });
         }
         holder.description.setText(descParsed);
-        holder.layout.setOnClickListener(view -> {
-            callback.fragmentChange(notesList.get(position).getTitle(), notesList.get(position).getDescription(), notesList.get(position).getId());
-        });
+        holder.layout.setOnClickListener(view -> callback.fragmentChange(notesList.get(position).getTitle(), notesList.get(position).getDescription(), notesList.get(position).getId()));
 
 
     }
