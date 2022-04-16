@@ -44,19 +44,17 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         NavigationUI.setupWithNavController(binding.navView, navController);
-        if(isFirstInitShared()){
-        showWelcomeDialog();
-        changeUiGreeting();
-        }
+
+
 
     }
-    private void showWelcomeDialog(){
+    private void showWelcomeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.WelcomeAlertDialog);
-        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.layout_ok_dialog, (ConstraintLayout)findViewById(R.id.layoutDialogContainer));
+        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.layout_ok_dialog, (ConstraintLayout) findViewById(R.id.layoutDialogContainer));
         builder.setView(view);
         ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.greeting_auth));
-        ((EditText)view.findViewById(R.id.textMessage)).setHint(getResources().getString(R.string.enter_name_auth));
-        ((Button)view.findViewById(R.id.buttonOK)).setText(getResources().getString(R.string.btn_auth));
+        ((EditText) view.findViewById(R.id.textMessage)).setHint(getResources().getString(R.string.enter_name_auth));
+        ((Button) view.findViewById(R.id.buttonOK)).setText(getResources().getString(R.string.btn_auth));
 
         AlertDialog alertDialog = builder.create();
         view.findViewById(R.id.buttonOK).setOnClickListener(new View.OnClickListener() {
@@ -65,33 +63,5 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
-        if(alertDialog.getWindow() != null ){
-            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        }
-        alertDialog.show();
-
-    }
-    private boolean isFirstInitShared() {
-        SharedPreferences sp = getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
-        boolean hasVisited = sp.getBoolean("hasVisited", false);
-
-        if (!hasVisited) {
-            SharedPreferences.Editor e = sp.edit();
-            e.putBoolean("hasVisited", true);
-            e.apply(); // applying changes
-        }
-        return !hasVisited;
-
-    }
-    public String getUsername(){
-        String username;
-        EditText enterUsername = findViewById(R.id.textMessage);
-        username = enterUsername.getText().toString().trim();
-
-        return username;
-    }
-    private void changeUiGreeting(){
-        TextView greeting = findViewById(R.id.greeting_text);
-        greeting.setText(getUsername());
     }
 }
