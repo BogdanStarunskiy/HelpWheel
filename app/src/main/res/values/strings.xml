@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">HelpWheel</string>
     <!--bnb -->
-    <string name="title_home">Notes</string>
+    <string name="title_notes">Notes</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Fuel</string>
     <!--weather -->
