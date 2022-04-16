@@ -30,8 +30,11 @@
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_nav_menu"
             app:itemPaddingTop="15dp"
-            app:itemTextColor="@color/white"
-            app:itemIconTint="@color/white"
+            app:itemTextColor="@drawable/bottom_nav_selector"
+            app:itemRippleColor="@null"
+            app:itemIconTint="@drawable/bottom_nav_selector"
+
+
             />
 
     </androidx.cardview.widget.CardView>
