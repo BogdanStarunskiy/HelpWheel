@@ -56,10 +56,9 @@ public class DashboardFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        if(isFirstInitShared()){
+        if (isFirstInitShared()) {
             showWelcomeDialog();
         }
-
 
 
         dashboardViewModel =
@@ -83,7 +82,6 @@ public class DashboardFragment extends Fragment {
         });
 
 
-
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
             binding.weatherLoading.setVisibility(View.INVISIBLE);
             if (s != null && !s.equals("")) {
@@ -97,7 +95,7 @@ public class DashboardFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(s);
                     temperature = currentTemperature + " " + jsonObject.getJSONObject("main").getDouble("temp") + degree_cels;
                     feel_temperature = feels_like + " " + jsonObject.getJSONObject("main").getDouble("feels_like") + degree_cels;
-                    wind = wind_speed + " " + jsonObject.getJSONObject("wind").getDouble("speed") + " "+ speed;
+                    wind = wind_speed + " " + jsonObject.getJSONObject("wind").getDouble("speed") + " " + speed;
                     JSONArray jsonArray = jsonObject.getJSONArray("weather");
                     JSONObject Json_description = jsonArray.getJSONObject(0);
                     main_description = Json_description.getString("main");
@@ -151,28 +149,32 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-    private void showWelcomeDialog(){
+    private void showWelcomeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.WelcomeAlertDialog);
         View view = LayoutInflater.from(requireContext()).inflate(R.layout.layout_ok_dialog, null);
         builder.setView(view);
         ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.greeting_auth));
-        ((EditText)view.findViewById(R.id.textMessage)).setHint(getResources().getString(R.string.enter_name_auth));
-        ((Button)view.findViewById(R.id.buttonOK)).setText(getResources().getString(R.string.btn_auth));
+        ((EditText) view.findViewById(R.id.textMessage)).setHint(getResources().getString(R.string.enter_name_auth));
+        ((Button) view.findViewById(R.id.buttonOK)).setText(getResources().getString(R.string.btn_auth));
 
         alertDialog = builder.create();
         view.findViewById(R.id.buttonOK).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialog.dismiss();
-                changeUi();
+                if (checkUsername()) {
+                    alertDialog.dismiss();
+                    changeUi();
+
+                }
             }
         });
-        if(alertDialog.getWindow() != null ){
+        if (alertDialog.getWindow() != null) {
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
         }
         alertDialog.show();
 
     }
+
     private boolean isFirstInitShared() {
         SharedPreferences sp = requireContext().getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
         boolean hasVisited = sp.getBoolean("hasVisited", false);
@@ -186,9 +188,26 @@ public class DashboardFragment extends Fragment {
 
     }
 
-    public void changeUi(){
+    @SuppressLint("SetTextI18n")
+    public void changeUi() {
         EditText enterUsername = alertDialog.findViewById(R.id.textMessage);
-        binding.greetingText.setText(enterUsername.getText().toString().trim());
+        assert enterUsername != null;
+
+        binding.greetingText.setText("Hello, " + enterUsername.getText().toString().trim() + "!");
+
+    }
+
+    public boolean checkUsername() {
+        EditText enterUsername = alertDialog.findViewById(R.id.textMessage);
+        assert enterUsername != null;
+        if (!enterUsername.getText().toString().equals("")) {
+            return true;
+        } else {
+            Toast toast = Toast.makeText(binding.getRoot().getContext(), "Enter username!", Toast.LENGTH_LONG);
+            toast.show();
+            return false;
+
+        }
     }
 
 
