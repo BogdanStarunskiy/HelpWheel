@@ -185,6 +185,7 @@ public class DashboardFragment extends Fragment {
         return !hasVisited;
 
     }
+
     public void changeUi(){
         EditText enterUsername = alertDialog.findViewById(R.id.textMessage);
         binding.greetingText.setText(enterUsername.getText().toString().trim());
