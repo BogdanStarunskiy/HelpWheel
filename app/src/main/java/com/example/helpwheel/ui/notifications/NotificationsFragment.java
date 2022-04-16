@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentNotificationsBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class NotificationsFragment extends Fragment {
 
@@ -22,7 +24,10 @@ public class NotificationsFragment extends Fragment {
                 new ViewModelProvider(this).get(NotificationsViewModel.class);
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         binding.fuelInputButton.setOnClickListener(view -> {
-
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+            bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
+            bottomSheetDialog.setCanceledOnTouchOutside(true);
+            bottomSheetDialog.show();
         });
         return binding.getRoot();
     }
