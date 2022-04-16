@@ -31,6 +31,10 @@ public class NotificationsFragment extends Fragment {
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
             bottomSheetDialog.setCanceledOnTouchOutside(true);
             bottomSheetDialog.show();
+            Button submitBtn = bottomSheetDialog.findViewById(R.id.submit_btn_fuel);
+            submitBtn.setOnClickListener(view1 -> {
+                bottomSheetDialog.dismiss();
+            });
         });
         return binding.getRoot();
     }

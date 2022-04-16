@@ -24,9 +24,9 @@
         android:backgroundTint="@color/dark"
         android:contentDescription="@string/add_a_note"
         app:borderWidth="0dp"
-        app:rippleColor="@color/white"
+        app:rippleColor="@color/yellow"
         app:srcCompat="@drawable/ic_plus"
-        app:tint="@color/white" />
+        app:tint="@color/white"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
