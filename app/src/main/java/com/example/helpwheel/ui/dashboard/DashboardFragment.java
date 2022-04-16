@@ -1,15 +1,23 @@
 package com.example.helpwheel.ui.dashboard;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -33,6 +41,8 @@ public class DashboardFragment extends Fragment {
     private String weather_desc = "";
     private String degree_cels = "";
     private String speed = "";
+    private final String MY_SETTINGS = "settings";
+    AlertDialog alertDialog;
 
     private void showSuccessMessage() {
         binding.currentWeather.setVisibility(View.VISIBLE);
@@ -46,6 +56,12 @@ public class DashboardFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        if(isFirstInitShared()){
+            showWelcomeDialog();
+        }
+
+
+
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 
@@ -134,5 +150,46 @@ public class DashboardFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    private void showWelcomeDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.WelcomeAlertDialog);
+        View view = LayoutInflater.from(requireContext()).inflate(R.layout.layout_ok_dialog, null);
+        builder.setView(view);
+        ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.greeting_auth));
+        ((EditText)view.findViewById(R.id.textMessage)).setHint(getResources().getString(R.string.enter_name_auth));
+        ((Button)view.findViewById(R.id.buttonOK)).setText(getResources().getString(R.string.btn_auth));
+
+        alertDialog = builder.create();
+        view.findViewById(R.id.buttonOK).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                changeUi();
+            }
+        });
+        if(alertDialog.getWindow() != null ){
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        alertDialog.show();
+
+    }
+    private boolean isFirstInitShared() {
+        SharedPreferences sp = requireContext().getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
+        boolean hasVisited = sp.getBoolean("hasVisited", false);
+
+        if (!hasVisited) {
+            SharedPreferences.Editor e = sp.edit();
+            e.putBoolean("hasVisited", true);
+            e.apply(); // applying changes
+        }
+        return !hasVisited;
+
+    }
+
+    public void changeUi(){
+        EditText enterUsername = alertDialog.findViewById(R.id.textMessage);
+        binding.greetingText.setText(enterUsername.getText().toString().trim());
+    }
+
 
 }

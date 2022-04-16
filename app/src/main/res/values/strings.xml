@@ -1,27 +1,26 @@
 <resources>
     <string name="app_name" translatable="false">HelpWheel</string>
-    <!-- bnb -->
-    <string name="title_notes">Notes</string>
+    <!--bnb -->
+    <string name="title_home">Notes</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Fuel</string>
-    <!-- weather -->
+    <!--weather -->
     <string name="enter_city">Please, enter your city</string>
     <string name="weather_btn">Check</string>
     <string name="current_weather">Here will be displayed current weather</string>
     <string name="error_weather">Something broke, try again</string>
-    <string name="api_key">a98ca7720a8fd711bb8548bf2373e263</string>
     <string name="temperature_is">Temperature in your city is </string>
     <string name="feels_like">Feels like: </string>
     <string name="wind_speed">Wind`s speed: </string>
     <string name="weather_desc">Description: </string>
     <string name="degree_cels">℃</string>
     <string name="speed">KM/H</string>
-    <!-- auth -->
-    <string name="greeting_auth">Greeting!</string>
+    <!--   auth -->
+    <string name="greeting_auth">Welcome to HelpWheel!</string>
     <string name="enter_name_auth">Please, type your name</string>
     <string name="btn_auth">Go</string>
 
-    <!-- notes -->
+    <!--notes -->
     <string name="add_a_note">Add a note</string>
     <string name="hello_user">Hello, User!</string>
     <string name="description">When?</string>
@@ -29,20 +28,9 @@
     <string name="save_a_note">Add Note</string>
     <string name="update_note">Update Note</string>
     <string name="wow_such_empty">wow, such empty!</string>
-    <string name="web_site">Web site (optional)</string>
-    <string name="both_fields_required">Both Fields Required</string>
-    <!-- strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!-- fuel manager -->
-    <string name="fifty_percents">50%</string>
-    <string name="add_refueling">New refueling</string>
+    <string name="web_site">Web site</string>
 
+    <string name="fifty_percents">50%</string>
+    <string name="odometer_km">Odometer (km)</string>
+    <string name="gas_price_per_liter">Gas price (per liter)</string>
 </resources>
