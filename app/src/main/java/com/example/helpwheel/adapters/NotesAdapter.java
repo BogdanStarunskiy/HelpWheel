@@ -14,12 +14,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.helpwheel.databinding.ActivityMainBinding;
-import com.example.helpwheel.databinding.FragmentDashboardBinding;
-import com.example.helpwheel.databinding.NotesRecyclerViewLayoutBinding;
-import com.example.helpwheel.interfaces.NotesInterface;
 import com.example.helpwheel.Models.NotesModel;
 import com.example.helpwheel.R;
+import com.example.helpwheel.interfaces.NotesInterface;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
@@ -29,7 +26,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
     Activity activity;
     List<NotesModel> notesList;
     NotesInterface callback;
-    private NotesRecyclerViewLayoutBinding binding;
 
     public NotesAdapter(Context context, Activity activity, List<NotesModel> notesList, NotesInterface mcallback) {
         this.callback = mcallback;
@@ -48,16 +44,27 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.title.setText(notesList.get(position).getTitle());
+
         String[] splitDesc = notesList.get(position).getDescription().split(" ");
         String descParsed = splitDesc[0];
-        if (splitDesc.length != 1){
-            String webUrlParser = splitDesc[1];
-            holder.webURL.setText(webUrlParser);
-        };
+
+        //обработка web site EditText
+        if (splitDesc.length != 1) {
+            holder.button.setVisibility(View.VISIBLE);
+
+            holder.openUrl.setOnClickListener(view -> {
+                String parsedWebUrl = splitDesc[1];
+                if (!parsedWebUrl.startsWith("http://") && !parsedWebUrl.startsWith("https://")) {
+                    parsedWebUrl = "http://" + parsedWebUrl;
+                }
+
+                //открытие ссылки
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(parsedWebUrl));
+                context.startActivity(intent);
+            });
+        }
         holder.description.setText(descParsed);
-        holder.layout.setOnClickListener(view -> {
-            callback.fragmentChange(notesList.get(position).getTitle(), notesList.get(position).getDescription(), notesList.get(position).getId());
-        });
+        holder.layout.setOnClickListener(view -> callback.fragmentChange(notesList.get(position).getTitle(), notesList.get(position).getDescription(), notesList.get(position).getId()));
 
 
     }
@@ -70,15 +77,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title, description, webURL;
-        RelativeLayout layout;
+        TextView title, description;
+        RelativeLayout layout, button;
+        MaterialButton openUrl;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            webURL = itemView.findViewById(R.id.web_url);
             title = itemView.findViewById(R.id.title);
             description = itemView.findViewById(R.id.description);
             layout = itemView.findViewById(R.id.note_layout);
+            button = itemView.findViewById(R.id.link_button);
+            openUrl = itemView.findViewById(R.id.openURL);
         }
     }
 

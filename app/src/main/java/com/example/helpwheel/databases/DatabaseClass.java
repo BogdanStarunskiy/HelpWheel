@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -55,6 +54,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
         long resultValue = db.insert(TableName, null, cv);
 
     }
+
     //Cursor содержит все заметки
     public Cursor readAllData() {
         String query = "SELECT * FROM " + TableName;
@@ -79,7 +79,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
     }
 
 
-    public void deleteSingleItem(String id){
+    public void deleteSingleItem(String id) {
         try {
             SQLiteDatabase database = this.getWritableDatabase();
 
@@ -87,7 +87,7 @@ public class DatabaseClass extends SQLiteOpenHelper {
             if (result == -1) {
                 Toast.makeText(context, "Item Not Deleted", Toast.LENGTH_SHORT).show();
             }
-        }catch (NullPointerException ignored){
+        } catch (NullPointerException ignored) {
         }
     }
 
