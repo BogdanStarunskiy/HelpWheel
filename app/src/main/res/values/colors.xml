@@ -8,5 +8,5 @@
     <color name="gray">#909090</color>
     <color name="darker">#191920</color>
     <color name="yellow">#fca311</color>
-
+    <color name="transparent">#00000000</color>
 </resources>
