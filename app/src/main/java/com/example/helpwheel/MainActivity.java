@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-
+    private static final String MY_SETTINGS = "settings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +33,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-<<<<<<<<< Temporary merge branch 1
-=========
 
->>>>>>>>> Temporary merge branch 2
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
@@ -47,5 +44,24 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+
+
+    }
+    private void showWelcomeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.WelcomeAlertDialog);
+        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.layout_ok_dialog, (ConstraintLayout) findViewById(R.id.layoutDialogContainer));
+        builder.setView(view);
+        ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.greeting_auth));
+        ((EditText) view.findViewById(R.id.textMessage)).setHint(getResources().getString(R.string.enter_name_auth));
+        ((Button) view.findViewById(R.id.buttonOK)).setText(getResources().getString(R.string.btn_auth));
+
+        AlertDialog alertDialog = builder.create();
+        view.findViewById(R.id.buttonOK).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

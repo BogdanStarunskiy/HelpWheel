@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.helpwheel.R;
+import com.example.helpwheel.databinding.BottomSheetDialogBinding;
 import com.example.helpwheel.databinding.FragmentNotificationsBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -28,6 +31,10 @@ public class NotificationsFragment extends Fragment {
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
             bottomSheetDialog.setCanceledOnTouchOutside(true);
             bottomSheetDialog.show();
+            Button submitBtn = bottomSheetDialog.findViewById(R.id.submit_btn_fuel);
+            submitBtn.setOnClickListener(view1 -> {
+                bottomSheetDialog.dismiss();
+            });
         });
         return binding.getRoot();
     }
