@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="60dp"
         android:layout_height="10dp"
-        android:src="@drawable/figure"
+        android:src="@drawable/figure_on_buttom_sheet_dialog"
         android:layout_marginBottom="30dp"/>
     <EditText
         android:layout_width="match_parent"
