@@ -1,4 +1,4 @@
-package com.example.helpwheel.notesFragments;
+package com.example.helpwheel.ui.home.notesFragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.MainActivity;
 import com.example.helpwheel.R;
-import com.example.helpwheel.databases.DatabaseClass;
+import com.example.helpwheel.ui.home.databases.DatabaseClass;
 import com.example.helpwheel.databinding.FragmentUpdateNotesBinding;
 
 

@@ -8,12 +8,12 @@
     android:paddingStart="30dp"
     android:paddingEnd="30dp"
     android:paddingBottom="30dp"
-    android:paddingTop="7dp">
+    android:paddingTop="14dp">
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="10dp"
+        android:layout_width="30dp"
+        android:layout_height="6dp"
         android:src="@drawable/figure_on_buttom_sheet_dialog"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="15dp"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,8 @@
         android:hint="@string/enter_odometer"
         android:textColorHint="@color/gray"
         android:padding="10dp"
-        android:background="@drawable/round_edittext"/>
+        android:background="@drawable/round_edittext"
+        android:inputType="numberDecimal"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +31,8 @@
         android:textColorHint="@color/gray"
         android:layout_marginTop="15dp"
         android:padding="10dp"
-        android:background="@drawable/round_edittext"/>
+        android:background="@drawable/round_edittext"
+        android:inputType="numberDecimal"/>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/submit_btn_fuel"
         android:layout_width="match_parent"
