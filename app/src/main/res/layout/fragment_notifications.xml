@@ -45,7 +45,8 @@
         app:layout_constraintTop_toBottomOf="@id/fuel_card_view"
         android:text="@string/add_refueling"
         android:textSize="25sp"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textColor="@color/white"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
