@@ -3,6 +3,7 @@ package com.example.helpwheel.ui.dashboard;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class DashboardFragment extends Fragment {
     private DashboardViewModel dashboardViewModel;
@@ -43,6 +45,9 @@ public class DashboardFragment extends Fragment {
     private String speed = "";
     private final String MY_SETTINGS = "settings";
     AlertDialog alertDialog;
+    SharedPreferences settings;
+    private final String key_username = "username228";
+    EditText username;
 
     private void showSuccessMessage() {
         binding.currentWeather.setVisibility(View.VISIBLE);
@@ -56,8 +61,10 @@ public class DashboardFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         if (isFirstInitShared()) {
             showWelcomeDialog();
+
         }
 
 
@@ -67,7 +74,10 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         initStrings();
-
+        changeUi();
+        binding.greetingText.setOnClickListener(view -> {
+            showWelcomeDialog();
+        });
         binding.weatherBtn.setOnClickListener(v -> {
             if (binding.enterCity.getText().toString().trim().equals("")) {
                 Toast toast = Toast.makeText(binding.getRoot().getContext(), "Enter city!", Toast.LENGTH_LONG);
@@ -162,10 +172,15 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (checkUsername()) {
-                    alertDialog.dismiss();
+                    settings = requireActivity().getSharedPreferences(MY_SETTINGS, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("name", ((EditText)(Objects.requireNonNull(alertDialog.findViewById(R.id.textMessage)))).getText().toString().trim().replace("\n", ""));
+                    editor.apply();
                     changeUi();
+                    alertDialog.dismiss();
 
                 }
+
             }
         });
         if (alertDialog.getWindow() != null) {
@@ -190,10 +205,14 @@ public class DashboardFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void changeUi() {
-        EditText enterUsername = alertDialog.findViewById(R.id.textMessage);
-        assert enterUsername != null;
+       SharedPreferences preferences = requireActivity().getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
+        String username = preferences.getString("name", "Albert");
 
-        binding.greetingText.setText("Hello, " + enterUsername.getText().toString().trim() + "!");
+        binding.greetingText.setText("Hello, " + username + "!");
+
+
+
+
 
     }
 
