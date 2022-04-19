@@ -32,12 +32,12 @@
     </fragment>
     <fragment
         android:id="@+id/addNotesFragment"
-        android:name="com.example.helpwheel.notesFragments.AddNotesFragment"
+        android:name="com.example.helpwheel.ui.home.notesFragments.AddNotesFragment"
         android:label="AddNotesFragment"
         tools:layout="@layout/fragment_add_notes"/>
     <fragment
         android:id="@+id/updateNotesFragment"
-        android:name="com.example.helpwheel.notesFragments.UpdateNotesFragment"
+        android:name="com.example.helpwheel.ui.home.notesFragments.UpdateNotesFragment"
         android:label="UpdateNotesFragment"
         tools:layout="@layout/fragment_update_notes">
         <argument
