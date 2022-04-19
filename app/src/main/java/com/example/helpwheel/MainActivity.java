@@ -48,20 +48,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void showWelcomeDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.WelcomeAlertDialog);
-        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.layout_ok_dialog, (ConstraintLayout) findViewById(R.id.layoutDialogContainer));
-        builder.setView(view);
-        ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.greeting_auth));
-        ((EditText) view.findViewById(R.id.textMessage)).setHint(getResources().getString(R.string.enter_name_auth));
-        ((Button) view.findViewById(R.id.buttonOK)).setText(getResources().getString(R.string.btn_auth));
 
-        AlertDialog alertDialog = builder.create();
-        view.findViewById(R.id.buttonOK).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
-    }
 }
