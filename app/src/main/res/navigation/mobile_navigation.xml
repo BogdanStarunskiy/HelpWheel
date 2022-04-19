@@ -1,52 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.notifications.NotificationsFragment">
-    <!--Фрагмент контроля топлива -->
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/fuel_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/dark"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.helpwheel.ui.home.HomeFragment"
+        android:label="@string/title_notes"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_addNotesFragment"
+            app:destination="@id/addNotesFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_updateNotesFragment"
+            app:destination="@id/updateNotesFragment" />
+    </fragment>
 
-        <TextView
-            android:id="@+id/fuel_percent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/fifty_percents"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="85sp" />
-    </androidx.cardview.widget.CardView>
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.helpwheel.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/fuel_input_button"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="20dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
-        android:backgroundTint="@color/dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fuel_card_view"
-        android:text="@string/add_refueling"
-        android:textSize="25sp"
-        android:textAllCaps="false"
-        android:textColor="@color/white"/>
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.helpwheel.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" >
+    </fragment>
+    <fragment
+        android:id="@+id/addNotesFragment"
+        android:name="com.example.helpwheel.ui.home.notesFragments.AddNotesFragment"
+        android:label="AddNotesFragment"
+        tools:layout="@layout/fragment_add_notes"/>
+    <fragment
+        android:id="@+id/updateNotesFragment"
+        android:name="com.example.helpwheel.ui.home.notesFragments.UpdateNotesFragment"
+        android:label="UpdateNotesFragment"
+        tools:layout="@layout/fragment_update_notes">
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue=" " />
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue=" " />
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue=" " />
+    </fragment>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</navigation>

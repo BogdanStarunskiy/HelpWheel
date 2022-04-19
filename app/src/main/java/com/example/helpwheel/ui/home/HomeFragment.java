@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.helpwheel.Models.NotesModel;
 import com.example.helpwheel.R;
 import com.example.helpwheel.adapters.NotesAdapter;
-import com.example.helpwheel.databases.DatabaseClass;
+import com.example.helpwheel.ui.home.databases.DatabaseClass;
 import com.example.helpwheel.databinding.FragmentHomeBinding;
 import com.example.helpwheel.interfaces.NotesInterface;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
