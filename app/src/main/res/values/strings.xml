@@ -15,7 +15,7 @@
     <string name="wind_speed">Wind`s speed: </string>
     <string name="weather_desc">Description: </string>
     <string name="degree_cels">℃</string>
-    <string name="speed">KM/H</string>
+    <string name="speed">M/SEC</string>
     <!-- auth -->
     <string name="greeting_auth">Greeting!</string>
     <string name="enter_name_auth">Please, type your name</string>
