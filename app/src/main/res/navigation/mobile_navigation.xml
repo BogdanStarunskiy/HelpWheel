@@ -34,7 +34,11 @@
         android:id="@+id/addNotesFragment"
         android:name="com.example.helpwheel.ui.home.notesFragments.AddNotesFragment"
         android:label="AddNotesFragment"
-        tools:layout="@layout/fragment_add_notes"/>
+        tools:layout="@layout/fragment_add_notes">
+        <action
+            android:id="@+id/action_addNotesFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
     <fragment
         android:id="@+id/updateNotesFragment"
         android:name="com.example.helpwheel.ui.home.notesFragments.UpdateNotesFragment"
@@ -52,6 +56,9 @@
             android:name="id"
             app:argType="string"
             android:defaultValue=" " />
+        <action
+            android:id="@+id/action_updateNotesFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
 </navigation>

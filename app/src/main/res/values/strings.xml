@@ -42,10 +42,14 @@
     <string name="login_failed">"Login failed"</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- fuel manager -->
-    <string name="fifty_percents">50%</string>
+    <string name="kms_placeholder">Your last ride:</string>
     <string name="add_refueling">New refueling</string>
     <string name="enter_odometer">Odometer(KM)</string>
     <string name="enter_price">Price (Per liter)</string>
     <string name="submit">Submit</string>
+    <string name="km"> KM</string>
+    <string name="alert_fuel_text">After your next ride let us know your odometer reading</string>
+    <string name="ok">OK</string>
+    <string name="zero">0</string>
 
 </resources>

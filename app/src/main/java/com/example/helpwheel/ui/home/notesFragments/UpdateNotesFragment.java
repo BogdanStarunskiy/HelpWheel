@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.helpwheel.MainActivity;
 import com.example.helpwheel.R;
@@ -42,9 +43,7 @@ public class UpdateNotesFragment extends Fragment {
                 String descWebUrlCombined = binding.description.getText().toString().trim() + " " + binding.webUlr.getText().toString().trim();
                 DatabaseClass db = new DatabaseClass(getContext());
                 db.updateNotes(binding.title.getText().toString(), descWebUrlCombined, id);
-                Intent i1 = new Intent(getContext(), MainActivity.class);
-                i1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i1);
+                NavHostFragment.findNavController(this).navigate(R.id.action_updateNotesFragment_to_navigation_home);
             } else {
                 Toast.makeText(getContext(), R.string.both_fields_required, Toast.LENGTH_SHORT).show();
             }

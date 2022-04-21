@@ -12,7 +12,10 @@
     <FrameLayout
         android:id="@+id/notes_fragment_place"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+
+    </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -26,25 +29,41 @@
         app:borderWidth="0dp"
         app:rippleColor="@color/yellow"
         app:srcCompat="@drawable/ic_plus"
-        app:tint="@color/white"/>
+        app:tint="@color/white" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/empty_image"
+            android:src="@drawable/ic_empty_vector"
+            app:layout_constraintBottom_toTopOf="@+id/empty_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"/>
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/wow_such_empty"
+            android:textAlignment="center"
+            android:textSize="35sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_anchor="@+id/notes_fragment_place"
+        app:layout_anchorGravity="center"
         tools:itemCount="3"
-        tools:listitem="@layout/notes_recycler_view_layout" />
-
-    <TextView
-        android:id="@+id/empty_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="290dp"
-        android:text="@string/wow_such_empty"
-        android:textAlignment="center"
-        android:textSize="35sp"
-        android:visibility="gone" />
-
-
+        tools:listitem="@layout/notes_recycler_view_layout"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
