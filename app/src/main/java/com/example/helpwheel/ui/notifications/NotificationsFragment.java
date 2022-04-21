@@ -23,11 +23,10 @@ public class NotificationsFragment extends Fragment {
 
     private FragmentNotificationsBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
-    public static final String APP_PREFERENCES_ODOMETER = " ";
-    public static final String APP_PREFERENCES_ODOMETER_OLD = " ";
-    public static final String APP_PREFERENCES_PRICE = " ";
-    public static final String APP_PREFERENCES_RESULT = " ";
-    public Float oldOdometerValue;
+    public static final String APP_PREFERENCES_ODOMETER = "odometer";
+    public static final String APP_PREFERENCES_ODOMETER_OLD = "odometer_old";
+    public static final String APP_PREFERENCES_PRICE = "price";
+    public static final String APP_PREFERENCES_RESULT = "result";
     SharedPreferences fuelStats;
     AlertDialog alertDialog;
     private SharedPreferences.Editor editor;
@@ -36,60 +35,64 @@ public class NotificationsFragment extends Fragment {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
+
         binding.fuelInputButton.setOnClickListener(view -> {
+
                     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
                     bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
                     bottomSheetDialog.show();
                     Button submitBtn = bottomSheetDialog.findViewById(R.id.submit_btn_fuel);
+
                     submitBtn.setOnClickListener(view1 -> {
+
                         EditText odometer = bottomSheetDialog.findViewById(R.id.odometer_edit_text);
                         EditText pricePerLiter = bottomSheetDialog.findViewById(R.id.price_edit_text);
                         String odometerValue = odometer.getText().toString();
                         String priceValue = pricePerLiter.getText().toString();
+
                         if (!odometerValue.isEmpty() && !priceValue.isEmpty()){
-                            setOldOdometerValue();
                             editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
                             editor.putFloat(APP_PREFERENCES_PRICE, Float.parseFloat(priceValue));
-                            calculatingDifferences(oldOdometerValue, Float.parseFloat(odometerValue));
+                            calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
                         } else if (!odometerValue.isEmpty()) {
-                            setOldOdometerValue();
+                            calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
                             editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
-                            calculatingDifferences(oldOdometerValue, Float.parseFloat(odometerValue));
-                        } else if(!priceValue.isEmpty()) {
+                            } else if(!priceValue.isEmpty()) {
                             editor.putFloat(APP_PREFERENCES_PRICE, Float.parseFloat(priceValue));
                         }
                         editor.apply();
                         bottomSheetDialog.dismiss();
                     });
         });
-        if (fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f) == 0.0f){
-            binding.distance.setText("0.0");
-        } else {
-            binding.distance.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f)));
-        }
+        updateUi();
         return binding.getRoot();
     }
 
-    public void setOldOdometerValue(){
-        if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0) == 0.0){
-            oldOdometerValue = 0.0f;
-            showCustomDialog();
-        } else{
+    public Float OldOdometerValue(){
             editor.putFloat(APP_PREFERENCES_ODOMETER_OLD, fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0));
-            oldOdometerValue = fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f);
             editor.apply();
-        }
+            return fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f);
     }
 
     public void calculatingDifferences(Float oldOdometerValue, Float odometerValue){
-        if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0) == 0.0) {
+        if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f) {
             binding.distance.setText("0.0");
+            showCustomDialog();
         } else {
             float number = BigDecimal.valueOf(odometerValue - oldOdometerValue)
                     .setScale(2, BigDecimal.ROUND_HALF_DOWN)
                     .floatValue();
             binding.distance.setText(Float.toString(number));
             editor.putFloat(APP_PREFERENCES_RESULT, number);
+            editor.apply();
+        }
+    }
+    public void updateUi(){
+        if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f)
+            binding.distance.setText("0.0");
+        else {
+            binding.distance.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f)));
+            editor.apply();
         }
     }
 
