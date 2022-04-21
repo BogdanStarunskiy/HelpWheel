@@ -56,8 +56,10 @@ public class HomeFragment extends Fragment implements NotesInterface {
         //переменная с данными с бд
         Cursor cursor = databaseClass.readAllData();
         //проверка количества заметок
-        if (cursor.getCount() == 0)
+        if (cursor.getCount() == 0) {
             binding.emptyText.setVisibility(View.VISIBLE);
+            binding.emptyImage.setVisibility(View.VISIBLE);
+        }
         else {
             while (cursor.moveToNext()) {
                 notesList.add(new NotesModel(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(2)));
@@ -78,7 +80,6 @@ public class HomeFragment extends Fragment implements NotesInterface {
             int position = viewHolder.getAdapterPosition();
             NotesModel item = adapter.getList().get(position);
             adapter.removeItem(position);
-
             //Snack bar для отмены удаления
             Snackbar snackbar = Snackbar.make(binding.notesLayout, "Item Deleted", Snackbar.LENGTH_LONG)
                     .setAction("UNDO", view -> {
@@ -91,14 +92,13 @@ public class HomeFragment extends Fragment implements NotesInterface {
                             if (!(event == DISMISS_EVENT_ACTION)){
                                 DatabaseClass db = new DatabaseClass(getContext());
                                 db.deleteSingleItem(item.getId());
+                                fetchAllNotesFromDatabase();
                             }
                         }
                     });
 
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
-
-
         }
     };
 

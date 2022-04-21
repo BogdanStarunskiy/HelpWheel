@@ -1,46 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <EditText
-        android:imeOptions="actionNext"
-        android:nextFocusDown="@id/description"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="@string/title"
-        android:textSize="22sp"
-        android:id="@+id/title"
-        />
-    <EditText
         android:imeOptions="actionNext"
-        android:nextFocusDown="@id/web_ulr"
+        android:nextFocusDown="@id/description"
+        android:textSize="22sp" />
+
+    <EditText
+        android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
         android:layout_margin="8dp"
         android:hint="@string/description"
-        android:id="@+id/description"
-        android:layout_below="@+id/title"
-        android:inputType="date"/>
+        android:imeOptions="actionNext"
+        android:inputType="date"
+        android:nextFocusDown="@id/web_ulr" />
+
     <EditText
+        android:id="@+id/web_ulr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
         android:layout_margin="8dp"
-        android:hint="@string/web_site"
-        android:id="@+id/web_ulr"
-        android:layout_below="@+id/description"/>
+        android:hint="@string/web_site" />
 
-   <Button
-       android:layout_width="match_parent"
-       android:layout_height="60dp"
-       android:layout_margin="8dp"
-       android:layout_alignParentBottom="true"
-       android:backgroundTint="@color/dark"
-       android:text="@string/save_a_note"
-       android:textColor="@color/white"
-       android:textSize="26sp"
-       android:id="@+id/addNote" />
+    <Button
+        android:id="@+id/addNote"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"
+        android:backgroundTint="@color/dark"
+        android:text="@string/save_a_note"
+        android:textColor="@color/white"
+        android:textSize="26sp" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/web_ulr"
+        android:layout_alignBottom="@id/addNote"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/ic_add_notes_image" />
 </RelativeLayout>

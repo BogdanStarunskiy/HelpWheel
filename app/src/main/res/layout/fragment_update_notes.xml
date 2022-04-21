@@ -45,7 +45,17 @@
         android:text="@string/update_note"
         android:textColor="@color/white"
         android:textSize="26sp"
-        android:id="@+id/updateNote"
-        />
+        android:id="@+id/updateNote" />
+    <ImageView
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/web_ulr"
+        android:layout_alignBottom="@id/updateNote"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/ic_updating_notes_image" />
 
 </RelativeLayout>
