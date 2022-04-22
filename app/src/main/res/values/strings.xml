@@ -8,16 +8,16 @@
     <string name="enter_city">Please, enter your city</string>
     <string name="weather_btn">Check</string>
     <string name="current_weather">Here will be displayed current weather</string>
-    <string name="error_weather">Something broke, try again</string>
-    <string name="api_key">a98ca7720a8fd711bb8548bf2373e263</string>
+    <string name="error_weather">Something went wrong, try again</string>
+    <string name="api_key" translatable="false">a98ca7720a8fd711bb8548bf2373e263</string>
     <string name="temperature_is">Temperature in your city is </string>
     <string name="feels_like">Feels like: </string>
     <string name="wind_speed">Wind`s speed: </string>
     <string name="weather_desc">Description: </string>
-    <string name="degree_cels">℃</string>
+    <string name="degree_cels" translatable="false">℃</string>
     <string name="speed">KM/H</string>
     <!-- auth -->
-    <string name="greeting_auth">Greeting!</string>
+    <string name="greeting_auth">Hello!</string>
     <string name="enter_name_auth">Please, enter your name</string>
     <string name="btn_auth">Go</string>
 
@@ -31,26 +31,16 @@
     <string name="wow_such_empty">wow, such empty!</string>
     <string name="web_site">Web site (optional)</string>
     <string name="both_fields_required">Both Fields Required</string>
-    <!-- strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- fuel manager -->
     <string name="kms_placeholder">Your last ride:</string>
     <string name="add_refueling">New refueling</string>
     <string name="enter_odometer">Odometer(KM)</string>
     <string name="enter_price">Price (Per liter)</string>
     <string name="submit">Submit</string>
-    <string name="km"> KM</string>
+    <string name="km" translatable="false"> KM</string>
     <string name="alert_fuel_text">After your next ride let us know your odometer reading</string>
-    <string name="ok">OK</string>
-    <string name="zero">0</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="zero" translatable="false">0</string>
     <string name="last_ride_price">Cost of your last ride:</string>
     <string name="welcome_to_helpwheel">Welcome to HelpWheel!</string>
     <string name="manage_your_car_like_you_want">Manage your car like you want</string>
@@ -59,5 +49,7 @@
     <string name="enter_some_data_text">Just enter some data about your car</string>
     <string name="enter_car_consumption_per_100km">Enter car consumption per 100km</string>
     <string name="enter_car_fuel_tank_capacity">Enter car fuel tank capacity</string>
+    <string name="on_item_deleted">Note has been deleted</string>
+    <string name="undo">Undo</string>
 
 </resources>

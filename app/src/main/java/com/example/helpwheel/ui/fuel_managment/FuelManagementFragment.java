@@ -1,5 +1,6 @@
 package com.example.helpwheel.ui.fuel_managment;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,26 +15,26 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
-import com.example.helpwheel.databinding.FragmentFuelManagmentBinding;
+import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.math.BigDecimal;
 
-public class FuelManagmentFragment extends Fragment {
+public class FuelManagementFragment extends Fragment {
 
-    private FragmentFuelManagmentBinding binding;
+    private FragmentFuelManagementBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String APP_PREFERENCES_ODOMETER = "odometer";
     public static final String APP_PREFERENCES_ODOMETER_OLD = "odometer_old";
     public static final String APP_PREFERENCES_PRE_PRICE = "pre_price";
     public static final String APP_PREFERENCES_RESULT = "result";
-    public static final String APP_PREFERENCES_PRICE = "result";
+//    public static final String APP_PREFERENCES_PRICE = "result";
     SharedPreferences fuelStats;
     AlertDialog alertDialog;
     private SharedPreferences.Editor editor;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentFuelManagmentBinding.inflate(inflater, container, false);
+        binding = FragmentFuelManagementBinding.inflate(inflater, container, false);
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
 
@@ -44,12 +45,15 @@ public class FuelManagmentFragment extends Fragment {
                     bottomSheetDialog.show();
                     Button submitBtn = bottomSheetDialog.findViewById(R.id.submit_btn_fuel);
 
-                    submitBtn.setOnClickListener(view1 -> {
+            assert submitBtn != null;
+            submitBtn.setOnClickListener(view1 -> {
 
                         EditText odometer = bottomSheetDialog.findViewById(R.id.odometer_edit_text);
                         EditText pricePerLiter = bottomSheetDialog.findViewById(R.id.price_edit_text);
-                        String odometerValue = odometer.getText().toString();
-                        String priceValue = pricePerLiter.getText().toString();
+                assert odometer != null;
+                String odometerValue = odometer.getText().toString();
+                assert pricePerLiter != null;
+                String priceValue = pricePerLiter.getText().toString();
 
                         if (!odometerValue.isEmpty() && !priceValue.isEmpty()){
                             editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
@@ -77,6 +81,7 @@ public class FuelManagmentFragment extends Fragment {
             return fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f);
     }
 
+    @SuppressLint("SetTextI18n")
     public void calculatingDifferences(Float oldOdometerValue, Float odometerValue){
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f) {
             binding.distance.setText("0.0");
@@ -91,6 +96,7 @@ public class FuelManagmentFragment extends Fragment {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateUi(){
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f)
             binding.distance.setText("0.0");

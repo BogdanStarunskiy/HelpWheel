@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_notes">Заметки</string>
+    <string name="title_dashboard">Меню</string>
+    <string name="title_notifications">Топливо</string>
+    <string name="enter_city">Пожалуйста, введите ваш город</string>
+    <string name="weather_btn">Отправить</string>
+    <string name="current_weather">Здесь будет отображаться погода</string>
+    <string name="error_weather">Что-то пошло не так, попробуйте снова</string>
+    <string name="temperature_is">Температура в вашем городе</string>
+    <string name="feels_like">По ощущению</string>
+    <string name="wind_speed">Скорость ветра</string>
+    <string name="weather_desc">Описание</string>
+    <string name="speed">км/час</string>
+    <string name="greeting_auth">Привет!</string>
+    <string name="enter_name_auth">Пожалуйста, введите ваше имя</string>
+    <string name="btn_auth">Поехали!</string>
+    <string name="add_a_note">Сохранить заметку</string>
+    <string name="hello_user">Привет, Пользователь!</string>
+    <string name="description">Когда?</string>
+    <string name="title">Что было заменено?</string>
+    <string name="save_a_note">Сохранить заметку</string>
+    <string name="update_note">Обновить заметку</string>
+    <string name="wow_such_empty">Вау, так пусто!</string>
+    <string name="web_site">Ссылка на деталь (необязательно)</string>
+    <string name="both_fields_required">Заполните два поля</string>
+    <string name="kms_placeholder">Ваша последняя поездка</string>
+    <string name="add_refueling">Добавить информацию</string>
+    <string name="enter_odometer">Одометр (км)</string>
+    <string name="enter_price">Цена (за 1 литр)</string>
+    <string name="submit">Сохранить</string>
+    <string name="alert_fuel_text">После следующей поездки введите показания одометра</string>
+    <string name="last_ride_price">Цена прошлой поездки:</string>
+    <string name="welcome_to_helpwheel">Добро пожаловать в HelpWheel!</string>
+    <string name="manage_your_car_like_you_want">правляйте своим авто как хотите</string>
+    <string name="continue_text">Продолжить</string>
+    <string name="almost_there_text">Вы почти у цели!</string>
+    <string name="enter_some_data_text">Просто введите некоторую информацию об вашем авто</string>
+    <string name="enter_car_consumption_per_100km">Введите расход топлива на 100км</string>
+    <string name="enter_car_fuel_tank_capacity">Введите объём топливного бака</string>
+    <string name="on_item_deleted">Заметка успешно удалено</string>
+    <string name="undo">Отменить</string>
+</resources>

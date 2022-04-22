@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fuel_managment.FuelManagmentFragment">
+    tools:context=".ui.fuel_managment.FuelManagementFragment">
     <!--Фрагмент контроля топлива -->
 
     <androidx.cardview.widget.CardView

@@ -51,11 +51,10 @@ public class NotesFragment extends Fragment implements NotesInterface {
         binding.fab.setOnClickListener(view -> NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment));
         return binding.getRoot();
     }
-    //достаём данные (заметки) из бд
+    //Taking all notes from database
     void fetchAllNotesFromDatabase() {
-        //переменная с данными с бд
         Cursor cursor = databaseClass.readAllData();
-        //проверка количества заметок
+        //If we don`t have any notes
         if (cursor.getCount() == 0) {
             binding.emptyText.setVisibility(View.VISIBLE);
             binding.emptyImage.setVisibility(View.VISIBLE);
@@ -67,22 +66,22 @@ public class NotesFragment extends Fragment implements NotesInterface {
         }
 
     }
-    //обработка свайпов
+    //Swipes
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
         }
 
-        //удаление заметки
+        //Notates removing
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
             NotesModel item = adapter.getList().get(position);
             adapter.removeItem(position);
-            //Snack bar для отмены удаления
-            Snackbar snackbar = Snackbar.make(binding.notesLayout, "Item Deleted", Snackbar.LENGTH_LONG)
-                    .setAction("UNDO", view -> {
+            //Snack bar for cancelling action
+            Snackbar snackbar = Snackbar.make(binding.notesLayout, R.string.on_item_deleted, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.undo, view -> {
                         adapter.restoreItem(item, position);
                         binding.recyclerView.scrollToPosition(position);
                     }).addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
