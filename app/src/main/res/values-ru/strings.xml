@@ -3,7 +3,7 @@
     <string name="title_notes">Заметки</string>
     <string name="title_dashboard">Меню</string>
     <string name="title_notifications">Топливо</string>
-    <string name="enter_city">Пожалуйста, введите ваш город</string>
+    <string name="enter_city">Введите ваш город</string>
     <string name="weather_btn">Отправить</string>
     <string name="current_weather">Здесь будет отображаться погода</string>
     <string name="error_weather">Что-то пошло не так, попробуйте снова</string>
@@ -40,4 +40,5 @@
     <string name="enter_car_fuel_tank_capacity">Введите объём топливного бака</string>
     <string name="on_item_deleted">Заметка успешно удалено</string>
     <string name="undo">Отменить</string>
+    <string name="hello_user_text">Привет,</string>
 </resources>

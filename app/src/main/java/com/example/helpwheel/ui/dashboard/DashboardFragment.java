@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -208,7 +209,7 @@ public class DashboardFragment extends Fragment {
        SharedPreferences preferences = requireActivity().getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
         String username = preferences.getString("name", "Albert");
 
-        binding.greetingText.setText("Hello, " + username + "!");
+        binding.greetingText.setText(getString(R.string.hello_user_text) + " " + username + "!");
 
 
 

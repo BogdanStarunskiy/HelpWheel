@@ -3,7 +3,7 @@
     <string name="title_notes">Нотатки</string>
     <string name="title_dashboard">Меню</string>
     <string name="title_notifications">Паливо</string>
-    <string name="enter_city">Будь ласка, введіть ваше місто</string>
+    <string name="enter_city">Введіть ваше місто</string>
     <string name="weather_btn">Відправити</string>
     <string name="current_weather">Тут буде відображатися погода</string>
     <string name="error_weather">Щось пішло не так, спробуйте знову</string>
@@ -40,4 +40,5 @@
     <string name="enter_car_fuel_tank_capacity">Введіть місткість паливного бака</string>
     <string name="on_item_deleted">Нотатка успішно видалена</string>
     <string name="undo">Відмінити</string>
+    <string name="hello_user_text">Привіт,</string>
 </resources>

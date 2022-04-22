@@ -51,5 +51,6 @@
     <string name="enter_car_fuel_tank_capacity">Enter car fuel tank capacity</string>
     <string name="on_item_deleted">Note has been deleted</string>
     <string name="undo">Undo</string>
+    <string name="hello_user_text">"Hello,"</string>
 
 </resources>
