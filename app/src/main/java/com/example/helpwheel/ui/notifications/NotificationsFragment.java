@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -25,8 +26,9 @@ public class NotificationsFragment extends Fragment {
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String APP_PREFERENCES_ODOMETER = "odometer";
     public static final String APP_PREFERENCES_ODOMETER_OLD = "odometer_old";
-    public static final String APP_PREFERENCES_PRICE = "price";
+    public static final String APP_PREFERENCES_PRE_PRICE = "pre_price";
     public static final String APP_PREFERENCES_RESULT = "result";
+    public static final String APP_PREFERENCES_PRICE = "result";
     SharedPreferences fuelStats;
     AlertDialog alertDialog;
     private SharedPreferences.Editor editor;
@@ -52,16 +54,18 @@ public class NotificationsFragment extends Fragment {
 
                         if (!odometerValue.isEmpty() && !priceValue.isEmpty()){
                             editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
-                            editor.putFloat(APP_PREFERENCES_PRICE, Float.parseFloat(priceValue));
+                            editor.putFloat(APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
                             calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
+//                            countPrice();
+                            bottomSheetDialog.dismiss();
                         } else if (!odometerValue.isEmpty()) {
                             calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
                             editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
+                            bottomSheetDialog.dismiss();
                             } else if(!priceValue.isEmpty()) {
-                            editor.putFloat(APP_PREFERENCES_PRICE, Float.parseFloat(priceValue));
+                            odometer.setError("Enter odometer value");
                         }
                         editor.apply();
-                        bottomSheetDialog.dismiss();
                     });
         });
         updateUi();
@@ -87,6 +91,7 @@ public class NotificationsFragment extends Fragment {
             editor.apply();
         }
     }
+
     public void updateUi(){
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f)
             binding.distance.setText("0.0");
@@ -94,7 +99,15 @@ public class NotificationsFragment extends Fragment {
             binding.distance.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f)));
             editor.apply();
         }
+        binding.price.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_PRICE, 0.0f)));
     }
+
+//    public void countPrice(){
+//        Float price = fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f) * fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f);
+//        editor.putFloat(APP_PREFERENCES_PRICE, price);
+//        binding.price.setText(Float.toString(price));
+//        editor.apply();
+//    }
 
     public void showCustomDialog (){
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.WelcomeAlertDialog);

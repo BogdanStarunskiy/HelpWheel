@@ -31,6 +31,7 @@
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_empty_vector.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_notes.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_pikb29.xml" value="0.139" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/registration_layout.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/round_bottom_sheet_layout.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/round_edittext.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/rounded_dialog.xml" value="0.139" />
@@ -48,6 +49,8 @@
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fuel_arelt_dialog_layout.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/layout_ok_dialog.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/notes_recycler_view_layout.xml" value="0.264" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/registration_layout.xml" value="0.25" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/welcome_screen_layout.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21105072463768115" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.21105072463768115" />

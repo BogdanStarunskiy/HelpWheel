@@ -18,7 +18,7 @@
     <string name="speed">KM/H</string>
     <!-- auth -->
     <string name="greeting_auth">Greeting!</string>
-    <string name="enter_name_auth">Please, type your name</string>
+    <string name="enter_name_auth">Please, enter your name</string>
     <string name="btn_auth">Go</string>
 
     <!-- notes -->
@@ -51,5 +51,13 @@
     <string name="alert_fuel_text">After your next ride let us know your odometer reading</string>
     <string name="ok">OK</string>
     <string name="zero">0</string>
+    <string name="last_ride_price">Cost of your last ride:</string>
+    <string name="welcome_to_helpwheel">Welcome to HelpWheel!</string>
+    <string name="manage_your_car_like_you_want">Manage your car like you want</string>
+    <string name="continue_text">Continue</string>
+    <string name="almost_there_text">you`re almost there!</string>
+    <string name="enter_some_data_text">Just enter some data about your car</string>
+    <string name="enter_car_consumption_per_100km">Enter car consumption per 100km</string>
+    <string name="enter_car_fuel_tank_capacity">Enter car fuel tank capacity</string>
 
 </resources>
