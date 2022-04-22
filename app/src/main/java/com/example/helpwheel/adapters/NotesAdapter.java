@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.helpwheel.Models.NotesModel;
+import com.example.helpwheel.models.NotesModel;
 import com.example.helpwheel.R;
 import com.example.helpwheel.interfaces.NotesInterface;
 import com.google.android.material.button.MaterialButton;

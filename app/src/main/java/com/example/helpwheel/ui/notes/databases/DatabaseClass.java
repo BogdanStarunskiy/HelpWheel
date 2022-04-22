@@ -1,4 +1,4 @@
-package com.example.helpwheel.ui.home.databases;
+package com.example.helpwheel.ui.notes.databases;
 
 import android.content.ContentValues;
 import android.content.Context;

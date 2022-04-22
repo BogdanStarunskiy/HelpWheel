@@ -1,4 +1,4 @@
-package com.example.helpwheel.Models;
+package com.example.helpwheel.models;
 
 public class UserModel {
     String username; int consumptionPer100Km, fuelTankCapacity;

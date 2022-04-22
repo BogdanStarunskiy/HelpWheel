@@ -1,4 +1,4 @@
-package com.example.helpwheel.ui.home;
+package com.example.helpwheel.ui.notes;
 
 import android.database.Cursor;
 import android.graphics.Color;
@@ -13,11 +13,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.helpwheel.Models.NotesModel;
+import com.example.helpwheel.models.NotesModel;
 import com.example.helpwheel.R;
 import com.example.helpwheel.adapters.NotesAdapter;
-import com.example.helpwheel.ui.home.databases.DatabaseClass;
-import com.example.helpwheel.databinding.FragmentHomeBinding;
+import com.example.helpwheel.databinding.FragmentNotesBinding;
+import com.example.helpwheel.ui.notes.databases.DatabaseClass;
 import com.example.helpwheel.interfaces.NotesInterface;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -25,9 +25,9 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements NotesInterface {
+public class NotesFragment extends Fragment implements NotesInterface {
 
-    private FragmentHomeBinding binding;
+    private FragmentNotesBinding binding;
 
     NotesAdapter adapter;
     List<NotesModel> notesList;
@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment implements NotesInterface {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentNotesBinding.inflate(inflater, container, false);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(binding.recyclerView);
 
@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment implements NotesInterface {
         adapter = new NotesAdapter(getContext(), getActivity(), notesList, this);
         binding.recyclerView.setAdapter(adapter);
 
-        //Запуск Фрагмента для добавления заметок через плавающую кнопку
+        //Launch AddNotesFragment
         binding.fab.setOnClickListener(view -> NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment));
         return binding.getRoot();
     }
@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment implements NotesInterface {
 
     @Override
     public void fragmentChange(String title, String description, String id) {
-        HomeFragmentDirections.ActionNavigationHomeToUpdateNotesFragment action = HomeFragmentDirections.actionNavigationHomeToUpdateNotesFragment();
+        NotesFragmentDirections.ActionNavigationHomeToUpdateNotesFragment action = NotesFragmentDirections.actionNavigationHomeToUpdateNotesFragment();
         action.setTitle(title);
         action.setDescription(description);
         action.setId(id);

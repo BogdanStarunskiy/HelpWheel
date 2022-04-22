@@ -1,6 +1,5 @@
-package com.example.helpwheel.ui.home.notesFragments;
+package com.example.helpwheel.ui.notes.notesFragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,9 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.helpwheel.MainActivity;
 import com.example.helpwheel.R;
-import com.example.helpwheel.ui.home.databases.DatabaseClass;
+import com.example.helpwheel.ui.notes.databases.DatabaseClass;
 import com.example.helpwheel.databinding.FragmentAddNotesBinding;
 
 

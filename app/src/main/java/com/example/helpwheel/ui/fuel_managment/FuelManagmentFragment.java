@@ -1,4 +1,4 @@
-package com.example.helpwheel.ui.notifications;
+package com.example.helpwheel.ui.fuel_managment;
 
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -8,21 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
-import com.example.helpwheel.databinding.FragmentNotificationsBinding;
+import com.example.helpwheel.databinding.FragmentFuelManagmentBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.math.BigDecimal;
 
-public class NotificationsFragment extends Fragment {
+public class FuelManagmentFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentFuelManagmentBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String APP_PREFERENCES_ODOMETER = "odometer";
     public static final String APP_PREFERENCES_ODOMETER_OLD = "odometer_old";
@@ -34,7 +33,7 @@ public class NotificationsFragment extends Fragment {
     private SharedPreferences.Editor editor;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentFuelManagmentBinding.inflate(inflater, container, false);
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
 
@@ -99,7 +98,7 @@ public class NotificationsFragment extends Fragment {
             binding.distance.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f)));
             editor.apply();
         }
-        binding.price.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_PRICE, 0.0f)));
+        //binding.price.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_PRICE, 0.0f)));
     }
 
 //    public void countPrice(){

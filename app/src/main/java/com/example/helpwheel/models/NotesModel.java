@@ -1,4 +1,4 @@
-package com.example.helpwheel.Models;
+package com.example.helpwheel.models;
 
 public class NotesModel {
     String title, description, id, webUrl;
