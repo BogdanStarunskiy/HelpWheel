@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -28,11 +29,17 @@ public class AddNotesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentAddNotesBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         title = binding.title;
         description = binding.description;
         addNote = binding.addNote;
         webURL = binding.webUlr;
-        addNote.setOnClickListener(view -> {
+        addNote.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(title.getText().toString()) && !TextUtils.isEmpty(description.getText().toString())) {
                 String descUrl = description.getText().toString().trim() + " " + webURL.getText().toString().trim();
                 DatabaseClass db = new DatabaseClass(getContext());
@@ -43,6 +50,5 @@ public class AddNotesFragment extends Fragment {
             }
 
         });
-        return binding.getRoot();
     }
 }

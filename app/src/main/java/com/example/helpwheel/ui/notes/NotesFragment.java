@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -35,8 +36,13 @@ public class NotesFragment extends Fragment implements NotesInterface {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         binding = FragmentNotesBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(binding.recyclerView);
 
@@ -48,9 +54,10 @@ public class NotesFragment extends Fragment implements NotesInterface {
         binding.recyclerView.setAdapter(adapter);
 
         //Launch AddNotesFragment
-        binding.fab.setOnClickListener(view -> NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment));
-        return binding.getRoot();
+        binding.fab.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment));
+
     }
+
     //Taking all notes from database
     void fetchAllNotesFromDatabase() {
         Cursor cursor = databaseClass.readAllData();

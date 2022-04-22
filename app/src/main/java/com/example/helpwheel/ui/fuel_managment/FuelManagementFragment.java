@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -35,44 +36,49 @@ public class FuelManagementFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFuelManagementBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
 
-        binding.fuelInputButton.setOnClickListener(view -> {
+        binding.fuelInputButton.setOnClickListener(v -> {
 
-                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
-                    bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
-                    bottomSheetDialog.show();
-                    Button submitBtn = bottomSheetDialog.findViewById(R.id.submit_btn_fuel);
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+            bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
+            bottomSheetDialog.show();
+            Button submitBtn = bottomSheetDialog.findViewById(R.id.submit_btn_fuel);
 
             assert submitBtn != null;
             submitBtn.setOnClickListener(view1 -> {
 
-                        EditText odometer = bottomSheetDialog.findViewById(R.id.odometer_edit_text);
-                        EditText pricePerLiter = bottomSheetDialog.findViewById(R.id.price_edit_text);
+                EditText odometer = bottomSheetDialog.findViewById(R.id.odometer_edit_text);
+                EditText pricePerLiter = bottomSheetDialog.findViewById(R.id.price_edit_text);
                 assert odometer != null;
                 String odometerValue = odometer.getText().toString();
                 assert pricePerLiter != null;
                 String priceValue = pricePerLiter.getText().toString();
 
-                        if (!odometerValue.isEmpty() && !priceValue.isEmpty()){
-                            editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
-                            editor.putFloat(APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
-                            calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
+                if (!odometerValue.isEmpty() && !priceValue.isEmpty()){
+                    editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
+                    editor.putFloat(APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
+                    calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
 //                            countPrice();
-                            bottomSheetDialog.dismiss();
-                        } else if (!odometerValue.isEmpty()) {
-                            calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
-                            editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
-                            bottomSheetDialog.dismiss();
-                            } else if(!priceValue.isEmpty()) {
-                            odometer.setError("Enter odometer value");
-                        }
-                        editor.apply();
-                    });
+                    bottomSheetDialog.dismiss();
+                } else if (!odometerValue.isEmpty()) {
+                    calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
+                    editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
+                    bottomSheetDialog.dismiss();
+                } else if(!priceValue.isEmpty()) {
+                    odometer.setError("Enter odometer value");
+                }
+                editor.apply();
+            });
         });
         updateUi();
-        return binding.getRoot();
     }
 
     public Float OldOdometerValue(){
@@ -106,7 +112,7 @@ public class FuelManagementFragment extends Fragment {
         }
         //binding.price.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_PRICE, 0.0f)));
     }
-
+//todo
 //    public void countPrice(){
 //        Float price = fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f) * fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f);
 //        editor.putFloat(APP_PREFERENCES_PRICE, price);
@@ -120,9 +126,8 @@ public class FuelManagementFragment extends Fragment {
         builder.setView(view);
         alertDialog = builder.create();
         view.findViewById(R.id.alert_dialog_fuel_ok_button).setOnClickListener(view1 -> alertDialog.dismiss());
-        if (alertDialog.getWindow() != null) {
+        if (alertDialog.getWindow() != null)
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        }
         alertDialog.show();
     }
 
