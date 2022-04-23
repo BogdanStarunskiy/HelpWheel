@@ -12,6 +12,7 @@
         android:layout_height="300dp"
         android:layout_margin="20dp"
         android:src="@drawable/ic_welcome_image"
+        app:layout_constraintBottom_toTopOf="@id/almost_there_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,12 +25,13 @@
         android:text="@string/almost_there_text"
         android:textAlignment="center"
         android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/enter_some_data_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
-        android:id="@+id/enter_some_data_test"
+        android:id="@+id/enter_some_data_text"
         style="@style/WelcomeDialogSubTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,6 +39,7 @@
         android:text="@string/enter_some_data_text"
         android:textAlignment="center"
         android:textSize="22sp"
+        app:layout_constraintBottom_toTopOf="@+id/enter_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/almost_there_text" />
@@ -45,42 +48,52 @@
         android:id="@+id/enter_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:autofillHints="username"
         android:background="@drawable/round_edittext"
         android:hint="@string/enter_name_auth"
-        android:padding="10dp"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:padding="15dp"
         android:textColor="@color/dark"
         android:textColorHint="@color/gray"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/consumption_per_100km"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_some_data_test" />
+        app:layout_constraintTop_toBottomOf="@+id/enter_some_data_text" />
 
     <EditText
         android:id="@+id/consumption_per_100km"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:autofillHints=""
         android:background="@drawable/round_edittext"
         android:hint="@string/enter_car_consumption_per_100km"
-        android:padding="10dp"
+        android:inputType="numberDecimal"
+        android:padding="15dp"
         android:textColor="@color/dark"
         android:textColorHint="@color/gray"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonOK"
+        app:layout_constraintBottom_toTopOf="@+id/fuel_tank_capacity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_some_data_test" />
+        app:layout_constraintTop_toBottomOf="@+id/enter_name" />
 
     <EditText
         android:id="@+id/fuel_tank_capacity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:autofillHints=""
         android:background="@drawable/round_edittext"
         android:hint="@string/enter_car_fuel_tank_capacity"
-        android:padding="10dp"
+        android:inputType="numberDecimal"
+        android:padding="15dp"
         android:textColor="@color/dark"
         android:textColorHint="@color/gray"
         android:textSize="16sp"
@@ -93,7 +106,9 @@
         android:id="@+id/buttonOK"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_margin="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@color/dark"
         android:text="@string/continue_text"
         android:textAllCaps="false"
@@ -101,5 +116,7 @@
         android:textSize="30sp"
         app:cornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="20dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fuel_tank_capacity" />
 </androidx.constraintlayout.widget.ConstraintLayout>

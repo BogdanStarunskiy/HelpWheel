@@ -56,8 +56,9 @@ public class DashboardFragment extends Fragment {
         editor = preferences.edit();
         if (isFirstInitShared()) {
             showWelcomeDialog();
+        }else if (preferences.getString(USERNAME_PREF, "user").equals("")){
+            showWelcomeDialog();
         }
-
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 

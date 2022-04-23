@@ -51,7 +51,6 @@ public class FuelManagementFragment extends Fragment {
             bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
             bottomSheetDialog.show();
             Button submitBtn = bottomSheetDialog.findViewById(R.id.submit_btn_fuel);
-
             assert submitBtn != null;
             submitBtn.setOnClickListener(view1 -> {
 

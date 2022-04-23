@@ -2,34 +2,32 @@ package com.example.helpwheel.ui.welcome_screens;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentEnterWelcomeDataBinding;
-import com.example.helpwheel.models.UserModel;
 
 public class EnterWelcomeDataFragment extends Fragment {
     FragmentEnterWelcomeDataBinding binding;
-    private SharedPreferences sharedPrefs;
     SharedPreferences.Editor editor;
-
     public static final String PREF = "user";
-    public static final String USERNAME_PREF = "usernamePref";
+    public static final String USERNAME = "usernamePref";
+    public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
+    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentEnterWelcomeDataBinding.inflate(inflater, container, false);
-        sharedPrefs = requireContext().getSharedPreferences(PREF, getContext().MODE_PRIVATE);
+        SharedPreferences sharedPrefs = requireContext().getSharedPreferences(PREF, getContext().MODE_PRIVATE);
         editor = sharedPrefs.edit();
         return binding.getRoot();
     }
@@ -37,11 +35,27 @@ public class EnterWelcomeDataFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.buttonOK.setOnClickListener(v -> {
+        binding.buttonOK.setOnClickListener(v -> putToSharedPreferences());
+    }
+
+    private void putToSharedPreferences() {
+        try {
             String username = binding.enterName.getText().toString();
-            editor.putString(USERNAME_PREF, username);
+            Float consumptionPer100km = Float.parseFloat(binding.consumptionPer100km.getText().toString());
+            Float fuelTankCapacity = Float.parseFloat(binding.fuelTankCapacity.getText().toString());
+            editor.putString(USERNAME, username);
+            editor.putFloat(CONSUMPTION_PER_100KM, consumptionPer100km);
+            editor.putFloat(FUEL_TANK_CAPACITY, fuelTankCapacity);
             editor.apply();
             NavHostFragment.findNavController(this).navigate(R.id.action_enterWelcomeDataFragment_to_navigation_dashboard);
-        });
+        } catch (Exception e){
+            Toast.makeText(requireContext(), R.string.field_must_be_filled, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
     }
 }

@@ -42,4 +42,5 @@
     <string name="undo">Відмінити</string>
     <string name="hello_user_text">Привіт,</string>
     <string name="edit_text_odometer_error">Введіть показник одометра</string>
+    <string name="field_must_be_filled">Всі поля повинні бути заповнені</string>
 </resources>
