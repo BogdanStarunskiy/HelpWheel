@@ -52,5 +52,6 @@
     <string name="on_item_deleted">Note has been deleted</string>
     <string name="undo">Undo</string>
     <string name="hello_user_text">"Hello,"</string>
+    <string name="edit_text_odometer_error">Enter odometer value</string>
 
 </resources>

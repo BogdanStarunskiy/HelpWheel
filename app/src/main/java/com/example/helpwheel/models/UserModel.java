@@ -7,7 +7,6 @@ public class UserModel {
         this.consumptionPer100Km = consumptionPer100Km;
         this.fuelTankCapacity = fuelTankCapacity;
     }
-
     public String getUsername() {
         return username;
     }

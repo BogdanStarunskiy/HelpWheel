@@ -25,7 +25,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.helpwheel.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -62,6 +66,24 @@
         <action
             android:id="@+id/action_updateNotesFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.helpwheel.ui.welcome_screens.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_enterWelcomeDataFragment"
+            app:destination="@id/enterWelcomeDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enterWelcomeDataFragment"
+        android:name="com.example.helpwheel.ui.welcome_screens.EnterWelcomeDataFragment"
+        android:label="fragment_enter_welcome_data"
+        tools:layout="@layout/fragment_enter_welcome_data" >
+        <action
+            android:id="@+id/action_enterWelcomeDataFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
     </fragment>
 
 </navigation>

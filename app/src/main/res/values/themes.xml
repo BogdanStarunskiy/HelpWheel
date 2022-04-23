@@ -27,4 +27,11 @@
         <item name="android:background">@drawable/drawable_round_bottom_sheet_white</item>
     </style>
 
+    <style name="WelcomeDialogTextStyle" parent="Theme.HelpWheel">
+        <item name="android:textColor">@color/darker</item>
+    </style>
+
+    <style name="WelcomeDialogSubTextStyle" parent="Theme.HelpWheel">
+        <item name="android:textColor">@color/dark_gray</item>
+    </style>
 </resources>

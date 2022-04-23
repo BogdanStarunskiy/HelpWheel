@@ -73,7 +73,7 @@ public class FuelManagementFragment extends Fragment {
                     editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
                     bottomSheetDialog.dismiss();
                 } else if(!priceValue.isEmpty()) {
-                    odometer.setError("Enter odometer value");
+                    odometer.setError(getString(R.string.edit_text_odometer_error));
                 }
                 editor.apply();
             });
