@@ -52,10 +52,4 @@ public class EnterWelcomeDataFragment extends Fragment {
             Toast.makeText(requireContext(), R.string.field_must_be_filled, Toast.LENGTH_SHORT).show();
         }
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
-    }
 }

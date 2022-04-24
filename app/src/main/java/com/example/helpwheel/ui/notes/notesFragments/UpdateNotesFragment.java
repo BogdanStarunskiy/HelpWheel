@@ -32,7 +32,6 @@ public class UpdateNotesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         UpdateNotesFragmentArgs args = UpdateNotesFragmentArgs.fromBundle(getArguments());
         binding.title.setText(args.getTitle());
-        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
         String[] splitDesc = args.getDescription().split(" ");
         String descParser = splitDesc[0];
         if (splitDesc.length != 1) {
@@ -53,5 +52,11 @@ public class UpdateNotesFragment extends Fragment {
             } else
                 Toast.makeText(getContext(), R.string.both_fields_required, Toast.LENGTH_SHORT).show();
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
     }
 }

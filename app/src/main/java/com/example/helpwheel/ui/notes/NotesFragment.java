@@ -14,12 +14,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.helpwheel.models.NotesModel;
+import com.example.helpwheel.ui.notes.models.NotesModel;
 import com.example.helpwheel.R;
-import com.example.helpwheel.adapters.NotesAdapter;
+import com.example.helpwheel.ui.notes.adapters.NotesAdapter;
 import com.example.helpwheel.databinding.FragmentNotesBinding;
 import com.example.helpwheel.ui.notes.databases.DatabaseClass;
-import com.example.helpwheel.interfaces.NotesInterface;
+import com.example.helpwheel.ui.notes.interfaces.NotesInterface;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 

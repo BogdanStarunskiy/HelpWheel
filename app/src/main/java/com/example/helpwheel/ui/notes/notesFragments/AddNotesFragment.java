@@ -29,7 +29,6 @@ public class AddNotesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentAddNotesBinding.inflate(inflater, container, false);
-        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
         return binding.getRoot();
     }
 
@@ -51,5 +50,11 @@ public class AddNotesFragment extends Fragment {
             }
 
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
     }
 }

@@ -55,5 +55,7 @@
     <string name="edit_text_odometer_error">Enter odometer value</string>
     <string name="field_must_be_filled">All fields must be filled</string>
     <string name="enter_city_message">Enter city!</string>
+    <string name="enter_new_data">Enter new data</string>
+    <string name="save">Save</string>
 
 </resources>

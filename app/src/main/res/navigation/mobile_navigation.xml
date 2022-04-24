@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_navigation_dashboard_to_welcomeFragment"
             app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_changeDataFragment"
+            app:destination="@id/changeDataFragment" />
     </fragment>
 
     <fragment
@@ -83,6 +86,15 @@
         tools:layout="@layout/fragment_enter_welcome_data" >
         <action
             android:id="@+id/action_enterWelcomeDataFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeDataFragment"
+        android:name="com.example.helpwheel.ui.dashboard.ChangeDataFragment"
+        android:label="fragment_change_data"
+        tools:layout="@layout/fragment_change_data" >
+        <action
+            android:id="@+id/action_changeDataFragment_to_navigation_dashboard"
             app:destination="@id/navigation_dashboard" />
     </fragment>
 

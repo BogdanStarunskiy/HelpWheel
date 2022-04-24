@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.welcome_screens.EnterWelcomeDataFragment">
+    tools:context=".ui.dashboard.ChangeDataFragment">
 
     <ImageView
         android:id="@+id/vector_image"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_margin="20dp"
-        android:src="@drawable/ic_welcome_image"
+        android:src="@drawable/ic_edit_data_image"
         app:layout_constraintBottom_toTopOf="@id/enter_new_data_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,27 +22,13 @@
         style="@style/WelcomeDialogTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/almost_there_text"
+        android:text="@string/enter_new_data"
         android:textAlignment="center"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/enter_some_data_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vector_image" />
-
-    <TextView
-        android:id="@+id/enter_some_data_text"
-        style="@style/WelcomeDialogSubTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/enter_some_data_text"
-        android:textAlignment="center"
-        android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/enter_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_new_data_text" />
+        app:layout_constraintTop_toBottomOf="@+id/vector_image" />
 
     <EditText
         android:id="@+id/enter_name"
@@ -62,7 +48,7 @@
         app:layout_constraintBottom_toTopOf="@+id/consumption_per_100km"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_some_data_text" />
+        app:layout_constraintTop_toBottomOf="@+id/enter_new_data_text" />
 
     <EditText
         android:id="@+id/consumption_per_100km"
@@ -110,7 +96,7 @@
         android:layout_marginVertical="10dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/dark"
-        android:text="@string/continue_text"
+        android:text="@string/save"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="30sp"

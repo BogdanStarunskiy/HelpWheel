@@ -55,9 +55,9 @@ public class DashboardFragment extends Fragment {
         preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
         editor = preferences.edit();
         if (isFirstInitShared())
-            showWelcomeDialog();
+            showWelcomeScreen();
         else if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
-            showWelcomeDialog();
+            showWelcomeScreen();
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 
@@ -65,7 +65,7 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
         initStrings();
         changeUi();
-        binding.greetingText.setOnClickListener(view -> showWelcomeDialog());
+        binding.greetingText.setOnClickListener(view -> showEditDataFragment());
         binding.weatherBtn.setOnClickListener(v -> {
             if (binding.enterCity.getText().toString().trim().equals("")) {
                 Toast toast = Toast.makeText(binding.getRoot().getContext(), R.string.enter_city_message, Toast.LENGTH_LONG);
@@ -147,8 +147,11 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-    private void showWelcomeDialog() {
+    private void showWelcomeScreen() {
         NavHostFragment.findNavController(this).navigate(R.id.action_navigation_dashboard_to_welcomeFragment);
+    }
+    private void showEditDataFragment() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_navigation_dashboard_to_changeDataFragment);
     }
 
 
@@ -170,5 +173,9 @@ public class DashboardFragment extends Fragment {
         binding.greetingText.setText(getString(R.string.hello_user_text) + " " + preferences.getString(USERNAME_PREF, "user") + "!");
     }
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
+    }
 }

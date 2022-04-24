@@ -1,4 +1,4 @@
-package com.example.helpwheel.adapters;
+package com.example.helpwheel.ui.notes.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -14,9 +14,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.helpwheel.models.NotesModel;
+import com.example.helpwheel.ui.notes.models.NotesModel;
 import com.example.helpwheel.R;
-import com.example.helpwheel.interfaces.NotesInterface;
+import com.example.helpwheel.ui.notes.interfaces.NotesInterface;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
