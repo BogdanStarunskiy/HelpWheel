@@ -32,7 +32,7 @@
     <string name="alert_fuel_text">После следующей поездки введите показания одометра</string>
     <string name="last_ride_price">Цена прошлой поездки:</string>
     <string name="welcome_to_helpwheel">Добро пожаловать в HelpWheel!</string>
-    <string name="manage_your_car_like_you_want">правляйте своим авто как хотите</string>
+    <string name="manage_your_car_like_you_want">Управляйте своим авто как хотите</string>
     <string name="continue_text">Продолжить</string>
     <string name="almost_there_text">Вы почти у цели!</string>
     <string name="enter_some_data_text">Просто введите некоторую информацию об вашем авто</string>
@@ -43,4 +43,5 @@
     <string name="hello_user_text">Привет,</string>
     <string name="edit_text_odometer_error">Введите показания одометра</string>
     <string name="field_must_be_filled">Все поля должны быть заполнены</string>
+    <string name="enter_city_message">Введите город!</string>
 </resources>

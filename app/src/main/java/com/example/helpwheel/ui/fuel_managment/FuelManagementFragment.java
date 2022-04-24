@@ -25,14 +25,18 @@ public class FuelManagementFragment extends Fragment {
 
     private FragmentFuelManagementBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
+    public static final String PREF = "user";
+    public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
+    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
     public static final String APP_PREFERENCES_ODOMETER = "odometer";
     public static final String APP_PREFERENCES_ODOMETER_OLD = "odometer_old";
     public static final String APP_PREFERENCES_PRE_PRICE = "pre_price";
     public static final String APP_PREFERENCES_RESULT = "result";
-//    public static final String APP_PREFERENCES_PRICE = "result";
-    SharedPreferences fuelStats;
+    public static final String APP_PREFERENCES_PRICE = "price";
+    SharedPreferences fuelStats, regData;
     AlertDialog alertDialog;
-    private SharedPreferences.Editor editor;
+    private SharedPreferences.Editor editor, regDataEditor;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFuelManagementBinding.inflate(inflater, container, false);
@@ -44,7 +48,8 @@ public class FuelManagementFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
-
+        regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
+        regDataEditor = regData.edit();
         binding.fuelInputButton.setOnClickListener(v -> {
 
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
@@ -61,17 +66,17 @@ public class FuelManagementFragment extends Fragment {
                 assert pricePerLiter != null;
                 String priceValue = pricePerLiter.getText().toString();
 
-                if (!odometerValue.isEmpty() && !priceValue.isEmpty()){
+                if (!odometerValue.isEmpty() && !priceValue.isEmpty()) {
                     editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
                     editor.putFloat(APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
                     calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
-//                            countPrice();
+                    countPrice();
                     bottomSheetDialog.dismiss();
                 } else if (!odometerValue.isEmpty()) {
                     calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
                     editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
                     bottomSheetDialog.dismiss();
-                } else if(!priceValue.isEmpty()) {
+                } else if (!priceValue.isEmpty()) {
                     odometer.setError(getString(R.string.edit_text_odometer_error));
                 }
                 editor.apply();
@@ -80,14 +85,14 @@ public class FuelManagementFragment extends Fragment {
         updateUi();
     }
 
-    public Float OldOdometerValue(){
-            editor.putFloat(APP_PREFERENCES_ODOMETER_OLD, fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0));
-            editor.apply();
-            return fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f);
+    public Float OldOdometerValue() {
+        editor.putFloat(APP_PREFERENCES_ODOMETER_OLD, fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0));
+        editor.apply();
+        return fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f);
     }
 
     @SuppressLint("SetTextI18n")
-    public void calculatingDifferences(Float oldOdometerValue, Float odometerValue){
+    public void calculatingDifferences(Float oldOdometerValue, Float odometerValue) {
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f) {
             binding.distance.setText("0.0");
             showCustomDialog();
@@ -102,24 +107,32 @@ public class FuelManagementFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    public void updateUi(){
+    public void updateUi() {
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f)
             binding.distance.setText("0.0");
-        else {
+        else
             binding.distance.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f)));
-            editor.apply();
-        }
-        //binding.price.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_PRICE, 0.0f)));
+        if (fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f) == 0.0f)
+            binding.price.setText("0.0");
+        else
+            binding.price.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_PRICE, 0.0f)));
     }
-//todo
-//    public void countPrice(){
-//        Float price = fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f) * fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f);
-//        editor.putFloat(APP_PREFERENCES_PRICE, price);
-//        binding.price.setText(Float.toString(price));
-//        editor.apply();
-//    }
 
-    public void showCustomDialog (){
+    public void countPrice() {
+        Float price = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f) * fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f);
+        float number = BigDecimal.valueOf(price)
+                .setScale(2, BigDecimal.ROUND_HALF_DOWN)
+                .floatValue();
+        editor.putFloat(APP_PREFERENCES_PRICE, number);
+        binding.price.setText(Float.toString(number));
+        editor.apply();
+    }
+
+    public Float consumptionPer1km() {
+        return regData.getFloat(CONSUMPTION_PER_100KM, 0.0f) / 100;
+    }
+
+    public void showCustomDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.WelcomeAlertDialog);
         View view = LayoutInflater.from(requireContext()).inflate(R.layout.fuel_arelt_dialog_layout, null);
         builder.setView(view);

@@ -32,6 +32,7 @@ public class UpdateNotesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         UpdateNotesFragmentArgs args = UpdateNotesFragmentArgs.fromBundle(getArguments());
         binding.title.setText(args.getTitle());
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
         String[] splitDesc = args.getDescription().split(" ");
         String descParser = splitDesc[0];
         if (splitDesc.length != 1) {
@@ -47,7 +48,7 @@ public class UpdateNotesFragment extends Fragment {
             if (!TextUtils.isEmpty(binding.title.getText().toString()) && !TextUtils.isEmpty(binding.description.getText().toString())) {
                 String descWebUrlCombined = binding.description.getText().toString().trim() + " " + binding.webUlr.getText().toString().trim();
                 DatabaseClass db = new DatabaseClass(getContext());
-                db.updateNotes(binding.title.getText().toString(), descWebUrlCombined, id);
+                db.updateNotes(binding.title.getText().toString().trim(), descWebUrlCombined, id);
                 NavHostFragment.findNavController(this).navigate(R.id.action_updateNotesFragment_to_navigation_home);
             } else
                 Toast.makeText(getContext(), R.string.both_fields_required, Toast.LENGTH_SHORT).show();

@@ -54,5 +54,6 @@
     <string name="hello_user_text">"Hello,"</string>
     <string name="edit_text_odometer_error">Enter odometer value</string>
     <string name="field_must_be_filled">All fields must be filled</string>
+    <string name="enter_city_message">Enter city!</string>
 
 </resources>

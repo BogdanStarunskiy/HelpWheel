@@ -29,6 +29,7 @@ public class AddNotesFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentAddNotesBinding.inflate(inflater, container, false);
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
         return binding.getRoot();
     }
 
@@ -43,7 +44,7 @@ public class AddNotesFragment extends Fragment {
             if (!TextUtils.isEmpty(title.getText().toString()) && !TextUtils.isEmpty(description.getText().toString())) {
                 String descUrl = description.getText().toString().trim() + " " + webURL.getText().toString().trim();
                 DatabaseClass db = new DatabaseClass(getContext());
-                db.addNotes(title.getText().toString(), descUrl);
+                db.addNotes(title.getText().toString().trim(), descUrl);
                 NavHostFragment.findNavController(this).navigate(R.id.action_addNotesFragment_to_navigation_home);
             } else {
                 Toast.makeText(getContext(), R.string.both_fields_required, Toast.LENGTH_SHORT).show();

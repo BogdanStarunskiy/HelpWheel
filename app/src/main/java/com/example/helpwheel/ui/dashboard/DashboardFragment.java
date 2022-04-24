@@ -54,11 +54,10 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
         editor = preferences.edit();
-        if (isFirstInitShared()) {
+        if (isFirstInitShared())
             showWelcomeDialog();
-        }else if (preferences.getString(USERNAME_PREF, "user").equals("")){
+        else if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
             showWelcomeDialog();
-        }
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 
@@ -69,7 +68,7 @@ public class DashboardFragment extends Fragment {
         binding.greetingText.setOnClickListener(view -> showWelcomeDialog());
         binding.weatherBtn.setOnClickListener(v -> {
             if (binding.enterCity.getText().toString().trim().equals("")) {
-                Toast toast = Toast.makeText(binding.getRoot().getContext(), "Enter city!", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(binding.getRoot().getContext(), R.string.enter_city_message, Toast.LENGTH_LONG);
                 toast.show();
             } else {
                 String user_city = binding.enterCity.getText().toString().trim();

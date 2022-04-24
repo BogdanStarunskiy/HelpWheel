@@ -40,7 +40,7 @@ public class EnterWelcomeDataFragment extends Fragment {
 
     private void putToSharedPreferences() {
         try {
-            String username = binding.enterName.getText().toString();
+            String username = binding.enterName.getText().toString().trim();
             Float consumptionPer100km = Float.parseFloat(binding.consumptionPer100km.getText().toString());
             Float fuelTankCapacity = Float.parseFloat(binding.fuelTankCapacity.getText().toString());
             editor.putString(USERNAME, username);
