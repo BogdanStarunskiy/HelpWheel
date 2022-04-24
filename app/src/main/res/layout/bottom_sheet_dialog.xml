@@ -24,6 +24,7 @@
         android:background="@drawable/round_edittext"
         android:hint="@string/enter_odometer"
         android:inputType="numberDecimal"
+        android:maxLength="14"
         android:padding="10dp"
         android:textColorHint="@color/gray" />
 
@@ -36,6 +37,7 @@
         android:background="@drawable/round_edittext"
         android:hint="@string/enter_price"
         android:inputType="numberDecimal"
+        android:maxLength="14"
         android:padding="10dp"
         android:textColorHint="@color/gray" />
 

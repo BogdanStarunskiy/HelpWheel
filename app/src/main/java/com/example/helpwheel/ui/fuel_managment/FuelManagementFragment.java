@@ -20,6 +20,7 @@ import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class FuelManagementFragment extends Fragment {
 

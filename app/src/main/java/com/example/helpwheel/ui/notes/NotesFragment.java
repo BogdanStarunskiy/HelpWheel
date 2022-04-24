@@ -64,8 +64,12 @@ public class NotesFragment extends Fragment implements NotesInterface {
         Cursor cursor = databaseClass.readAllData();
         //If we don`t have any notes
         if (cursor.getCount() == 0) {
-            binding.emptyText.setVisibility(View.VISIBLE);
-            binding.emptyImage.setVisibility(View.VISIBLE);
+            try {
+                binding.emptyText.setVisibility(View.VISIBLE);
+                binding.emptyImage.setVisibility(View.VISIBLE);
+            } catch (Exception e){
+
+            }
         }
         else {
             while (cursor.moveToNext()) {
