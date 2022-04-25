@@ -1,38 +1,27 @@
 package com.example.helpwheel.ui.dashboard;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDashboardBinding;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
-import java.util.Objects;
 
 public class DashboardFragment extends Fragment {
     private DashboardViewModel dashboardViewModel;
@@ -43,11 +32,10 @@ public class DashboardFragment extends Fragment {
     private String weather_desc = "";
     private String degree_cels = "";
     private String speed = "";
-    private final String MY_SETTINGS = "settings";
-    AlertDialog alertDialog;
-    SharedPreferences settings;
-    private final String key_username = "username228";
-    EditText username;
+    public static final String PREF = "user";
+    public static final String USERNAME_PREF = "usernamePref";
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     private void showSuccessMessage() {
         binding.currentWeather.setVisibility(View.VISIBLE);
@@ -61,13 +49,10 @@ public class DashboardFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-        if (isFirstInitShared()) {
-            showWelcomeDialog();
-
-        }
-
-
+        preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
+            showWelcomeScreen();
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 
@@ -75,12 +60,10 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
         initStrings();
         changeUi();
-        binding.greetingText.setOnClickListener(view -> {
-            showWelcomeDialog();
-        });
+        binding.greetingText.setOnClickListener(view -> showEditDataFragment());
         binding.weatherBtn.setOnClickListener(v -> {
             if (binding.enterCity.getText().toString().trim().equals("")) {
-                Toast toast = Toast.makeText(binding.getRoot().getContext(), "Enter city!", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(binding.getRoot().getContext(), R.string.enter_city_message, Toast.LENGTH_LONG);
                 toast.show();
             } else {
                 String user_city = binding.enterCity.getText().toString().trim();
@@ -159,76 +142,23 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-    private void showWelcomeDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.WelcomeAlertDialog);
-        View view = LayoutInflater.from(requireContext()).inflate(R.layout.layout_ok_dialog, null);
-        builder.setView(view);
-        ((TextView) view.findViewById(R.id.textTitle)).setText(getResources().getString(R.string.greeting_auth));
-        ((EditText) view.findViewById(R.id.textMessage)).setHint(getResources().getString(R.string.enter_name_auth));
-        ((Button) view.findViewById(R.id.buttonOK)).setText(getResources().getString(R.string.btn_auth));
-
-        alertDialog = builder.create();
-        view.findViewById(R.id.buttonOK).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (checkUsername()) {
-                    settings = requireActivity().getSharedPreferences(MY_SETTINGS, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putString("name", ((EditText)(Objects.requireNonNull(alertDialog.findViewById(R.id.textMessage)))).getText().toString().trim().replace("\n", ""));
-                    editor.apply();
-                    changeUi();
-                    alertDialog.dismiss();
-
-                }
-
-            }
-        });
-        if (alertDialog.getWindow() != null) {
-            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        }
-        alertDialog.show();
-
+    private void showWelcomeScreen() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_navigation_dashboard_to_welcomeFragment);
     }
 
-    private boolean isFirstInitShared() {
-        SharedPreferences sp = requireContext().getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
-        boolean hasVisited = sp.getBoolean("hasVisited", false);
-
-        if (!hasVisited) {
-            SharedPreferences.Editor e = sp.edit();
-            e.putBoolean("hasVisited", true);
-            e.apply(); // applying changes
-        }
-        return !hasVisited;
-
+    private void showEditDataFragment() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_navigation_dashboard_to_changeDataFragment);
     }
 
     @SuppressLint("SetTextI18n")
     public void changeUi() {
-       SharedPreferences preferences = requireActivity().getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
-        String username = preferences.getString("name", "Albert");
-
-        binding.greetingText.setText("Hello, " + username + "!");
-
-
-
-
-
+        binding.greetingText.setText(getString(R.string.hello_user_text) + " " + preferences.getString(USERNAME_PREF, "user") + "!");
     }
 
-    public boolean checkUsername() {
-        EditText enterUsername = alertDialog.findViewById(R.id.textMessage);
-        assert enterUsername != null;
-        if (!enterUsername.getText().toString().equals("")) {
-            return true;
-        } else {
-            Toast toast = Toast.makeText(binding.getRoot().getContext(), "Enter username!", Toast.LENGTH_LONG);
-            toast.show();
-            return false;
-
-        }
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
     }
-
-
 }
 //fdsfsdfgh
