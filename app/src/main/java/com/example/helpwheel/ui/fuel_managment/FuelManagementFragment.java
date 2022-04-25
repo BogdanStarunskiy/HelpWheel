@@ -94,13 +94,13 @@ public class FuelManagementFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public void calculatingDifferences(Float oldOdometerValue, Float odometerValue) {
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f) {
-            binding.distance.setText("0.0");
+            binding.distanceCounter.setText("0.0");
             showCustomDialog();
         } else {
             float number = BigDecimal.valueOf(odometerValue - oldOdometerValue)
                     .setScale(2, BigDecimal.ROUND_HALF_DOWN)
                     .floatValue();
-            binding.distance.setText(Float.toString(number));
+            binding.distanceCounter.setText(Float.toString(number));
             editor.putFloat(APP_PREFERENCES_RESULT, number);
             editor.apply();
         }
@@ -109,9 +109,9 @@ public class FuelManagementFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public void updateUi() {
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f)
-            binding.distance.setText("0.0");
+            binding.distanceCounter.setText("0.0");
         else
-            binding.distance.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f)));
+            binding.distanceCounter.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f)));
         if (fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f) == 0.0f)
             binding.price.setText("0.0");
         else

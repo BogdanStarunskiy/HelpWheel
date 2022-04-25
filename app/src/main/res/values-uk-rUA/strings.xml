@@ -30,7 +30,7 @@
     <string name="enter_price">Ціна (за 1 літр)</string>
     <string name="submit">Зберегти</string>
     <string name="alert_fuel_text">Після настопної поїздки введіть показання одометра</string>
-    <string name="last_ride_price">Ціна минулої поїздки:</string>
+    <string name="last_ride_price">Ціна:</string>
     <string name="welcome_to_helpwheel">Вітаємо в HelpWheel!</string>
     <string name="manage_your_car_like_you_want">Керуйте своїм авто як ви бажаєте</string>
     <string name="continue_text">Продовжити</string>
@@ -46,4 +46,5 @@
     <string name="enter_city_message">Введіть місто!</string>
     <string name="enter_new_data">Введіть нові данні</string>
     <string name="save">Зберегти</string>
+    <string name="distance_text">Відстань:</string>
 </resources>

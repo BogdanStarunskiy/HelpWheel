@@ -1,7 +1,5 @@
 package com.example.helpwheel.ui.dashboard;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,7 +16,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDashboardBinding;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +34,6 @@ public class DashboardFragment extends Fragment {
     private String speed = "";
     public static final String PREF = "user";
     public static final String USERNAME_PREF = "usernamePref";
-    private static final String MY_SETTINGS = "settings";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
@@ -55,9 +51,7 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
         editor = preferences.edit();
-        if (isFirstInitShared())
-            showWelcomeScreen();
-        else if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
+        if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
             showWelcomeScreen();
         dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
@@ -154,20 +148,6 @@ public class DashboardFragment extends Fragment {
 
     private void showEditDataFragment() {
         NavHostFragment.findNavController(this).navigate(R.id.action_navigation_dashboard_to_changeDataFragment);
-    }
-
-
-    private boolean isFirstInitShared() {
-        SharedPreferences sp = requireContext().getSharedPreferences(MY_SETTINGS, MODE_PRIVATE);
-        boolean hasVisited = sp.getBoolean("hasVisited", false);
-
-        if (!hasVisited) {
-            SharedPreferences.Editor e = sp.edit();
-            e.putBoolean("hasVisited", true);
-            e.apply(); // applying changes
-        }
-        return !hasVisited;
-
     }
 
     @SuppressLint("SetTextI18n")

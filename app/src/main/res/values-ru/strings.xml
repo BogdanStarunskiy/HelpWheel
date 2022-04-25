@@ -24,13 +24,13 @@
     <string name="wow_such_empty">Вау, так пусто!</string>
     <string name="web_site">Ссылка на деталь (необязательно)</string>
     <string name="both_fields_required">Заполните два поля</string>
-    <string name="kms_placeholder">Ваша последняя поездка</string>
+    <string name="kms_placeholder">Ваша последняя поездка:</string>
     <string name="add_refueling">Добавить информацию</string>
     <string name="enter_odometer">Одометр (км)</string>
     <string name="enter_price">Цена (за 1 литр)</string>
     <string name="submit">Сохранить</string>
     <string name="alert_fuel_text">После следующей поездки введите показания одометра</string>
-    <string name="last_ride_price">Цена прошлой поездки:</string>
+    <string name="last_ride_price">Цена:</string>
     <string name="welcome_to_helpwheel">Добро пожаловать в HelpWheel!</string>
     <string name="manage_your_car_like_you_want">Управляйте своим авто как хотите</string>
     <string name="continue_text">Продолжить</string>
@@ -46,4 +46,5 @@
     <string name="enter_city_message">Введите город!</string>
     <string name="enter_new_data">Введите новые данные</string>
     <string name="save">Сохранить</string>
+    <string name="distance_text">Расстояние:</string>
 </resources>
