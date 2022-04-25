@@ -31,6 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/vector_image" />
 
     <EditText
+        android:maxLength="14"
         android:id="@+id/enter_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,6 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/enter_new_data_text" />
 
     <EditText
+        android:maxLength="14"
         android:id="@+id/consumption_per_100km"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,6 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/enter_name" />
 
     <EditText
+        android:maxLength="14"
         android:id="@+id/fuel_tank_capacity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

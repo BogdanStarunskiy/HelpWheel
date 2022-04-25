@@ -19,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDashboardBinding;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -150,6 +151,7 @@ public class DashboardFragment extends Fragment {
     private void showWelcomeScreen() {
         NavHostFragment.findNavController(this).navigate(R.id.action_navigation_dashboard_to_welcomeFragment);
     }
+
     private void showEditDataFragment() {
         NavHostFragment.findNavController(this).navigate(R.id.action_navigation_dashboard_to_changeDataFragment);
     }

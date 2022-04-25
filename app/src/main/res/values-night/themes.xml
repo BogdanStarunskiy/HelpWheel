@@ -34,4 +34,17 @@
     <style name="WelcomeDialogSubTextStyle" parent="Theme.HelpWheel">
         <item name="android:textColor">@color/gray</item>
     </style>
+
+    <style name="FuelAlertDialogStyle" parent="Theme.HelpWheel">
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="FuelAlertDialogButtonStyle" parent="FuelAlertDialogStyle">
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
+    <style name="FuelAlertDialogTextStyle" parent="Theme.HelpWheel">
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
 </resources>

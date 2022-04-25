@@ -20,7 +20,6 @@ import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 public class FuelManagementFragment extends Fragment {
 
@@ -59,7 +58,6 @@ public class FuelManagementFragment extends Fragment {
             Button submitBtn = bottomSheetDialog.findViewById(R.id.submit_btn_fuel);
             assert submitBtn != null;
             submitBtn.setOnClickListener(view1 -> {
-
                 EditText odometer = bottomSheetDialog.findViewById(R.id.odometer_edit_text);
                 EditText pricePerLiter = bottomSheetDialog.findViewById(R.id.price_edit_text);
                 assert odometer != null;
@@ -80,6 +78,7 @@ public class FuelManagementFragment extends Fragment {
                 } else if (!priceValue.isEmpty()) {
                     odometer.setError(getString(R.string.edit_text_odometer_error));
                 }
+                bottomSheetDialog.dismiss();
                 editor.apply();
             });
         });
@@ -135,7 +134,7 @@ public class FuelManagementFragment extends Fragment {
 
     public void showCustomDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.WelcomeAlertDialog);
-        View view = LayoutInflater.from(requireContext()).inflate(R.layout.fuel_arelt_dialog_layout, null);
+        View view = LayoutInflater.from(requireContext()).inflate(R.layout.fuel_alert_dialog_layout, null);
         builder.setView(view);
         alertDialog = builder.create();
         view.findViewById(R.id.alert_dialog_fuel_ok_button).setOnClickListener(view1 -> alertDialog.dismiss());

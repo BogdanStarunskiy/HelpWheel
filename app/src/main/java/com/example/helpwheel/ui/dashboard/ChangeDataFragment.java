@@ -39,9 +39,9 @@ public class ChangeDataFragment extends Fragment {
             if (!binding.enterName.getText().toString().trim().isEmpty())
                 editor.putString(USERNAME_PREF, binding.enterName.getText().toString().trim());
             if (!binding.consumptionPer100km.getText().toString().trim().isEmpty())
-                editor.putString(CONSUMPTION_PER_100KM, binding.consumptionPer100km.getText().toString().trim());
+                editor.putFloat(CONSUMPTION_PER_100KM, Float.parseFloat(binding.consumptionPer100km.getText().toString()));
             if (!binding.fuelTankCapacity.getText().toString().trim().isEmpty())
-                editor.putString(FUEL_TANK_CAPACITY, binding.fuelTankCapacity.getText().toString().trim());
+                editor.putFloat(FUEL_TANK_CAPACITY, Float.parseFloat(binding.fuelTankCapacity.getText().toString()));
             editor.apply();
             NavHostFragment.findNavController(this).navigate(R.id.action_changeDataFragment_to_navigation_dashboard);
         });
