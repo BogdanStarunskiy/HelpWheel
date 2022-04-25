@@ -10,6 +10,8 @@
         android:layout_margin="8dp"
         android:hint="@string/title"
         android:imeOptions="actionNext"
+        android:inputType="textPersonName"
+        android:maxLines="1"
         android:nextFocusDown="@id/description"
         android:textSize="22sp" />
 
@@ -30,7 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/description"
         android:layout_margin="8dp"
-        android:hint="@string/web_site" />
+        android:hint="@string/web_site"
+        android:inputType="textUri"
+        android:maxLines="1" />
 
     <Button
         android:id="@+id/addNote"

@@ -8,12 +8,13 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/dark</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="WelcomeAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
     </style>
@@ -25,4 +26,25 @@
     <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/drawable_round_bottom_sheet_night</item>
     </style>
+
+    <style name="WelcomeDialogTextStyle" parent="Theme.HelpWheel">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WelcomeDialogSubTextStyle" parent="Theme.HelpWheel">
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
+    <style name="FuelAlertDialogStyle" parent="Theme.HelpWheel">
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="FuelAlertDialogButtonStyle" parent="FuelAlertDialogStyle">
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
+    <style name="FuelAlertDialogTextStyle" parent="Theme.HelpWheel">
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
 </resources>

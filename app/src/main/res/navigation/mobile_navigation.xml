@@ -7,32 +7,42 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.helpwheel.ui.home.HomeFragment"
+        android:name="com.example.helpwheel.ui.notes.NotesFragment"
         android:label="@string/title_notes"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_notes" >
         <action
             android:id="@+id/action_navigation_home_to_addNotesFragment"
             app:destination="@id/addNotesFragment" />
         <action
             android:id="@+id/action_navigation_home_to_updateNotesFragment"
             app:destination="@id/updateNotesFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_addNotesFragment2"
+            app:destination="@id/addNotesFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.helpwheel.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_changeDataFragment"
+            app:destination="@id/changeDataFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.helpwheel.ui.notifications.NotificationsFragment"
+        android:name="com.example.helpwheel.ui.fuel_managment.FuelManagementFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" >
+        tools:layout="@layout/fragment_fuel_management" >
     </fragment>
     <fragment
         android:id="@+id/addNotesFragment"
-        android:name="com.example.helpwheel.ui.home.notesFragments.AddNotesFragment"
+        android:name="com.example.helpwheel.ui.notes.notesFragments.AddNotesFragment"
         android:label="AddNotesFragment"
         tools:layout="@layout/fragment_add_notes">
         <action
@@ -41,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateNotesFragment"
-        android:name="com.example.helpwheel.ui.home.notesFragments.UpdateNotesFragment"
+        android:name="com.example.helpwheel.ui.notes.notesFragments.UpdateNotesFragment"
         android:label="UpdateNotesFragment"
         tools:layout="@layout/fragment_update_notes">
         <argument
@@ -59,6 +69,33 @@
         <action
             android:id="@+id/action_updateNotesFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.helpwheel.ui.welcome_screens.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_enterWelcomeDataFragment"
+            app:destination="@id/enterWelcomeDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enterWelcomeDataFragment"
+        android:name="com.example.helpwheel.ui.welcome_screens.EnterWelcomeDataFragment"
+        android:label="fragment_enter_welcome_data"
+        tools:layout="@layout/fragment_enter_welcome_data" >
+        <action
+            android:id="@+id/action_enterWelcomeDataFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeDataFragment"
+        android:name="com.example.helpwheel.ui.dashboard.ChangeDataFragment"
+        android:label="fragment_change_data"
+        tools:layout="@layout/fragment_change_data" >
+        <action
+            android:id="@+id/action_changeDataFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
     </fragment>
 
 </navigation>
