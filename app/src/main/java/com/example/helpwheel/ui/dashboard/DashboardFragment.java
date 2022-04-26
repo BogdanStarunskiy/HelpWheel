@@ -54,6 +54,8 @@ public class DashboardFragment extends Fragment {
     SharedPreferences.Editor editor;
     private FusedLocationProviderClient mFusedLocationClient;
 
+    String key = "a98ca7720a8fd711bb8548bf2373e263";
+
 
     private void showSuccessMessage() {
         binding.currentWeather.setVisibility(View.VISIBLE);
@@ -85,7 +87,7 @@ public class DashboardFragment extends Fragment {
                 toast.show();
             } else {
                 String user_city = binding.enterCity.getText().toString().trim();
-                String key = "a98ca7720a8fd711bb8548bf2373e263";
+
                 String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
                 dashboardViewModel.getTemperature(url);
                 binding.weatherLoading.setVisibility(View.VISIBLE);
@@ -181,6 +183,9 @@ public class DashboardFragment extends Fragment {
                     // Got last known location. In some rare situations this can be null.
                     if (location != null) {
                       Log.wtf("LOCATION",location.toString());
+                      String url2 = "https://api.openweathermap.org/data/2.5/weather?lat="+location.getLatitude()+"&lon="+location.getLongitude()+"&appid="+key;
+                        dashboardViewModel.getTemperature(url2);
+//                        Log.wtf("WEATHER", )
 
                         Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
                         List<Address> addresses = null;
