@@ -26,6 +26,7 @@ public class UpdateNotesFragment extends Fragment {
     String id;
     HashMap<String, String> months;
     private MaterialDatePicker materialDatePicker;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentUpdateNotesBinding.inflate(inflater, container, false);
@@ -67,17 +68,19 @@ public class UpdateNotesFragment extends Fragment {
         materialDatePicker.addOnPositiveButtonClickListener(selection -> getDate());
     }
 
-    private void getDate(){
+    private void getDate() {
         String date = materialDatePicker.getHeaderText();
         String[] dateList = date.split(",");
         String[] monthAndDay = dateList[0].split(" ");
-        String month =  months.get(monthAndDay[0]);
+        String month = months.get(monthAndDay[0]);
         String day = monthAndDay[1];
+        if (Integer.parseInt(day) < 10)
+            day = "0" + day;
         String year = dateList[1].trim();
         binding.description.setText(String.format("%s.%s.%s", day, month, year));
     }
 
-    private void hashMapCreator(){
+    private void hashMapCreator() {
         months.put("Jan", "01");
         months.put("Feb", "02");
         months.put("Mar", "03");

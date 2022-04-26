@@ -70,6 +70,8 @@ public class AddNotesFragment extends Fragment {
         String[] monthAndDay = dateList[0].split(" ");
         String month =  months.get(monthAndDay[0]);
         String day = monthAndDay[1];
+        if (Integer.parseInt(day) < 10)
+            day = "0" + day;
         String year = dateList[1].trim();
         binding.description.setText(String.format("%s.%s.%s", day, month, year));
     }
