@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.HelpWheel" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/yellow</item>
         <item name="colorPrimaryVariant">@color/dark</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->

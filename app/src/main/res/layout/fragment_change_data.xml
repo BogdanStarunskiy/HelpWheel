@@ -55,7 +55,6 @@
             android:inputType="textPersonName"
             android:maxLength="14"
             android:maxLines="1"
-            android:textColor="@color/dark"
             android:textColorHint="@color/gray"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +84,6 @@
             android:hint="@string/enter_car_consumption_per_100km"
             android:inputType="numberDecimal"
             android:maxLength="14"
-            android:textColor="@color/dark"
             android:textColorHint="@color/gray"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +112,6 @@
             android:hint="@string/enter_car_fuel_tank_capacity"
             android:inputType="numberDecimal"
             android:maxLength="14"
-            android:textColor="@color/dark"
             android:textColorHint="@color/gray"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
