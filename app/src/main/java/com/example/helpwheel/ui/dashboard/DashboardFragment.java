@@ -182,10 +182,10 @@ public class DashboardFragment extends Fragment {
                 .addOnSuccessListener(requireActivity(), location -> {
                     // Got last known location. In some rare situations this can be null.
                     if (location != null) {
-                      Log.wtf("LOCATION",location.toString());
-                      String url2 = "https://api.openweathermap.org/data/2.5/weather?lat="+location.getLatitude()+"&lon="+location.getLongitude()+"&appid="+key;
+                        Log.wtf("LOCATION",location.toString());
+                        String url2 = "https://api.openweathermap.org/data/2.5/weather?lat="+location.getLatitude()+"&lon="+location.getLongitude()+"&appid="+key+"&units=metric&lang=en";
                         dashboardViewModel.getTemperature(url2);
-//                        Log.wtf("WEATHER", )
+
 
                         Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
                         List<Address> addresses = null;
@@ -251,4 +251,3 @@ public class DashboardFragment extends Fragment {
         requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
     }
 }
-//fdsfsdfgh
