@@ -1,26 +1,42 @@
 package com.example.helpwheel.ui.dashboard;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDashboardBinding;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 
 public class DashboardFragment extends Fragment {
@@ -36,6 +52,8 @@ public class DashboardFragment extends Fragment {
     public static final String USERNAME_PREF = "usernamePref";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    private FusedLocationProviderClient mFusedLocationClient;
+
 
     private void showSuccessMessage() {
         binding.currentWeather.setVisibility(View.VISIBLE);
@@ -124,6 +142,73 @@ public class DashboardFragment extends Fragment {
 
         });
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        checkPermissions();
+    }
+
+    private void checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Dexter.withContext(requireContext())
+                    .withPermissions(
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    ).withListener(new MultiplePermissionsListener() {
+                @Override
+                public void onPermissionsChecked(MultiplePermissionsReport report) {
+                    getMyLocation();
+                }
+
+                @Override
+                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
+            }).check();
+
+        } else {
+            getMyLocation();
+        }
+
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getMyLocation() {
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(requireActivity(), location -> {
+                    // Got last known location. In some rare situations this can be null.
+                    if (location != null) {
+                      Log.wtf("LOCATION",location.toString());
+
+                        Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
+                        List<Address> addresses = null;
+                        try {
+                            addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if (addresses != null && !addresses.isEmpty()) {
+                            Log.wtf("ADDRESSES", (addresses.get(0).getLocality()) + (addresses.get(0).getAdminArea()));
+
+                            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                            String city = addresses.get(0).getLocality();
+                            String state = addresses.get(0).getAdminArea();
+                            String country = addresses.get(0).getCountryName();
+                            String postalCode = addresses.get(0).getPostalCode();
+                            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+
+                            Log.d("TAG", "getAddress:  address" + address);
+                            Log.d("TAG",  ""+ city);
+                            Log.d("TAG", "getAddress:  state" + state);
+                            Log.d("TAG", "getAddress:  postalCode" + postalCode);
+                            Log.d("TAG", "getAddress:  knownName" + knownName);
+
+                        }
+                    }
+                });
+
     }
 
     private void initStrings() {
