@@ -35,7 +35,7 @@ public class FuelManagementFragment extends Fragment {
     public static final String APP_PREFERENCES_PRICE = "price";
     SharedPreferences fuelStats, regData;
     AlertDialog alertDialog;
-    private SharedPreferences.Editor editor, regDataEditor;
+    private SharedPreferences.Editor editor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +49,6 @@ public class FuelManagementFragment extends Fragment {
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
         regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
-        regDataEditor = regData.edit();
         binding.fuelInputButton.setOnClickListener(v -> {
 
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
@@ -58,8 +57,8 @@ public class FuelManagementFragment extends Fragment {
             Button submitBtn = bottomSheetDialog.findViewById(R.id.submit_btn_fuel);
             assert submitBtn != null;
             submitBtn.setOnClickListener(view1 -> {
-                EditText odometer = bottomSheetDialog.findViewById(R.id.odometer_edit_text);
-                EditText pricePerLiter = bottomSheetDialog.findViewById(R.id.price_edit_text);
+                EditText odometer = bottomSheetDialog.findViewById(R.id.odometer_text);
+                EditText pricePerLiter = bottomSheetDialog.findViewById(R.id.price_text);
                 assert odometer != null;
                 String odometerValue = odometer.getText().toString();
                 assert pricePerLiter != null;
@@ -77,7 +76,7 @@ public class FuelManagementFragment extends Fragment {
                     bottomSheetDialog.dismiss();
                 } else if (!priceValue.isEmpty()) {
                     odometer.setError(getString(R.string.edit_text_odometer_error));
-                }
+                } else
                 bottomSheetDialog.dismiss();
                 editor.apply();
             });

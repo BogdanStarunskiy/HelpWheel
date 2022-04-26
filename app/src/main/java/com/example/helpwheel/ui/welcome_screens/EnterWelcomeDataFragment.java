@@ -15,6 +15,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentEnterWelcomeDataBinding;
 
+import java.util.Objects;
+
 public class EnterWelcomeDataFragment extends Fragment {
     FragmentEnterWelcomeDataBinding binding;
     SharedPreferences.Editor editor;
@@ -40,16 +42,28 @@ public class EnterWelcomeDataFragment extends Fragment {
 
     private void putToSharedPreferences() {
         try {
-            String username = binding.enterName.getText().toString().trim();
-            Float consumptionPer100km = Float.parseFloat(binding.consumptionPer100km.getText().toString());
-            Float fuelTankCapacity = Float.parseFloat(binding.fuelTankCapacity.getText().toString());
+            String username = Objects.requireNonNull(binding.enterName.getText()).toString().trim();
+            Float consumptionPer100km = Float.parseFloat(Objects.requireNonNull(binding.consumptionPer100km.getText()).toString());
+            Float fuelTankCapacity = Float.parseFloat(Objects.requireNonNull(binding.fuelTankCapacity.getText()).toString());
             editor.putString(USERNAME, username);
             editor.putFloat(CONSUMPTION_PER_100KM, consumptionPer100km);
             editor.putFloat(FUEL_TANK_CAPACITY, fuelTankCapacity);
             editor.apply();
             NavHostFragment.findNavController(this).navigate(R.id.action_enterWelcomeDataFragment_to_navigation_dashboard);
-        } catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(requireContext(), R.string.field_must_be_filled, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
     }
 }

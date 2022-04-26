@@ -48,7 +48,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
         String[] splitDesc = notesList.get(position).getDescription().split(" ");
         String descParsed = splitDesc[0];
 
-        //обработка web site EditText
         if (splitDesc.length != 1) {
             holder.button.setVisibility(View.VISIBLE);
 
@@ -58,7 +57,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
                     parsedWebUrl = "http://" + parsedWebUrl;
                 }
 
-                //открытие ссылки
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(parsedWebUrl));
                 context.startActivity(intent);
             });
@@ -69,12 +67,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
 
     }
 
-    //получить количество заметок
     @Override
     public int getItemCount() {
         return notesList.size();
     }
-
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView title, description;
@@ -92,18 +88,15 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
     }
 
 
-    //получить список заметок
     public List<NotesModel> getList() {
         return notesList;
     }
 
-    //удаление заметок
     public void removeItem(int position) {
         notesList.remove(position);
         notifyItemRemoved(position);
     }
 
-    //восстановление заметок
     public void restoreItem(NotesModel item, int position) {
         notesList.add(position, item);
         notifyItemInserted(position);

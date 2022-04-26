@@ -59,10 +59,9 @@ public class NotesFragment extends Fragment implements NotesInterface {
 
     }
 
-    //Taking all notes from database
     void fetchAllNotesFromDatabase() {
         Cursor cursor = databaseClass.readAllData();
-        //If we don`t have any notes
+
         if (cursor.getCount() == 0) {
             try {
                 binding.emptyText.setVisibility(View.VISIBLE);
@@ -78,14 +77,13 @@ public class NotesFragment extends Fragment implements NotesInterface {
         }
 
     }
-    //Swipes
+
     ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
         }
 
-        //Notates removing
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
