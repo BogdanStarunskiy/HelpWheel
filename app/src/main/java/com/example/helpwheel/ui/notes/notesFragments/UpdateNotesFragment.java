@@ -17,15 +17,16 @@ import com.example.helpwheel.databinding.FragmentUpdateNotesBinding;
 import com.example.helpwheel.ui.notes.databases.DatabaseClass;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Objects;
+import java.util.TimeZone;
 
 
 public class UpdateNotesFragment extends Fragment {
     private FragmentUpdateNotesBinding binding;
     String id;
-    HashMap<String, String> months;
-    private MaterialDatePicker materialDatePicker;
+    private MaterialDatePicker<Long> materialDatePicker;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,10 +37,8 @@ public class UpdateNotesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-        materialDateBuilder.setTitleText("SELECT A DATE");
+        materialDateBuilder.setTitleText(R.string.select_a_date);
         materialDatePicker = materialDateBuilder.build();
-        months = new HashMap<>();
-        hashMapCreator();
         super.onViewCreated(view, savedInstanceState);
         UpdateNotesFragmentArgs args = UpdateNotesFragmentArgs.fromBundle(getArguments());
         binding.title.setText(args.getTitle());
@@ -65,35 +64,17 @@ public class UpdateNotesFragment extends Fragment {
         });
 
         binding.calendarBtn.setOnClickListener(v1 -> materialDatePicker.show(getChildFragmentManager(), "MATERIAL_DATE_PICKER"));
-        materialDatePicker.addOnPositiveButtonClickListener(selection -> getDate());
+        materialDatePicker.addOnPositiveButtonClickListener(this::getDate);
     }
 
-    private void getDate() {
-        String date = materialDatePicker.getHeaderText();
-        String[] dateList = date.split(",");
-        String[] monthAndDay = dateList[0].split(" ");
-        String month = months.get(monthAndDay[0]);
-        String day = monthAndDay[1];
-        if (Integer.parseInt(day) < 10)
-            day = "0" + day;
-        String year = dateList[1].trim();
-        binding.description.setText(String.format("%s.%s.%s", day, month, year));
+    private void getDate(Long selection){
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(selection);
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate  = format.format(calendar.getTime());
+        binding.description.setText(formattedDate);
     }
 
-    private void hashMapCreator() {
-        months.put("Jan", "01");
-        months.put("Feb", "02");
-        months.put("Mar", "03");
-        months.put("Apr", "04");
-        months.put("May", "05");
-        months.put("Jun", "06");
-        months.put("Jul", "07");
-        months.put("Aug", "08");
-        months.put("Sep", "09");
-        months.put("Oct", "10");
-        months.put("Nov", "11");
-        months.put("Dec", "12");
-    }
 
     @Override
     public void onStart() {

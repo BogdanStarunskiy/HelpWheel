@@ -5,7 +5,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Fuel</string>
     <!-- weather -->
-    <string name="enter_city">Please, enter your city</string>
+    <string name="enter_city">Please, enter a city</string>
     <string name="weather_btn">Check</string>
     <string name="current_weather">Here will be displayed current weather</string>
     <string name="error_weather">Something went wrong, try again</string>
@@ -58,5 +58,6 @@
     <string name="enter_new_data">Enter new data</string>
     <string name="save">Save</string>
     <string name="distance_text">Distance:</string>
+    <string name="select_a_date">Select a date</string>
 
 </resources>
