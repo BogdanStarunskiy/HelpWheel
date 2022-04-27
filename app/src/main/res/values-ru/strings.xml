@@ -3,7 +3,7 @@
     <string name="title_notes">Заметки</string>
     <string name="title_dashboard">Меню</string>
     <string name="title_notifications">Топливо</string>
-    <string name="enter_city">Введите ваш город</string>
+    <string name="enter_city">Введите город</string>
     <string name="weather_btn">Отправить</string>
     <string name="current_weather">Здесь будет отображаться погода</string>
     <string name="error_weather">Что-то пошло не так, попробуйте снова</string>
@@ -47,4 +47,5 @@
     <string name="enter_new_data">Введите новые данные</string>
     <string name="save">Сохранить</string>
     <string name="distance_text">Расстояние:</string>
+    <string name="select_a_date">Выберите дату</string>
 </resources>
