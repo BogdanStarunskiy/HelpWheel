@@ -2,7 +2,7 @@
 <resources>
     <string name="title_notes">Заметки</string>
     <string name="title_dashboard">Меню</string>
-    <string name="title_notifications">Топливо</string>
+    <string name="title_notifications">Поездка</string>
     <string name="enter_city">Введите город</string>
     <string name="weather_btn">Отправить</string>
     <string name="current_weather">Здесь будет отображаться погода</string>
@@ -48,4 +48,8 @@
     <string name="save">Сохранить</string>
     <string name="distance_text">Расстояние:</string>
     <string name="select_a_date">Выберите дату</string>
+    <string name="you_spent">Вы потратили</string>
+    <string name="co2_you_ve_produced">Выброс CO2</string>
+    <string name="if_you_use_gasoline">Если вы используете бензин:</string>
+    <string name="if_you_use_diesel">Если вы используете дизель:</string>
 </resources>
