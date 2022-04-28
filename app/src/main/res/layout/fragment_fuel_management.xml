@@ -24,7 +24,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/dark"
-        android:text="@string/add_refueling"
+        android:text="@string/enter_data"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="25sp"
@@ -32,7 +32,7 @@
         app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_pager_last_ride"/>
+        app:layout_constraintTop_toBottomOf="@id/tab" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_last_ride"
@@ -41,7 +41,16 @@
         android:layout_marginVertical="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/your_last_ride"
-        tools:layout_editor_absoluteY="251dp" />
+        app:layout_constraintTop_toBottomOf="@id/your_last_ride" />
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab"
+        app:tabBackground="@drawable/tab_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/transparent"
+        app:layout_constraintTop_toBottomOf="@id/view_pager_last_ride"
+        app:tabGravity="center"
+        app:tabIndicator="@color/transparent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

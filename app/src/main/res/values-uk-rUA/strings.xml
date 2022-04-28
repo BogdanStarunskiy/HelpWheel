@@ -25,7 +25,7 @@
     <string name="web_site">Посилання на деталь (за бажанням)</string>
     <string name="both_fields_required">Ви повинні заповнити обидва поля</string>
     <string name="kms_placeholder">Ваша остання поїздка:</string>
-    <string name="add_refueling">Додати інформацію</string>
+    <string name="enter_data">Ввести дані</string>
     <string name="enter_odometer">Одометр (км)</string>
     <string name="enter_price">Ціна (за 1 літр)</string>
     <string name="submit">Зберегти</string>
@@ -49,7 +49,7 @@
     <string name="distance_text">Відстань:</string>
     <string name="select_a_date">Оберіть дату</string>
     <string name="you_spent">Ви використали</string>
-    <string name="co2_you_ve_produced">Викинуто CO2</string>
-    <string name="if_you_use_gasoline">Якщо ви використовуєте бензин:</string>
-    <string name="if_you_use_diesel">Якщо ви використовуєте дизель:</string>
+    <string name="co2_you_ve_produced">Викинуто CO2:</string>
+    <string name="if_you_use_gasoline">Бензин:</string>
+    <string name="if_you_use_diesel">Дизель:</string>
 </resources>
