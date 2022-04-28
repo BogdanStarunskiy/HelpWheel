@@ -33,7 +33,7 @@
     <string name="both_fields_required">Both Fields Required</string>
     <!-- fuel manager -->
     <string name="kms_placeholder">Your last ride:</string>
-    <string name="add_refueling">New refueling</string>
+    <string name="enter_data">Enter data</string>
     <string name="enter_odometer">Odometer(KM)</string>
     <string name="enter_price">Price (Per liter)</string>
     <string name="submit">Submit</string>
@@ -61,7 +61,7 @@
     <string name="select_a_date">Select a date</string>
     <string name="you_spent">You spent</string>
     <string name="co2_you_ve_produced">CO2 you`ve produced:</string>
-    <string name="if_you_use_gasoline">if you use gasoline:</string>
-    <string name="if_you_use_diesel">if you use diesel:</string>
+    <string name="if_you_use_gasoline">Gasoline:</string>
+    <string name="if_you_use_diesel">Diesel:</string>
 
 </resources>
