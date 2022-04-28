@@ -58,7 +58,7 @@ public class AddNotesFragment extends Fragment {
             }
 
         });
-        binding.calendarBtn.setOnClickListener(v1 -> materialDatePicker.show(getChildFragmentManager(), "MATERIAL_DATE_PICKER"));
+        binding.descriptionEditText.setEndIconOnClickListener(v1 -> materialDatePicker.show(getChildFragmentManager(), "MATERIAL_DATE_PICKER"));
 
         materialDatePicker.addOnPositiveButtonClickListener(this::getDate);
     }

@@ -21,6 +21,7 @@ import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
 import com.example.helpwheel.ui.fuel_managment.adapter.ScreenSlidePageAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.math.BigDecimal;
 
@@ -60,6 +61,8 @@ public class FuelManagementFragment extends Fragment {
         ViewPager2 viewPager2 = binding.viewPagerLastRide;
         FragmentStateAdapter pageAdapter = new ScreenSlidePageAdapter(this);
         viewPager2.setAdapter(pageAdapter);
+        new TabLayoutMediator(binding.tab, binding.viewPagerLastRide,(tab, position) -> {}).attach();
+
 
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
@@ -103,6 +106,7 @@ public class FuelManagementFragment extends Fragment {
                     bottomSheetDialog.dismiss();
                     onViewCreated(view, savedInstanceState);
                 }
+
                 editor.apply();
             });
         });
