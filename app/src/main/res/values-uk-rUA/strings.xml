@@ -2,7 +2,7 @@
 <resources>
     <string name="title_notes">Нотатки</string>
     <string name="title_dashboard">Меню</string>
-    <string name="title_notifications">Паливо</string>
+    <string name="title_notifications">Поїздка</string>
     <string name="enter_city">Введіть місто</string>
     <string name="weather_btn">Відправити</string>
     <string name="current_weather">Тут буде відображатися погода</string>
@@ -48,4 +48,8 @@
     <string name="save">Зберегти</string>
     <string name="distance_text">Відстань:</string>
     <string name="select_a_date">Оберіть дату</string>
+    <string name="you_spent">Ви використали</string>
+    <string name="co2_you_ve_produced">Викинуто CO2</string>
+    <string name="if_you_use_gasoline">Якщо ви використовуєте бензин:</string>
+    <string name="if_you_use_diesel">Якщо ви використовуєте дизель:</string>
 </resources>

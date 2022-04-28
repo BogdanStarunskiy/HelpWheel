@@ -61,7 +61,6 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:textColor="@color/white"
         android:id="@+id/submit_btn_fuel"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -69,6 +68,8 @@
         android:backgroundTint="@color/dark"
         android:text="@string/submit"
         android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="25sp"
         app:cornerRadius="20dp" />
+
 </LinearLayout>
