@@ -35,7 +35,7 @@ public class FuelManagementFragment extends Fragment {
     public static final String APP_PREFERENCES_ODOMETER = "odometer";
     public static final String APP_PREFERENCES_ODOMETER_OLD = "odometer_old";
     public static final String APP_PREFERENCES_PRE_PRICE = "pre_price";
-    public static final String APP_PREFERENCES_RESULT = "result";
+    public static final String APP_PREFERENCES_DISTANCE = "distance";
     public static final String APP_PREFERENCES_PRICE = "price";
     public static final String APP_PREFERENCES_SPENT_FUEL = "spent_fuel";
     public static final String APP_PREFERENCES_GASOLINE_EMISSIONS = "gasoline_emissions";
@@ -120,13 +120,13 @@ public class FuelManagementFragment extends Fragment {
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f) {
             showCustomDialog();
         } else {
-            editor.putFloat(APP_PREFERENCES_RESULT, formattedNumber(odometerValue - oldOdometerValue));
+            editor.putFloat(APP_PREFERENCES_DISTANCE, formattedNumber(odometerValue - oldOdometerValue));
             editor.apply();
         }
     }
 
     private void countPrice() {
-        Float price = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f) * fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f);
+        Float price = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f) * fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f);
         editor.putFloat(APP_PREFERENCES_PRICE, formattedNumber(price));
         editor.apply();
     }
@@ -147,8 +147,8 @@ public class FuelManagementFragment extends Fragment {
     }
 
     private void countSpentFuel(){
-        Float spentFuel = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f);
-        editor.putFloat(APP_PREFERENCES_SPENT_FUEL, spentFuel);
+        Float spentFuel = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f);
+        editor.putFloat(APP_PREFERENCES_SPENT_FUEL, formattedNumber(spentFuel));
         editor.apply();
     }
 

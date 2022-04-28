@@ -17,7 +17,7 @@ public class DistanceOfLastRideFragment extends Fragment {
     SharedPreferences fuelStats;
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String APP_PREFERENCES_ODOMETER_OLD = "odometer_old";
-    public static final String APP_PREFERENCES_RESULT = "result";
+    public static final String APP_PREFERENCES_DISTANCE = "distance";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,7 +33,7 @@ public class DistanceOfLastRideFragment extends Fragment {
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f)
             binding.distanceCounter.setText("0.0");
         else
-            binding.distanceCounter.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_RESULT, 0.0f)));
+            binding.distanceCounter.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f)));
     }
 
 }
