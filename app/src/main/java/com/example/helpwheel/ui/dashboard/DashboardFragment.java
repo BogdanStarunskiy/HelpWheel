@@ -18,11 +18,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDashboardBinding;
+import com.example.helpwheel.ui.fuel_managment.adapter.ScreenSlidePageAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.karumi.dexter.Dexter;
@@ -53,8 +57,15 @@ public class DashboardFragment extends Fragment {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private FusedLocationProviderClient mFusedLocationClient;
-
+    String temperature = null;
+    String main_description = null;
+    String description = null;
+    String wind = null;
+    String feel_temperature = null;
     String key = "a98ca7720a8fd711bb8548bf2373e263";
+    private FragmentStateAdapter pagerAdapter;
+    private ViewPager2 viewPager2;
+    private static final int NUM_PAGES = 2;
 
 
     private void showSuccessMessage() {
@@ -98,11 +109,7 @@ public class DashboardFragment extends Fragment {
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
             binding.weatherLoading.setVisibility(View.INVISIBLE);
             if (s != null && !s.equals("")) {
-                String temperature = null;
-                String main_description = null;
-                String description = null;
-                String wind = null;
-                String feel_temperature = null;
+
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
@@ -141,8 +148,8 @@ public class DashboardFragment extends Fragment {
 
             }
 
-
         });
+
         return root;
     }
 
@@ -151,6 +158,62 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         checkPermissions();
+        viewPager2 = binding.weatherViewPager;
+        pagerAdapter = new ScreenSlidePageAdapterWeathner(requireActivity());
+        viewPager2.setAdapter(pagerAdapter);
+        viewPager2.setPageTransformer(new ZoomPageTransformer());
+    }
+    private class ZoomPageTransformer implements ViewPager2.PageTransformer{
+        private static final float MIN_SCALE = 0.85f;
+        private static final float MIN_ALPHA = 0.5f;
+
+        @Override
+        public void transformPage(@NonNull View page, float position) {
+            int pageWidth = page.getWidth();
+            int pageHeight = page.getHeight();
+            if(position<-1){
+                page.setAlpha(0f);
+            }else if(position <=1 ){
+                float scaleFactor = Math.max(MIN_SCALE, 1-Math.abs(position));
+                float vertMargin = pageHeight*(1-scaleFactor)/2;
+                float horzMargin = pageWidth*(1-scaleFactor)/2;
+                if(position<0){
+                    page.setTranslationX(horzMargin- vertMargin/2);
+
+                }else{
+                    page.setTranslationX(-horzMargin+vertMargin/2);
+                }
+                page.setScaleX(scaleFactor);
+                page.setScaleY(scaleFactor);
+                page.setAlpha(MIN_ALPHA+(scaleFactor-MIN_SCALE)/(1-MIN_SCALE)*(1-MIN_SCALE));
+            }
+            else {
+                page.setAlpha(0f);
+            }
+        }
+    }
+    private class ScreenSlidePageAdapterWeathner extends FragmentStateAdapter{
+        public ScreenSlidePageAdapterWeathner(@NonNull FragmentActivity fragmentActivity) {
+            super(fragmentActivity);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            switch (position){
+                case 0:
+                    return new DescriptionWeather();
+                case 1:
+                    return new WeatherWindSpeed();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return NUM_PAGES;
+        }
     }
 
     private void checkPermissions() {
@@ -250,4 +313,11 @@ public class DashboardFragment extends Fragment {
         super.onStart();
         requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
     }
+    public String getTemperature(){
+        return temperature;
+    }
+    public String getDescription(){
+        return description;
+    }
+
 }
