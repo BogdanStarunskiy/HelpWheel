@@ -55,7 +55,6 @@ public class DatabaseClass extends SQLiteOpenHelper {
 
     }
 
-    //Cursor содержит все заметки
     public Cursor readAllData() {
         String query = "SELECT * FROM " + TableName;
         SQLiteDatabase database = this.getReadableDatabase();
