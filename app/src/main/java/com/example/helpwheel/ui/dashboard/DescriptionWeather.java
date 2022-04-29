@@ -46,12 +46,11 @@ public class DescriptionWeather extends Fragment {
         binding = FragmentDescriptionWeatherBinding.inflate(inflater, container, false);
         pref = requireContext().getSharedPreferences(PREF, getContext().MODE_PRIVATE);
 
-        SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals(WEATHER_TEMPERATURE)) {
-                    setTemp();
-                }
+        SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+            if (key.equals(WEATHER_TEMPERATURE)) {
+                setTemp();
+            } else if (key.equals(WEATHER_DESCRIPTION)){
+                setDesc();
             }
         };
 
@@ -66,5 +65,9 @@ public class DescriptionWeather extends Fragment {
     private void setTemp() {
         temperature = pref.getString(WEATHER_TEMPERATURE, "error");
         binding.weatherTemperature.setText(temperature);
+    }
+    private void setDesc(){
+        description = pref.getString(WEATHER_DESCRIPTION, "error");
+        binding.weatherDescription.setText(description);
     }
 }

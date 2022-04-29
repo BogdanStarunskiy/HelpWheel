@@ -126,7 +126,7 @@ public class DashboardFragment extends Fragment {
 //                    Bundle weather = new Bundle();
 //                    weather.putString("weather from dashboard", temperature);
 //                    getParentFragmentManager().setFragmentResult("weather from dashboard", weather);
-                    if (preferences.getString(WEATHER_TEMPERATURE, null)!=null && preferences.getString(WEATHER_DESCRIPTION, null)!=null){
+                    if (preferences.getString(WEATHER_TEMPERATURE, null)!=null || preferences.getString(WEATHER_DESCRIPTION, null)!=null){
 
                         editor.remove(WEATHER_TEMPERATURE);
                         editor.remove(WEATHER_DESCRIPTION);
