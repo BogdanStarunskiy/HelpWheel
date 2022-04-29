@@ -57,6 +57,7 @@ public class DashboardFragment extends Fragment {
     public static final String USERNAME_PREF = "usernamePref";
     public static final String WEATHER_TEMPERATURE = "weatherTemp";
     public static final String WEATHER_DESCRIPTION = "weatherDesc";
+    public static final String WEATHER_WIND = "weatherWind";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -126,14 +127,16 @@ public class DashboardFragment extends Fragment {
 //                    Bundle weather = new Bundle();
 //                    weather.putString("weather from dashboard", temperature);
 //                    getParentFragmentManager().setFragmentResult("weather from dashboard", weather);
-                    if (preferences.getString(WEATHER_TEMPERATURE, null)!=null || preferences.getString(WEATHER_DESCRIPTION, null)!=null){
-
+                    if (preferences.getString(WEATHER_TEMPERATURE, null)!=null || preferences.getString(WEATHER_DESCRIPTION, null)!=null || preferences.getString(WEATHER_WIND, null)!=null){
+                        editor.remove(WEATHER_WIND);
                         editor.remove(WEATHER_TEMPERATURE);
                         editor.remove(WEATHER_DESCRIPTION);
+                        editor.putString(WEATHER_WIND, wind);
                         editor.putString(WEATHER_TEMPERATURE, temperature);
                         editor.putString(WEATHER_DESCRIPTION, description);
                         editor.apply();
                     }else{
+                        editor.putString(WEATHER_WIND, wind);
                         editor.putString(WEATHER_TEMPERATURE, temperature);
                         editor.putString(WEATHER_DESCRIPTION, description);
                         editor.apply();
