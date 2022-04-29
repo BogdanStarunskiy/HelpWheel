@@ -1,18 +1,18 @@
-package com.example.helpwheel.ui.fuel_managment.adapter;
+package com.example.helpwheel.ui.fuel_management.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.helpwheel.ui.fuel_managment.FuelManagementFragment;
-import com.example.helpwheel.ui.fuel_managment.fuel_stats_fragments.CostOfLastRideFragment;
-import com.example.helpwheel.ui.fuel_managment.fuel_stats_fragments.DistanceOfLastRideFragment;
-import com.example.helpwheel.ui.fuel_managment.fuel_stats_fragments.EcologyImpactFragment;
-import com.example.helpwheel.ui.fuel_managment.fuel_stats_fragments.SpentFuelFragment;
+import com.example.helpwheel.ui.fuel_management.FuelManagementFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.CostOfLastRideFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.DistanceOfLastRideFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.EcologyImpactFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.SpentFuelFragment;
 
-public class ScreenSlidePageAdapter extends FragmentStateAdapter {
+public class LastRideAdapter extends FragmentStateAdapter {
     private static final int pagesCount = 4;
-    public ScreenSlidePageAdapter(FuelManagementFragment fuelManagementFragment) {
+    public LastRideAdapter(FuelManagementFragment fuelManagementFragment) {
         super(fuelManagementFragment);
     }
 

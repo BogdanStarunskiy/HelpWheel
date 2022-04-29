@@ -1,17 +1,15 @@
-package com.example.helpwheel.ui.fuel_managment.fuel_stats_fragments;
+package com.example.helpwheel.ui.fuel_management.last_ride_fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentSpentFuelBinding;
 
 public class SpentFuelFragment extends Fragment {

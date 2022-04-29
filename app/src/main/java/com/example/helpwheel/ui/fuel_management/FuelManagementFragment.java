@@ -1,4 +1,4 @@
-package com.example.helpwheel.ui.fuel_managment;
+package com.example.helpwheel.ui.fuel_management;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -19,7 +19,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
-import com.example.helpwheel.ui.fuel_managment.adapter.ScreenSlidePageAdapter;
+import com.example.helpwheel.ui.fuel_management.adapter.LastRideAdapter;
+import com.example.helpwheel.ui.fuel_management.adapter.NewRideAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -30,9 +31,10 @@ public class FuelManagementFragment extends Fragment {
     private FragmentFuelManagementBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String PREF = "user";
-
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
     public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
+    public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
+    public static final String FUEL_LEVEL = "fuelLevel";
     public static final String APP_PREFERENCES_ODOMETER = "odometer";
     public static final String APP_PREFERENCES_ODOMETER_OLD = "odometer_old";
     public static final String APP_PREFERENCES_PRE_PRICE = "pre_price";
@@ -57,17 +59,21 @@ public class FuelManagementFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ViewPager2 newRideVP = binding.viewPagerNewRide;
+        ViewPager2 lastRideVP = binding.viewPagerLastRide;
+        lastRideVP.setAdapter(new LastRideAdapter(this));
+        newRideVP.setAdapter(new NewRideAdapter(this));
 
-        ViewPager2 viewPager2 = binding.viewPagerLastRide;
-        FragmentStateAdapter pageAdapter = new ScreenSlidePageAdapter(this);
-        viewPager2.setAdapter(pageAdapter);
-        new TabLayoutMediator(binding.tab, binding.viewPagerLastRide,(tab, position) -> {}).attach();
-
+        new TabLayoutMediator(binding.tabLastRide, binding.viewPagerLastRide, (tab, position) -> {
+        }).attach();
+        new TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide, (tab, position) -> {
+        }).attach();
 
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
         regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
 
+        binding.fuelLevel.setText(String.valueOf(fuelStats.getFloat(FUEL_LEVEL, regData.getFloat(FUEL_TANK_CAPACITY, 0.0f))));
         binding.fuelInputButton.setOnClickListener(v -> {
 
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
@@ -82,7 +88,7 @@ public class FuelManagementFragment extends Fragment {
                 EditText odometer = bottomSheetDialog.findViewById(R.id.odometer_text);
                 EditText pricePerLiter = bottomSheetDialog.findViewById(R.id.price_text);
                 assert odometer != null;
-                String odometerValue = odometer.getText().toString();
+                String odometerValue =  odometer.getText().toString();;
                 assert pricePerLiter != null;
                 String priceValue = pricePerLiter.getText().toString();
 
@@ -139,6 +145,19 @@ public class FuelManagementFragment extends Fragment {
         return regData.getFloat(CONSUMPTION_PER_100KM, 0.0f) / 100;
     }
 
+    private void countFuelInTank() {
+        if (fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) == 0.0f) {
+            Float fuelLevel = regData.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
+            editor.putFloat(FUEL_LEVEL_OLD, fuelLevel);
+        } else {
+            Float newFuelLevel = fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) - fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
+            editor.putFloat(FUEL_LEVEL_OLD, newFuelLevel);
+            editor.putFloat(FUEL_LEVEL, newFuelLevel);
+            binding.fuelLevel.setText(String.valueOf(formattedNumber(newFuelLevel)));
+        }
+        editor.apply();
+    }
+
     private void showCustomDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext(), R.style.WelcomeAlertDialog);
         View view = LayoutInflater.from(requireContext()).inflate(R.layout.fuel_alert_dialog_layout, null);
@@ -150,13 +169,13 @@ public class FuelManagementFragment extends Fragment {
         alertDialog.show();
     }
 
-    private void countSpentFuel(){
+    private void countSpentFuel() {
         Float spentFuel = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f);
         editor.putFloat(APP_PREFERENCES_SPENT_FUEL, formattedNumber(spentFuel));
         editor.apply();
     }
 
-    private void countImpactOnEcology(){
+    private void countImpactOnEcology() {
         Float spentFuel = fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
         Float gasolineEmissions = co2EmissionPer1LiterOfGasoline * spentFuel;
         Float dieselEmissions = co2EmissionPer1LiterOfDiesel * spentFuel;
@@ -165,12 +184,13 @@ public class FuelManagementFragment extends Fragment {
         editor.apply();
     }
 
-    private void callMethods(){
+    private void callMethods() {
         countSpentFuel();
         countImpactOnEcology();
+        countFuelInTank();
     }
 
-    private Float formattedNumber(Float number){
+    private Float formattedNumber(Float number) {
         float result = BigDecimal.valueOf(number)
                 .setScale(2, BigDecimal.ROUND_HALF_DOWN)
                 .floatValue();

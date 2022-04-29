@@ -1,4 +1,4 @@
-package com.example.helpwheel.ui.fuel_managment.fuel_stats_fragments;
+package com.example.helpwheel.ui.fuel_management.last_ride_fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentEcologyImpactBinding;
 
 public class EcologyImpactFragment extends Fragment {
