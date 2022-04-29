@@ -32,9 +32,10 @@
     </androidx.cardview.widget.CardView>
     <!--Обёртка погоды в card view-->
     <androidx.cardview.widget.CardView
+
         android:id="@+id/weather_card_view"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="400dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="10dp"
@@ -44,10 +45,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_greeting">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="279dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/text_dashboard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.515"
@@ -122,6 +122,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/weather_btn"
                 app:layout_constraintVertical_bias="0.435" />
 
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/weatherViewPager"
                 android:layout_width="match_parent"
@@ -134,6 +135,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/enter_city">
 
             </androidx.viewpager2.widget.ViewPager2>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab"
+                app:tabBackground="@drawable/tab_weather_selector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                app:layout_constraintTop_toBottomOf="@id/weatherViewPager"
+                app:tabGravity="center"
+                app:tabIndicator="@color/transparent"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

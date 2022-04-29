@@ -29,6 +29,7 @@ import com.example.helpwheel.databinding.FragmentDashboardBinding;
 import com.example.helpwheel.ui.fuel_managment.adapter.ScreenSlidePageAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -54,6 +55,8 @@ public class DashboardFragment extends Fragment {
     private String speed = "";
     public static final String PREF = "user";
     public static final String USERNAME_PREF = "usernamePref";
+    public static final String WEATHER_TEMPERATURE = "weatherTemp";
+    public static final String WEATHER_DESCRIPTION = "weatherDesc";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -120,12 +123,29 @@ public class DashboardFragment extends Fragment {
                     JSONObject Json_description = jsonArray.getJSONObject(0);
                     main_description = Json_description.getString("main");
                     description = weather_desc + " " + Json_description.getString("description");
+//                    Bundle weather = new Bundle();
+//                    weather.putString("weather from dashboard", temperature);
+//                    getParentFragmentManager().setFragmentResult("weather from dashboard", weather);
+                    if (preferences.getString(WEATHER_TEMPERATURE, null)!=null && preferences.getString(WEATHER_DESCRIPTION, null)!=null){
+
+                        editor.remove(WEATHER_TEMPERATURE);
+                        editor.remove(WEATHER_DESCRIPTION);
+                        editor.putString(WEATHER_TEMPERATURE, temperature);
+                        editor.putString(WEATHER_DESCRIPTION, description);
+                        editor.apply();
+                    }else{
+                        editor.putString(WEATHER_TEMPERATURE, temperature);
+                        editor.putString(WEATHER_DESCRIPTION, description);
+                        editor.apply();
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 assert main_description != null;
                 assert description != null;
+
+
                 if (main_description.trim().toLowerCase(Locale.ROOT).
                         equals(description.trim().
                                 toLowerCase(Locale.ROOT))) {
@@ -133,12 +153,14 @@ public class DashboardFragment extends Fragment {
                     binding.currentWeather.append(feel_temperature + "\n");
                     binding.currentWeather.append(main_description + "\n");
                     binding.currentWeather.append(wind + "\n");
+
                 } else {
                     binding.currentWeather.setText(temperature + "\n");
                     binding.currentWeather.append(feel_temperature + "\n");
                     binding.currentWeather.append(main_description + "\n");
                     binding.currentWeather.append(description + "\n");
                     binding.currentWeather.append(wind + "\n");
+
                 }
                 binding.weatherLoading.setVisibility(View.INVISIBLE);
                 showSuccessMessage();
@@ -149,6 +171,7 @@ public class DashboardFragment extends Fragment {
             }
 
         });
+
 
         return root;
     }
@@ -162,6 +185,7 @@ public class DashboardFragment extends Fragment {
         pagerAdapter = new ScreenSlidePageAdapterWeathner(requireActivity());
         viewPager2.setAdapter(pagerAdapter);
         viewPager2.setPageTransformer(new ZoomPageTransformer());
+        new TabLayoutMediator(binding.tab, binding.weatherViewPager,(tab, position) -> {}).attach();
     }
     private class ZoomPageTransformer implements ViewPager2.PageTransformer{
         private static final float MIN_SCALE = 0.85f;
@@ -185,11 +209,8 @@ public class DashboardFragment extends Fragment {
                 }
                 page.setScaleX(scaleFactor);
                 page.setScaleY(scaleFactor);
-                page.setAlpha(MIN_ALPHA+(scaleFactor-MIN_SCALE)/(1-MIN_SCALE)*(1-MIN_SCALE));
             }
-            else {
-                page.setAlpha(0f);
-            }
+
         }
     }
     private class ScreenSlidePageAdapterWeathner extends FragmentStateAdapter{
