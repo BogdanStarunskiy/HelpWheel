@@ -18,7 +18,8 @@
             app:destination="@id/updateNotesFragment" />
         <action
             android:id="@+id/action_navigation_home_to_addNotesFragment2"
-            app:destination="@id/addNotesFragment" />
+            app:destination="@id/addNotesFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
 
     <fragment
@@ -36,7 +37,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.helpwheel.ui.fuel_managment.FuelManagementFragment"
+        android:name="com.example.helpwheel.ui.fuel_management.FuelManagementFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_fuel_management" >
     </fragment>

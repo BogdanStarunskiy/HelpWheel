@@ -63,5 +63,6 @@
     <string name="co2_you_ve_produced">CO2 you`ve produced:</string>
     <string name="if_you_use_gasoline">Gasoline:</string>
     <string name="if_you_use_diesel">Diesel:</string>
+    <string name="plan_a_ride">Plan a ride:</string>
 
 </resources>

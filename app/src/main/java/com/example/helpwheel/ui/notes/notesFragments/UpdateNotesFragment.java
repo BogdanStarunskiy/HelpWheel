@@ -63,7 +63,7 @@ public class UpdateNotesFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.both_fields_required, Toast.LENGTH_SHORT).show();
         });
 
-        binding.calendarBtn.setOnClickListener(v1 -> materialDatePicker.show(getChildFragmentManager(), "MATERIAL_DATE_PICKER"));
+        binding.descriptionEditText.setEndIconOnClickListener(v1 -> materialDatePicker.show(getChildFragmentManager(), "MATERIAL_DATE_PICKER"));
         materialDatePicker.addOnPositiveButtonClickListener(this::getDate);
     }
 
