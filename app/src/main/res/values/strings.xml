@@ -64,5 +64,13 @@
     <string name="if_you_use_gasoline">Gasoline:</string>
     <string name="if_you_use_diesel">Diesel:</string>
     <string name="plan_a_ride">Plan a ride:</string>
+    <string name="litres_have_left">Litres in th tank</string>
+    <string name="litres_symbol">L</string>
+    <string name="grams_sign">g</string>
+    <string name="you_will_spend">You will spend:</string>
+    <string name="co2_you_will_produce">CO2 you will produce</string>
+    <string name="distance">Distance</string>
+    <string name="next_ride">Next ride</string>
+    <string name="last_ride">Last ride</string>
 
 </resources>

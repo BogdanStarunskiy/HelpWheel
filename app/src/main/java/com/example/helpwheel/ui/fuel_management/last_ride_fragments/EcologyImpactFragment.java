@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentEcologyImpactBinding;
 
 public class EcologyImpactFragment extends Fragment {
@@ -20,7 +21,7 @@ public class EcologyImpactFragment extends Fragment {
     public static final String APP_PREFERENCES_DIESEL_EMISSIONS = "diesel_emissions";
     SharedPreferences fuelStats;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentEcologyImpactBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -30,7 +31,7 @@ public class EcologyImpactFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
-        binding.dieselCount.setText(String.valueOf(fuelStats.getFloat(APP_PREFERENCES_DIESEL_EMISSIONS, 0.0f)));
-        binding.gasolineCount.setText(String.valueOf(fuelStats.getFloat(APP_PREFERENCES_GASOLINE_EMISSIONS, 0.0f)));
+        binding.dieselCount.setText(String.format("%s %s", fuelStats.getFloat(APP_PREFERENCES_DIESEL_EMISSIONS, 0.0f), getString(R.string.grams_sign)));
+        binding.gasolineCount.setText(String.format("%s %s", fuelStats.getFloat(APP_PREFERENCES_GASOLINE_EMISSIONS, 0.0f), getString(R.string.grams_sign)));
     }
 }
