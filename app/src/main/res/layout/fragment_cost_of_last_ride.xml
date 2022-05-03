@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.fuel_management.last_ride_fragments.CostOfLastRideFragment">
     <androidx.cardview.widget.CardView
-        android:layout_margin="8dp"
+        android:layout_margin="10dp"
         app:cardCornerRadius="15dp"
         android:backgroundTint="@color/dark"
         android:layout_width="match_parent"
