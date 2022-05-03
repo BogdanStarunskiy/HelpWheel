@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,18 +39,18 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public static final String APP_PREFERENCES_PRE_PRICE = "pre_price";
     public static final String APP_PREFERENCES_DISTANCE = "distance";
     public static final String APP_PREFERENCES_PRICE = "price";
-    public static final String APP_PREFERENCES_SPENT_FUEL = "spent_fuel";
+    public static final String APP_PREFERENCES_SPENT_FUEL = "spent_uel";
     public static final String APP_PREFERENCES_GASOLINE_EMISSIONS = "gasoline_emissions";
     public static final String APP_PREFERENCES_DIESEL_EMISSIONS = "diesel_emissions";
     private static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     private static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
-    BottomSheetDialog bottomSheetDialog;
+    private BottomSheetDialog bottomSheetDialog;
     SharedPreferences fuelStats, regData;
-    AlertDialog alertDialog;
-    BottomSheetCallBack callBack;
+    private AlertDialog alertDialog;
+    private BottomSheetCallBack callBack;
 
     public LastRideBottomSheetFragment lastRideBottomSheetFragment;
-    private SharedPreferences.Editor editor;
+    SharedPreferences.Editor editor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -122,9 +121,16 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
 //
 //                editor.apply();
 //            });
+
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        editor.apply();
+        binding = null;
+    }
 
     private Float OldOdometerValue() {
         editor.putFloat(APP_PREFERENCES_ODOMETER_OLD, fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0));
@@ -204,12 +210,6 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         return result;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        editor.apply();
-        binding = null;
-    }
 
 
     @Override
