@@ -9,5 +9,6 @@
     <color name="darker">#191920</color>
     <color name="yellow">#FCCE28</color>
     <color name="dark_gray">#453F3D</color>
+    <color name="background">#303D50</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

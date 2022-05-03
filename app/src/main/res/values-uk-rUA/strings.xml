@@ -52,4 +52,13 @@
     <string name="co2_you_ve_produced">Викинуто CO2:</string>
     <string name="if_you_use_gasoline">Бензин:</string>
     <string name="if_you_use_diesel">Дизель:</string>
+    <string name="plan_a_ride">Запланувати поїздку:</string>
+    <string name="litres_have_left">Літрів в баці</string>
+    <string name="litres_symbol">Л</string>
+    <string name="grams_sign">гр</string>
+    <string name="you_will_spend">Ви використаете:</string>
+    <string name="co2_you_will_produce">CO2 в атмосферу</string>
+    <string name="distance">Відстань</string>
+    <string name="next_ride">Наступна поїздка</string>
+    <string name="last_ride">Минула поїздка</string>
 </resources>

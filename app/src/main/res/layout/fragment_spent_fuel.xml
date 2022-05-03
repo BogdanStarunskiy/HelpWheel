@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fuel_managment.fuel_stats_fragments.SpentFuelFragment">
+    tools:context=".ui.fuel_management.last_ride_fragments.SpentFuelFragment">
     <androidx.cardview.widget.CardView
-        android:layout_margin="8dp"
+        android:layout_margin="10dp"
         app:cardCornerRadius="15dp"
         android:backgroundTint="@color/dark"
         android:layout_width="match_parent"
