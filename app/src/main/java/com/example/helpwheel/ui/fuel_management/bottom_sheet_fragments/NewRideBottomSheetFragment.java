@@ -17,10 +17,8 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class NewRideBottomSheetFragment extends Fragment {
-    public static final String APP_PREFERENCES = "fuelStats";
     public static final String PREF = "user";
     public static final String APP_NEW_RIDE_PREFERENCES = "new_ride_prefs";
-    public static final String APP_PREFERENCES_DISTANCE = "distance";
     public static final String APP_NEW_RIDE_DISTANCE = "new_ride_distance";
     public static final String APP_NEW_RIDE_PRICE = "new_ride_price";
     public static final String APP_NEW_RIDE_PRE_PRICE = "new_ride_pre_price";
@@ -31,7 +29,7 @@ public class NewRideBottomSheetFragment extends Fragment {
     private static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     private static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
     private FragmentNewRideBottomSheetBinding binding;
-    private SharedPreferences newRideData, fuelStats, regData;
+    private SharedPreferences newRideData, regData;
     private SharedPreferences.Editor editor;
 
     @Override
@@ -45,7 +43,6 @@ public class NewRideBottomSheetFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         newRideData = requireContext().getSharedPreferences(APP_NEW_RIDE_PREFERENCES, requireContext().MODE_PRIVATE);
-        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
         regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
         editor = newRideData.edit();
         binding.submitBtnFuel.setOnClickListener(v -> {
