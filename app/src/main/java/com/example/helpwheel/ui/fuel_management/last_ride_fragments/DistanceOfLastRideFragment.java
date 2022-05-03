@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDistanceOfLastRideBinding;
-import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
 
 public class DistanceOfLastRideFragment extends Fragment {
     FragmentDistanceOfLastRideBinding binding;

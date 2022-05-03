@@ -28,6 +28,6 @@ public class SpendFuelNewRideFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences newRideData = requireContext().getSharedPreferences(APP_NEW_RIDE_PREFERENCES, requireContext().MODE_PRIVATE);
-        binding.spentFuel.setText(String.format("%s %s", newRideData.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f), getString(R.string.litres_symbol)));
+        binding.spendFuelNewRide.setText(String.format("%s %s", newRideData.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f), getString(R.string.litres_symbol)));
     }
 }

@@ -94,10 +94,9 @@ public class LastRideBottomSheetFragment extends Fragment {
     }
 
     private Float formattedNumber(Float number) {
-        float result = BigDecimal.valueOf(number)
+        return BigDecimal.valueOf(number)
                 .setScale(2, BigDecimal.ROUND_HALF_DOWN)
                 .floatValue();
-        return result;
     }
 
     private void countPrice() {
@@ -139,10 +138,10 @@ public class LastRideBottomSheetFragment extends Fragment {
 
     private void countFuelInTank() {
         if (fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) == 0.0f) {
-            Float fuelLevel = regData.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
+            float fuelLevel = regData.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
             editor.putFloat(FUEL_LEVEL_OLD, fuelLevel);
         } else {
-            Float newFuelLevel = fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) - fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
+            float newFuelLevel = fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) - fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
             editor.putFloat(FUEL_LEVEL_OLD, newFuelLevel);
             editor.putFloat(FUEL_LEVEL, newFuelLevel);
         }

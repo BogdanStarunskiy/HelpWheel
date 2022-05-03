@@ -2,15 +2,13 @@ package com.example.helpwheel.ui.fuel_management.bottom_sheet_fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentNewRideBottomSheetBinding;
@@ -35,6 +33,7 @@ public class NewRideBottomSheetFragment extends Fragment {
     private FragmentNewRideBottomSheetBinding binding;
     private SharedPreferences newRideData, fuelStats, regData;
     private SharedPreferences.Editor editor;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,7 +73,7 @@ public class NewRideBottomSheetFragment extends Fragment {
     }
 
     private void countPrice() {
-        Float price = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f) * newRideData.getFloat(APP_NEW_RIDE_PRE_PRICE, 0.0f);
+        Float price = consumptionPer1km() * newRideData.getFloat(APP_NEW_RIDE_DISTANCE, 0.0f) * newRideData.getFloat(APP_NEW_RIDE_PRE_PRICE, 0.0f);
         editor.putFloat(APP_NEW_RIDE_PRICE, formattedNumber(price));
         editor.apply();
     }
@@ -84,10 +83,9 @@ public class NewRideBottomSheetFragment extends Fragment {
     }
 
     private Float formattedNumber(Float number) {
-        float result = BigDecimal.valueOf(number)
+        return BigDecimal.valueOf(number)
                 .setScale(2, BigDecimal.ROUND_HALF_DOWN)
                 .floatValue();
-        return result;
     }
 
     private void callMethods() {
@@ -96,7 +94,7 @@ public class NewRideBottomSheetFragment extends Fragment {
     }
 
     private void countWillBeUsedFuel() {
-        Float willBeUsed = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f);
+        Float willBeUsed = consumptionPer1km() * newRideData.getFloat(APP_NEW_RIDE_DISTANCE, 0.0f);
         editor.putFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, formattedNumber(willBeUsed));
         editor.apply();
     }
