@@ -47,17 +47,24 @@
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_add_notes.xml" value="0.2" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_change_data.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_cost_of_last_ride.xml" value="0.2359375" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_cost_of_new_ride.xml" value="0.2359375" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_dashboard.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_distance_of_last_ride.xml" value="0.25" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_distance_of_new_ride.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_ecology_impact.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_ecology_impact_blank.xml" value="0.2359375" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_ecology_impact_new_ride.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_enter_welcome_data.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_fuel_control.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_fuel_management.xml" value="0.2" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_fuel_managment.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_last_ride_bottom_sheet.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_new_refueling_dialog_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_new_ride_bottom_sheet.xml" value="0.25" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_notes.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_notifications.xml" value="0.2" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_spend_fuel_new_ride.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_spent_fuel.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_update_notes.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_welcome.xml" value="0.25" />

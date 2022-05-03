@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,6 +21,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:layout_gravity="center"
+            android:layout_margin="3dp"
+            android:textAlignment="center"
             android:id="@+id/fuel_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +46,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_last_ride"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:layout_marginVertical="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,38 +62,39 @@
         app:tabGravity="center"
         app:tabIndicator="@color/transparent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/fuel_input_button"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/dark"
-        android:text="@string/enter_data"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tab_last_ride" />
+     <com.google.android.material.button.MaterialButton
+         android:id="@+id/fuel_input_button"
+         android:layout_width="match_parent"
+         android:layout_height="60dp"
+         android:layout_marginVertical="5dp"
+         android:layout_marginStart="8dp"
+         android:layout_marginEnd="8dp"
+         android:backgroundTint="@color/dark"
+         android:text="@string/enter_data"
+         android:textAllCaps="false"
+         android:textColor="@color/white"
+         android:textSize="25sp"
+         app:cardElevation="200dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@id/tab_new_ride" />
 
     <TextView
         android:id="@+id/new_ride_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginHorizontal="15dp"
         android:text="@string/plan_a_ride"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@id/view_pager_new_ride"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fuel_input_button" />
+        app:layout_constraintTop_toBottomOf="@id/tab_last_ride" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager_new_ride"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:layout_marginVertical="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,4 +111,4 @@
         app:tabIndicator="@color/transparent" />
 
  </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</FrameLayout>

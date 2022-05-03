@@ -1,4 +1,4 @@
-package com.example.helpwheel.ui.fuel_management.last_ride_fragments;
+package com.example.helpwheel.ui.fuel_management.new_ride_fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,12 +14,13 @@ import android.view.ViewGroup;
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentEcologyImpactBinding;
 
-public class EcologyImpactFragment extends Fragment {
+
+public class EcologyImpactNewRideFragment extends Fragment {
     FragmentEcologyImpactBinding binding;
-    public static final String APP_PREFERENCES = "fuelStats";
-    public static final String APP_PREFERENCES_GASOLINE_EMISSIONS = "gasoline_emissions";
-    public static final String APP_PREFERENCES_DIESEL_EMISSIONS = "diesel_emissions";
-    SharedPreferences fuelStats;
+    public static final String APP_NEW_RIDE_PREFERENCES = "new_ride_prefs";
+    public static final String APP_NEW_RIDE_GASOLINE_EMISSIONS = "new_ride_gasoline_emissions";
+    public static final String APP_NEW_RIDE_DIESEL_EMISSIONS = "new_ride_diesel_emissions";
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -30,8 +31,8 @@ public class EcologyImpactFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
-        binding.dieselCount.setText(String.format("%s %s", fuelStats.getFloat(APP_PREFERENCES_DIESEL_EMISSIONS, 0.0f), getString(R.string.grams_sign)));
-        binding.gasolineCount.setText(String.format("%s %s", fuelStats.getFloat(APP_PREFERENCES_GASOLINE_EMISSIONS, 0.0f), getString(R.string.grams_sign)));
+        SharedPreferences newRideData = requireContext().getSharedPreferences(APP_NEW_RIDE_PREFERENCES, requireContext().MODE_PRIVATE);
+        binding.gasolineCount.setText(String.format("%s %s", newRideData.getFloat(APP_NEW_RIDE_GASOLINE_EMISSIONS, 0.0f), getString(R.string.grams_sign)));
+        binding.dieselCount.setText(String.format("%s %s", newRideData.getFloat(APP_NEW_RIDE_DIESEL_EMISSIONS, 0.0f), getString(R.string.grams_sign)));
     }
 }

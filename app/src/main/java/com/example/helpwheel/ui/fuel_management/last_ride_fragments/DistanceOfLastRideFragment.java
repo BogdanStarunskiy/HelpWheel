@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDistanceOfLastRideBinding;
 
 public class DistanceOfLastRideFragment extends Fragment {
@@ -20,9 +21,10 @@ public class DistanceOfLastRideFragment extends Fragment {
     public static final String APP_PREFERENCES_DISTANCE = "distance";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentDistanceOfLastRideBinding.inflate(inflater, container, false);
+
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         return binding.getRoot();
     }
@@ -33,7 +35,7 @@ public class DistanceOfLastRideFragment extends Fragment {
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f)
             binding.distanceCounter.setText("0.0");
         else
-            binding.distanceCounter.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f)));
+            binding.distanceCounter.setText(String.format("%s %s", fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f), getResources().getString(R.string.km)));
     }
 
 }
