@@ -16,7 +16,6 @@ import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
 import com.example.helpwheel.ui.fuel_management.adapter.BottomSheetVPAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.LastRideAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.NewRideAdapter;
-import com.example.helpwheel.ui.fuel_management.bottom_sheet_fragments.LastRideBottomSheetFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -34,9 +33,8 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public static final String APP_PREFERENCES_SPENT_FUEL = "spent_uel";
     private BottomSheetDialog bottomSheetDialog;
     SharedPreferences fuelStats, regData;
-    private BottomSheetCallBack callBack;
 
-    public LastRideBottomSheetFragment lastRideBottomSheetFragment;
+
     SharedPreferences.Editor editor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,21 +52,12 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
 
         countFuelInTank();
-
-        ViewPager2 newRideVP = binding.viewPagerNewRide;
-        ViewPager2 lastRideVP = binding.viewPagerLastRide;
-        lastRideVP.setAdapter(new LastRideAdapter(this));
-        newRideVP.setAdapter(new NewRideAdapter(this));
-        new TabLayoutMediator(binding.tabLastRide, binding.viewPagerLastRide, (tab, position) -> {
-        }).attach();
-        new TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide, (tab, position) -> {
-        }).attach();
+        initializeViewPagersAndTabs();
 
         binding.fuelLevel.setText(String.format("%s %s", formattedNumber(fuelStats.getFloat(FUEL_LEVEL, regData.getFloat(FUEL_TANK_CAPACITY, 0.0f))), getString(R.string.litres_have_left)));
         bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
-        lastRideBottomSheetFragment = new LastRideBottomSheetFragment();
-        lastRideBottomSheetFragment.regCallBack(callBack);
+
 
         binding.fuelInputButton.setOnClickListener(v -> {
             bottomSheetDialog.show();
@@ -105,6 +94,17 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         return BigDecimal.valueOf(number)
                 .setScale(2, BigDecimal.ROUND_HALF_DOWN)
                 .floatValue();
+    }
+
+    private void initializeViewPagersAndTabs(){
+        ViewPager2 newRideVP = binding.viewPagerNewRide;
+        ViewPager2 lastRideVP = binding.viewPagerLastRide;
+        lastRideVP.setAdapter(new LastRideAdapter(this));
+        newRideVP.setAdapter(new NewRideAdapter(this));
+        new TabLayoutMediator(binding.tabLastRide, binding.viewPagerLastRide, (tab, position) -> {
+        }).attach();
+        new TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide, (tab, position) -> {
+        }).attach();
     }
 
 

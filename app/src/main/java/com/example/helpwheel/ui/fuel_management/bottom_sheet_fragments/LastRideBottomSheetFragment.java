@@ -42,6 +42,10 @@ public class LastRideBottomSheetFragment extends Fragment {
     SharedPreferences fuelStats, regData;
     private SharedPreferences.Editor editor;
 
+    public  LastRideBottomSheetFragment(BottomSheetCallBack callBack) {
+        this.callBack = callBack;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,8 +76,8 @@ public class LastRideBottomSheetFragment extends Fragment {
                 callMethods();
             } else if (!priceValue.isEmpty()) {
                 binding.odometerEditText.setError(getString(R.string.edit_text_odometer_error));
-            }
-            // callBack.dismissBottomSheet();
+            } else
+             callBack.dismissBottomSheet();
 
         });
     }

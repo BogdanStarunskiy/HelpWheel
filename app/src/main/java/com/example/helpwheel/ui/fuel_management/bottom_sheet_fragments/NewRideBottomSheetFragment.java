@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentNewRideBottomSheetBinding;
+import com.example.helpwheel.ui.fuel_management.BottomSheetCallBack;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -31,6 +32,11 @@ public class NewRideBottomSheetFragment extends Fragment {
     private FragmentNewRideBottomSheetBinding binding;
     private SharedPreferences newRideData, regData;
     private SharedPreferences.Editor editor;
+    BottomSheetCallBack callBack;
+
+    public NewRideBottomSheetFragment(BottomSheetCallBack callBack) {
+        this.callBack = callBack;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -59,7 +65,8 @@ public class NewRideBottomSheetFragment extends Fragment {
                 callMethods();
             } else if (!price.isEmpty()) {
                 binding.distanceNewRideEditText.setError(getString(R.string.edit_text_odometer_error));
-            }
+            } else
+            callBack.dismissBottomSheet();
         });
     }
 

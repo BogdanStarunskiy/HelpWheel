@@ -74,7 +74,6 @@
          android:textAllCaps="false"
          android:textColor="@color/white"
          android:textSize="25sp"
-         app:cardCornerRadius="15dp"
          app:cardElevation="200dp"
          app:layout_constraintBottom_toBottomOf="parent"
          app:layout_constraintEnd_toEndOf="parent"
