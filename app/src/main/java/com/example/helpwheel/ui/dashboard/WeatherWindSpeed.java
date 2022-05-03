@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.helpwheel.R;
+
 import com.example.helpwheel.databinding.FragmentWeatherWindSpeedBinding;
 
 
@@ -38,6 +38,9 @@ public class WeatherWindSpeed extends Fragment {
         };
 
         pref.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        if(pref.getString(WEATHER_WIND, "error")!=null){
+            binding.weatherWind.setText(pref.getString(WEATHER_WIND, "error"));
+        }
         return binding.getRoot();
     }
     private void setWind(){

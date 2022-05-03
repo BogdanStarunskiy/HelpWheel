@@ -72,10 +72,6 @@ public class DashboardFragment extends Fragment {
     private static final int NUM_PAGES = 2;
 
 
-    private void showSuccessMessage() {
-        binding.currentWeather.setVisibility(View.VISIBLE);
-    }
-
     private void showErrorMessage() {
         binding.currentWeather.setVisibility(View.VISIBLE);
         binding.currentWeather.setText(R.string.error_weather);
@@ -124,9 +120,6 @@ public class DashboardFragment extends Fragment {
                     JSONObject Json_description = jsonArray.getJSONObject(0);
                     main_description = Json_description.getString("main");
                     description = weather_desc + " " + Json_description.getString("description");
-//                    Bundle weather = new Bundle();
-//                    weather.putString("weather from dashboard", temperature);
-//                    getParentFragmentManager().setFragmentResult("weather from dashboard", weather);
                     if (preferences.getString(WEATHER_TEMPERATURE, null)!=null || preferences.getString(WEATHER_DESCRIPTION, null)!=null || preferences.getString(WEATHER_WIND, null)!=null){
                         editor.remove(WEATHER_WIND);
                         editor.remove(WEATHER_TEMPERATURE);
@@ -147,26 +140,7 @@ public class DashboardFragment extends Fragment {
                 }
                 assert main_description != null;
                 assert description != null;
-
-
-                if (main_description.trim().toLowerCase(Locale.ROOT).
-                        equals(description.trim().
-                                toLowerCase(Locale.ROOT))) {
-                    binding.currentWeather.setText(temperature + "\n");
-                    binding.currentWeather.append(feel_temperature + "\n");
-                    binding.currentWeather.append(main_description + "\n");
-                    binding.currentWeather.append(wind + "\n");
-
-                } else {
-                    binding.currentWeather.setText(temperature + "\n");
-                    binding.currentWeather.append(feel_temperature + "\n");
-                    binding.currentWeather.append(main_description + "\n");
-                    binding.currentWeather.append(description + "\n");
-                    binding.currentWeather.append(wind + "\n");
-
-                }
                 binding.weatherLoading.setVisibility(View.INVISIBLE);
-                showSuccessMessage();
             } else {
                 showErrorMessage();
                 binding.weatherLoading.setVisibility(View.INVISIBLE);
@@ -185,14 +159,13 @@ public class DashboardFragment extends Fragment {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         checkPermissions();
         viewPager2 = binding.weatherViewPager;
-        pagerAdapter = new ScreenSlidePageAdapterWeathner(requireActivity());
+        pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
         viewPager2.setAdapter(pagerAdapter);
         viewPager2.setPageTransformer(new ZoomPageTransformer());
         new TabLayoutMediator(binding.tab, binding.weatherViewPager,(tab, position) -> {}).attach();
     }
     private class ZoomPageTransformer implements ViewPager2.PageTransformer{
         private static final float MIN_SCALE = 0.85f;
-        private static final float MIN_ALPHA = 0.5f;
 
         @Override
         public void transformPage(@NonNull View page, float position) {
@@ -214,10 +187,11 @@ public class DashboardFragment extends Fragment {
                 page.setScaleY(scaleFactor);
             }
 
+
         }
     }
-    private class ScreenSlidePageAdapterWeathner extends FragmentStateAdapter{
-        public ScreenSlidePageAdapterWeathner(@NonNull FragmentActivity fragmentActivity) {
+    private class ScreenSlidePageAdapterWeather extends FragmentStateAdapter{
+        public ScreenSlidePageAdapterWeather(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
         }
 
@@ -336,12 +310,6 @@ public class DashboardFragment extends Fragment {
     public void onStart() {
         super.onStart();
         requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
-    }
-    public String getTemperature(){
-        return temperature;
-    }
-    public String getDescription(){
-        return description;
     }
 
 }
