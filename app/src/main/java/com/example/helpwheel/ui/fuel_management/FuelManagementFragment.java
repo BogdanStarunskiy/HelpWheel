@@ -16,6 +16,7 @@ import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
 import com.example.helpwheel.ui.fuel_management.adapter.BottomSheetVPAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.LastRideAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.NewRideAdapter;
+import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -32,6 +33,8 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public static final String FUEL_LEVEL = "fuelLevel";
     public static final String APP_PREFERENCES_SPENT_FUEL = "spent_uel";
     private BottomSheetDialog bottomSheetDialog;
+    private View currentView;
+    private Bundle currentBundle;
     SharedPreferences fuelStats, regData;
 
 
@@ -58,6 +61,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         bottomSheetDialog = new BottomSheetDialog(requireContext());
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
 
+        getViewAndBundle(view, savedInstanceState);
 
         binding.fuelInputButton.setOnClickListener(v -> {
             bottomSheetDialog.show();
@@ -106,10 +110,17 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         new TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide, (tab, position) -> {
         }).attach();
     }
+    public void getViewAndBundle(View view, Bundle savedInstanceState){
+        currentView = view;
+        currentBundle = savedInstanceState;
+    }
 
-
+    private void updateUI(){
+        onViewCreated(currentView, currentBundle);
+    }
     @Override
     public void dismissBottomSheet() {
         bottomSheetDialog.dismiss();
+        updateUI();
     }
 }

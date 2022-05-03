@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentLastRideBottomSheetBinding;
-import com.example.helpwheel.ui.fuel_management.BottomSheetCallBack;
+import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -69,11 +69,13 @@ public class LastRideBottomSheetFragment extends Fragment {
                 calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
                 countPrice();
                 callMethods();
+                callBack.dismissBottomSheet();
             } else if (!odometerValue.isEmpty()) {
                 calculatingDifferences(OldOdometerValue(), Float.parseFloat(odometerValue));
                 editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
                 editor.putFloat(APP_PREFERENCES_PRICE, 0.0f);
                 callMethods();
+                callBack.dismissBottomSheet();
             } else if (!priceValue.isEmpty()) {
                 binding.odometerEditText.setError(getString(R.string.edit_text_odometer_error));
             } else

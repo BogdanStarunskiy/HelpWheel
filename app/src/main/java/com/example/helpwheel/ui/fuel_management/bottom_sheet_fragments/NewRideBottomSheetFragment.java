@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentNewRideBottomSheetBinding;
-import com.example.helpwheel.ui.fuel_management.BottomSheetCallBack;
+import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -59,10 +59,12 @@ public class NewRideBottomSheetFragment extends Fragment {
                 editor.putFloat(APP_NEW_RIDE_PRE_PRICE, Float.parseFloat(price));
                 countPrice();
                 callMethods();
+                callBack.dismissBottomSheet();
             } else if (!distance.isEmpty()) {
                 editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
                 editor.putFloat(APP_NEW_RIDE_PRE_PRICE, 0.0f);
                 callMethods();
+                callBack.dismissBottomSheet();
             } else if (!price.isEmpty()) {
                 binding.distanceNewRideEditText.setError(getString(R.string.edit_text_odometer_error));
             } else
