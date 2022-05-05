@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,16 +30,13 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     private FragmentFuelManagementBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String PREF = "user";
-    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
-    public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
-    public static final String FUEL_LEVEL = "fuelLevel";
-    public static final String APP_PREFERENCES_SPENT_FUEL = "spent_uel";
-    private BottomSheetDialog bottomSheetDialog;
+    public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
+    public static final String FUEL_LEVEL = "fuel_level";
+    public static final String APP_PREFERENCES_SPENT_FUEL = "spent_fuel";
+    private BottomSheetDialog bottomSheetDialogFuelStats, bottomSheetDialogFuelInTank;
     private View currentView;
     private Bundle currentBundle;
     SharedPreferences fuelStats, regData;
-
-
     SharedPreferences.Editor editor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,22 +53,43 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         editor = fuelStats.edit();
         regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
 
-        countFuelInTank();
         initializeViewPagersAndTabs();
 
-        binding.fuelLevel.setText(String.format("%s %s", formattedNumber(fuelStats.getFloat(FUEL_LEVEL, regData.getFloat(FUEL_TANK_CAPACITY, 0.0f))), getString(R.string.litres_have_left)));
-        bottomSheetDialog = new BottomSheetDialog(requireContext());
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
+        bottomSheetDialogFuelStats = new BottomSheetDialog(requireContext());
+        bottomSheetDialogFuelStats.setContentView(R.layout.bottom_sheet_dialog_fuel_stats);
+        bottomSheetDialogFuelInTank = new BottomSheetDialog(requireContext());
+        bottomSheetDialogFuelInTank.setContentView(R.layout.bottom_sheet_fuel_in_tank);
+
+        float fuelLevel = formattedNumber(fuelStats.getFloat(FUEL_LEVEL, 0.0f));
+        binding.fuelLevel.setText(String.format("%s %s", fuelLevel, getString(R.string.litres_have_left)));
 
         getViewAndBundle(view, savedInstanceState);
-
         binding.fuelInputButton.setOnClickListener(v -> {
-            bottomSheetDialog.show();
-            ViewPager2 viewPager2BottomSheet = bottomSheetDialog.findViewById(R.id.view_pager_bottom_sheet);
+            bottomSheetDialogFuelStats.show();
+            ViewPager2 viewPager2BottomSheet = bottomSheetDialogFuelStats.findViewById(R.id.view_pager_bottom_sheet);
             assert viewPager2BottomSheet != null;
             viewPager2BottomSheet.setAdapter(new BottomSheetVPAdapter(this));
-            new TabLayoutMediator(Objects.requireNonNull(bottomSheetDialog.findViewById(R.id.tab)), viewPager2BottomSheet, (tab, position) -> {
+            new TabLayoutMediator(Objects.requireNonNull(bottomSheetDialogFuelStats.findViewById(R.id.tab)), viewPager2BottomSheet, (tab, position) -> {
             }).attach();
+        });
+
+        binding.editButton.setOnClickListener(v -> {
+            bottomSheetDialogFuelInTank.show();
+            EditText tankFuelLevel = bottomSheetDialogFuelInTank.findViewById(R.id.fuel_in_tank_text);
+            Button submit = bottomSheetDialogFuelInTank.findViewById(R.id.submit_btn_fuel_in_tank);
+
+            assert submit != null;
+            submit.setOnClickListener(v1 -> {
+                assert tankFuelLevel != null;
+                if (!tankFuelLevel.getText().toString().isEmpty()) {
+                    editor.putFloat(FUEL_LEVEL, Float.parseFloat(tankFuelLevel.getText().toString()));
+                    editor.apply();
+                    bottomSheetDialogFuelInTank.dismiss();
+                    updateUI();
+                } else {
+                    bottomSheetDialogFuelInTank.dismiss();
+                }
+            });
         });
     }
 
@@ -81,18 +101,19 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     }
 
     private void countFuelInTank() {
-        if (fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) == 0.0f) {
-            float fuelLevel = regData.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
-            editor.putFloat(FUEL_LEVEL_OLD, fuelLevel);
-        } else {
-            float newFuelLevel = fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) - fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
-            editor.putFloat(FUEL_LEVEL_OLD, newFuelLevel);
-            editor.putFloat(FUEL_LEVEL, newFuelLevel);
-            binding.fuelLevel.setText(String.valueOf(formattedNumber(newFuelLevel)));
+        if (fuelStats.getFloat(FUEL_LEVEL, 0.0f) == 0.0f) {
+            float spentFuel = fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
+            float fuelTankCapacity = regData.getFloat(FUEL_TANK_CAPACITY, 0.0f);
+            float fuelLevel = fuelTankCapacity - spentFuel;
+            editor.putFloat(FUEL_LEVEL, fuelLevel);
+        } else{
+            float lastFuelLevel = fuelStats.getFloat(FUEL_LEVEL, 0.0f);
+            float spentFuel = fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
+            float fuelLevel = lastFuelLevel - spentFuel;
+            editor.putFloat(FUEL_LEVEL, fuelLevel);
         }
         editor.apply();
-    }
-
+        }
 
     private Float formattedNumber(Float number) {
         return BigDecimal.valueOf(number)
@@ -110,6 +131,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         new TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide, (tab, position) -> {
         }).attach();
     }
+
     public void getViewAndBundle(View view, Bundle savedInstanceState){
         currentView = view;
         currentBundle = savedInstanceState;
@@ -118,9 +140,11 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     private void updateUI(){
         onViewCreated(currentView, currentBundle);
     }
+
     @Override
     public void dismissBottomSheet() {
-        bottomSheetDialog.dismiss();
+        bottomSheetDialogFuelStats.dismiss();
+        countFuelInTank();
         updateUI();
     }
 }

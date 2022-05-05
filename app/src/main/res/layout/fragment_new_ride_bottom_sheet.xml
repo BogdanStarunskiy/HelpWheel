@@ -60,7 +60,7 @@
             android:textColorHint="@color/gray" />
 
         <com.google.android.material.button.MaterialButton
-            android:layout_marginHorizontal="30dp"
+
             android:layout_marginTop="30dp"
             android:id="@+id/submit_btn_fuel"
             android:layout_width="match_parent"

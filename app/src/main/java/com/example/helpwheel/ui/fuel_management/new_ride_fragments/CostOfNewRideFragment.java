@@ -17,6 +17,7 @@ public class CostOfNewRideFragment extends Fragment {
     FragmentCostOfNewRideBinding binding;
     public static final String APP_NEW_RIDE_PREFERENCES = "new_ride_prefs";
     public static final String APP_NEW_RIDE_PRICE = "new_ride_price";
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class CostOfNewRideFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences newRideData = requireContext().getSharedPreferences(APP_NEW_RIDE_PREFERENCES, getContext().MODE_PRIVATE);
+        SharedPreferences newRideData = requireContext().getSharedPreferences(APP_NEW_RIDE_PREFERENCES, requireContext().MODE_PRIVATE);
         binding.price.setText(String.valueOf(newRideData.getFloat(APP_NEW_RIDE_PRICE, 0.0f)));
     }
 }

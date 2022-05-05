@@ -13,10 +13,11 @@ import android.view.ViewGroup;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentEcologyImpactBinding;
+import com.example.helpwheel.databinding.FragmentEcologyImpactNewRideBinding;
 
 
 public class EcologyImpactNewRideFragment extends Fragment {
-    FragmentEcologyImpactBinding binding;
+    FragmentEcologyImpactNewRideBinding binding;
     public static final String APP_NEW_RIDE_PREFERENCES = "new_ride_prefs";
     public static final String APP_NEW_RIDE_GASOLINE_EMISSIONS = "new_ride_gasoline_emissions";
     public static final String APP_NEW_RIDE_DIESEL_EMISSIONS = "new_ride_diesel_emissions";
@@ -24,7 +25,7 @@ public class EcologyImpactNewRideFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentEcologyImpactBinding.inflate(inflater, container, false);
+        binding = FragmentEcologyImpactNewRideBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

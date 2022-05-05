@@ -23,7 +23,7 @@ public class EnterWelcomeDataFragment extends Fragment {
     public static final String PREF = "user";
     public static final String USERNAME = "usernamePref";
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
-    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
+    public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -43,8 +43,8 @@ public class EnterWelcomeDataFragment extends Fragment {
     private void putToSharedPreferences() {
         try {
             String username = Objects.requireNonNull(binding.enterName.getText()).toString().trim();
-            Float consumptionPer100km = Float.parseFloat(Objects.requireNonNull(binding.consumptionPer100km.getText()).toString());
-            Float fuelTankCapacity = Float.parseFloat(Objects.requireNonNull(binding.fuelTankCapacity.getText()).toString());
+            float consumptionPer100km = Float.parseFloat(Objects.requireNonNull(binding.consumptionPer100km.getText()).toString());
+            float fuelTankCapacity = Float.parseFloat(Objects.requireNonNull(binding.fuelTankCapacity.getText()).toString());
             editor.putString(USERNAME, username);
             editor.putFloat(CONSUMPTION_PER_100KM, consumptionPer100km);
             editor.putFloat(FUEL_TANK_CAPACITY, fuelTankCapacity);

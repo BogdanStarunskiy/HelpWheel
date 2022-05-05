@@ -57,8 +57,8 @@ public class NewRideBottomSheetFragment extends Fragment {
             if (!distance.isEmpty() && !price.isEmpty()) {
                 editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
                 editor.putFloat(APP_NEW_RIDE_PRE_PRICE, Float.parseFloat(price));
-                countPrice();
                 callMethods();
+                countPrice();
                 callBack.dismissBottomSheet();
             } else if (!distance.isEmpty()) {
                 editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));

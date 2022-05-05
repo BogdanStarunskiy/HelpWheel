@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentChangeDataBinding;
 
+import java.util.Objects;
+
 public class ChangeDataFragment extends Fragment {
     FragmentChangeDataBinding binding;
     SharedPreferences preferences;
@@ -22,9 +24,9 @@ public class ChangeDataFragment extends Fragment {
     public static final String PREF = "user";
     public static final String USERNAME_PREF = "usernamePref";
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
-    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
+    public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentChangeDataBinding.inflate(inflater, container, false);
         preferences = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
@@ -36,11 +38,11 @@ public class ChangeDataFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.buttonOK.setOnClickListener(v -> {
-            if (!binding.enterName.getText().toString().trim().isEmpty())
+            if (!Objects.requireNonNull(binding.enterName.getText()).toString().trim().isEmpty())
                 editor.putString(USERNAME_PREF, binding.enterName.getText().toString().trim());
-            if (!binding.consumptionPer100km.getText().toString().trim().isEmpty())
+            if (!Objects.requireNonNull(binding.consumptionPer100km.getText()).toString().trim().isEmpty())
                 editor.putFloat(CONSUMPTION_PER_100KM, Float.parseFloat(binding.consumptionPer100km.getText().toString()));
-            if (!binding.fuelTankCapacity.getText().toString().trim().isEmpty())
+            if (!Objects.requireNonNull(binding.fuelTankCapacity.getText()).toString().trim().isEmpty())
                 editor.putFloat(FUEL_TANK_CAPACITY, Float.parseFloat(binding.fuelTankCapacity.getText().toString()));
             editor.apply();
             NavHostFragment.findNavController(this).navigate(R.id.action_changeDataFragment_to_navigation_dashboard);
