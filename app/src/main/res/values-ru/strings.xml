@@ -61,4 +61,5 @@
     <string name="distance">Расстояние</string>
     <string name="next_ride">Следущая поездка</string>
     <string name="last_ride">Прошлая поездка</string>
+    <string name="enter_current_fuel_level">Введите текущее количество топлива</string>
 </resources>
