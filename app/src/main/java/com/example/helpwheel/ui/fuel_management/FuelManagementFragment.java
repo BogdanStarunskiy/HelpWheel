@@ -15,10 +15,12 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
+import com.example.helpwheel.ui.dashboard.DashboardFragment;
 import com.example.helpwheel.ui.fuel_management.adapter.BottomSheetVPAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.LastRideAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.NewRideAdapter;
 import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
+import com.example.helpwheel.ui.fuel_management.page_transfromer.ZoomPageTransformer;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -48,6 +50,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
 
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
@@ -71,6 +74,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
             viewPager2BottomSheet.setAdapter(new BottomSheetVPAdapter(this));
             new TabLayoutMediator(Objects.requireNonNull(bottomSheetDialogFuelStats.findViewById(R.id.tab)), viewPager2BottomSheet, (tab, position) -> {
             }).attach();
+            viewPager2BottomSheet.setPageTransformer(new ZoomPageTransformer());
         });
 
         binding.editButton.setOnClickListener(v -> {
@@ -130,6 +134,8 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         }).attach();
         new TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide, (tab, position) -> {
         }).attach();
+        newRideVP.setPageTransformer(new ZoomPageTransformer());
+        lastRideVP.setPageTransformer(new ZoomPageTransformer());
     }
 
     public void getViewAndBundle(View view, Bundle savedInstanceState){

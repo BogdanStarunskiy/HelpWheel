@@ -73,5 +73,6 @@
     <string name="next_ride">Next ride</string>
     <string name="last_ride">Last ride</string>
     <string name="enter_current_fuel_level">Enter current fuel level</string>
+    <string name="remains_in_the_tank">Remains fuel:</string>
 
 </resources>

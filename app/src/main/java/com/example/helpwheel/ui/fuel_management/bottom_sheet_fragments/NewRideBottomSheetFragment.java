@@ -19,6 +19,7 @@ import java.util.Objects;
 
 public class NewRideBottomSheetFragment extends Fragment {
     public static final String PREF = "user";
+    public static final String APP_PREFERENCES = "fuelStats";
     public static final String APP_NEW_RIDE_PREFERENCES = "new_ride_prefs";
     public static final String APP_NEW_RIDE_DISTANCE = "new_ride_distance";
     public static final String APP_NEW_RIDE_PRICE = "new_ride_price";
@@ -27,10 +28,12 @@ public class NewRideBottomSheetFragment extends Fragment {
     public static final String APP_NEW_RIDE_WILL_BE_USED_FUEL = "will_be_used_fuel";
     public static final String APP_NEW_RIDE_GASOLINE_EMISSIONS = "new_ride_gasoline_emissions";
     public static final String APP_NEW_RIDE_DIESEL_EMISSIONS = "new_ride_diesel_emissions";
+    public static final String FUEL_LEVEL = "fuel_level";
+    public static final String APP_NEW_RIDE_REMAINS_FUEL = "remains_fuel";
     private static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     private static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
     private FragmentNewRideBottomSheetBinding binding;
-    private SharedPreferences newRideData, regData;
+    private SharedPreferences newRideData, regData, fuelStats;
     private SharedPreferences.Editor editor;
     BottomSheetCallBack callBack;
 
@@ -50,6 +53,7 @@ public class NewRideBottomSheetFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         newRideData = requireContext().getSharedPreferences(APP_NEW_RIDE_PREFERENCES, requireContext().MODE_PRIVATE);
         regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
+        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
         editor = newRideData.edit();
         binding.submitBtnFuel.setOnClickListener(v -> {
             String distance = Objects.requireNonNull(binding.distanceNewRideText.getText()).toString();
@@ -97,6 +101,7 @@ public class NewRideBottomSheetFragment extends Fragment {
     private void callMethods() {
         countWillBeUsedFuel();
         countImpactOnEcology();
+        calculateRemainsFuel();
     }
 
     private void countWillBeUsedFuel() {
@@ -111,6 +116,14 @@ public class NewRideBottomSheetFragment extends Fragment {
         Float dieselEmissions = co2EmissionPer1LiterOfDiesel * spentFuel;
         editor.putFloat(APP_NEW_RIDE_GASOLINE_EMISSIONS, formattedNumber(gasolineEmissions));
         editor.putFloat(APP_NEW_RIDE_DIESEL_EMISSIONS, formattedNumber(dieselEmissions));
+        editor.apply();
+    }
+
+    private void calculateRemainsFuel() {
+        float spendFuel = newRideData.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f);
+        float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, 0.0f);
+        float remainsFuel = fuelLevel - spendFuel;
+        editor.putFloat(APP_NEW_RIDE_REMAINS_FUEL, formattedNumber(remainsFuel));
         editor.apply();
     }
 
