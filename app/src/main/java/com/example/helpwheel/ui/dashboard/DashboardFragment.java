@@ -298,7 +298,32 @@ public class DashboardFragment extends Fragment {
                     if (location != null) {
                         Log.wtf("LOCATION", location.toString());
                         String url2 = "https://api.openweathermap.org/data/2.5/weather?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + key + "&units=metric&lang=en";
+                        dashboardViewModel.getTemperature(url2);
+                        dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
+                            if (s != null && !s.equals("")) {
 
+
+                                try {
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    temperature = jsonObject.getJSONObject("main").getDouble("temp") + " ";
+                                    wind = jsonObject.getJSONObject("wind").getDouble("speed") + " ";
+                                    JSONArray jsonArray = jsonObject.getJSONArray("weather");
+                                    JSONObject Json_description = jsonArray.getJSONObject(0);
+                                    description = Json_description.getString("description");
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                editor.putString(WEATHER_TEMP_AUTO, temperature);
+                                editor.putString(WEATHER_DESC_AUTO, description);
+                                editor.apply();
+
+                            }
+
+                        });
 
                         Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
                         List<Address> addresses = null;
