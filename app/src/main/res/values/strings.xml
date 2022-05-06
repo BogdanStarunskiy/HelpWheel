@@ -16,6 +16,7 @@
     <string name="weather_desc">Description: </string>
     <string name="degree_cels" translatable="false">℃</string>
     <string name="speed">KM/H</string>
+    <string name="type_input">Auto</string>
     <!-- auth -->
     <string name="greeting_auth">Hello!</string>
     <string name="enter_name_auth">Please, enter your name</string>

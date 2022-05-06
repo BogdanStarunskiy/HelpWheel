@@ -46,6 +46,7 @@
     <string name="enter_city_message">Введіть місто!</string>
     <string name="enter_new_data">Введіть нові данні</string>
     <string name="save">Зберегти</string>
+    <string name="type_input">Автоматично</string>
     <string name="distance_text">Відстань:</string>
     <string name="select_a_date">Оберіть дату</string>
     <string name="you_spent">Ви використали</string>
