@@ -22,11 +22,10 @@ public class LastRideBottomSheetFragment extends Fragment {
     FragmentLastRideBottomSheetBinding binding;
     BottomSheetCallBack callBack;
     public static final String APP_PREFERENCES = "fuelStats";
-    public static final String PREF = "user";
     public static final String APP_PREFERENCES_ODOMETER = "odometer";
     public static final String APP_PREFERENCES_PRE_PRICE = "pre_price";
     public static final String APP_PREFERENCES_PRICE = "price";
-    SharedPreferences fuelStats, regData;
+    SharedPreferences fuelStats;
     private SharedPreferences.Editor editor;
     SharedPreferencesHolder sharedPreferencesHolder;
 
@@ -38,6 +37,7 @@ public class LastRideBottomSheetFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentLastRideBottomSheetBinding.inflate(inflater, container, false);
+        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
         return binding.getRoot();
     }
 
@@ -45,10 +45,10 @@ public class LastRideBottomSheetFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
-        regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
+        sharedPreferencesHolder.setFuelStats(fuelStats);
+        sharedPreferencesHolder.setEditor(editor);
         binding.submitBtnFuel.setOnClickListener(v -> {
             String odometerValue = Objects.requireNonNull(binding.odometerText.getText()).toString();
             String priceValue = Objects.requireNonNull(binding.priceText.getText()).toString();
@@ -56,7 +56,7 @@ public class LastRideBottomSheetFragment extends Fragment {
                 editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
                 editor.putFloat(APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
                 sharedPreferencesHolder.calculatingDistance(sharedPreferencesHolder.oldOdometerValue(), Float.parseFloat(odometerValue));
-                sharedPreferencesHolder.countPrice("low");
+                sharedPreferencesHolder.countPrice("last");
                 callMethods();
                 callBack.dismissBottomSheet();
             } else if (!odometerValue.isEmpty()) {
@@ -69,7 +69,6 @@ public class LastRideBottomSheetFragment extends Fragment {
                 binding.odometerEditText.setError(getString(R.string.edit_text_odometer_error));
             } else
              callBack.dismissBottomSheet();
-
         });
     }
 

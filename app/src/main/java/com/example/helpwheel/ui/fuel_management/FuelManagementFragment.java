@@ -29,18 +29,19 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
 
     private FragmentFuelManagementBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
-    public static final String PREF = "user";
     public static final String FUEL_LEVEL = "fuel_level";
+    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
     private BottomSheetDialog bottomSheetDialogFuelStats, bottomSheetDialogFuelInTank;
     private View currentView;
     private Bundle currentBundle;
-    SharedPreferences fuelStats, regData;
+    SharedPreferences fuelStats;
     SharedPreferences.Editor editor;
     SharedPreferencesHolder sharedPreferencesHolder;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFuelManagementBinding.inflate(inflater, container, false);
+        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
         return binding.getRoot();
     }
 
@@ -48,15 +49,14 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
-        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
-        regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
-
+        sharedPreferencesHolder.setEditor(editor);
+        sharedPreferencesHolder.setFuelStats(fuelStats);
         initializeViewPagersAndTabs();
         initializeBottomSheetDialogs();
 
-        float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, 0.0f);
+        float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
         binding.fuelLevel.setText(String.format("%s %s", fuelLevel, getString(R.string.litres_have_left)));
 
         getViewAndBundle(view, savedInstanceState);

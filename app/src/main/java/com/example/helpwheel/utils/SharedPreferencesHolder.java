@@ -14,10 +14,7 @@ import java.math.BigDecimal;
 import java.util.Locale;
 
 public class SharedPreferencesHolder {
-    public static final String PREF = "user";
     public static final String APP_PREFERENCES = "fuelStats";
-    public static final String APP_NEW_RIDE_PREFERENCES = "new_ride_prefs";
-
     public static final String APP_NEW_RIDE_DISTANCE = "new_ride_distance";
     public static final String APP_NEW_RIDE_PRICE = "new_ride_price";
     public static final String APP_NEW_RIDE_PRE_PRICE = "new_ride_pre_price";
@@ -39,90 +36,86 @@ public class SharedPreferencesHolder {
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
     private static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     private static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
-    SharedPreferences newRideData;
-    SharedPreferences regData;
+
     SharedPreferences fuelStats;
-    SharedPreferences.Editor editorNewRideData;
-    SharedPreferences.Editor editorRegData;
-    SharedPreferences.Editor editorFuelStats;
-    Context context;
+    SharedPreferences.Editor editor;
+    Context sharedHolderContext;
 
     public SharedPreferencesHolder(Context context){
-        this.fuelStats = context.getSharedPreferences(APP_PREFERENCES, context.MODE_PRIVATE);
-        this.editorFuelStats = fuelStats.edit();
-        this.regData = context.getSharedPreferences(PREF, context.MODE_PRIVATE);
-        this.editorRegData = regData.edit();
-        this.newRideData = context.getSharedPreferences(APP_NEW_RIDE_PREFERENCES, context.MODE_PRIVATE);
-        this.editorNewRideData = newRideData.edit();
-        this.context = context;
+        this.sharedHolderContext = context;
+    }
+
+    public void setFuelStats(SharedPreferences fuelStats) {
+        this.fuelStats = fuelStats;
+    }
+
+    public void setEditor(SharedPreferences.Editor editor) {
+        this.editor = editor;
     }
 
     public void countFuelInTank() {
         if (fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) == 0.0f) {
-            float fuelLevel = regData.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
-            editorFuelStats.putFloat(FUEL_LEVEL_OLD, formattedNumber(fuelLevel));
+            float fuelLevel = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
+            editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(fuelLevel));
         } else {
             float newFuelLevel = fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) - fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
-            editorFuelStats.putFloat(FUEL_LEVEL_OLD, formattedNumber(newFuelLevel));
-            editorFuelStats.putFloat(FUEL_LEVEL, formattedNumber(newFuelLevel));
+            editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(newFuelLevel));
+            editor.putFloat(FUEL_LEVEL, formattedNumber(newFuelLevel));
         }
-        editorFuelStats.apply();
+        editor.apply();
     }
 
 
     public void calculateRemainsFuel() {
-        float spendFuel = newRideData.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f);
+        float spendFuel = fuelStats.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f);
         float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, 0.0f);
         float remainsFuel = fuelLevel - spendFuel;
-        editorNewRideData.putFloat(APP_NEW_RIDE_REMAINS_FUEL, formattedNumber(remainsFuel));
-        editorFuelStats.apply();
+        editor.putFloat(APP_NEW_RIDE_REMAINS_FUEL, formattedNumber(remainsFuel));
+        editor.apply();
     }
 
     public void countImpactOnEcology(String currentFragment) {
         if (currentFragment.toLowerCase(Locale.ROOT).equals("new")) {
-            Float spentFuel = newRideData.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f);
+            Float spentFuel = fuelStats.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f);
             Float gasolineEmissions = co2EmissionPer1LiterOfGasoline * spentFuel;
             Float dieselEmissions = co2EmissionPer1LiterOfDiesel * spentFuel;
-            editorNewRideData.putFloat(APP_NEW_RIDE_GASOLINE_EMISSIONS, formattedNumber(gasolineEmissions));
-            editorNewRideData.putFloat(APP_NEW_RIDE_DIESEL_EMISSIONS, formattedNumber(dieselEmissions));
-            editorNewRideData.apply();
+            editor.putFloat(APP_NEW_RIDE_GASOLINE_EMISSIONS, formattedNumber(gasolineEmissions));
+            editor.putFloat(APP_NEW_RIDE_DIESEL_EMISSIONS, formattedNumber(dieselEmissions));
         } else if (currentFragment.toLowerCase(Locale.ROOT).equals("last")) {
             Float spentFuel = fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
             Float gasolineEmissions = co2EmissionPer1LiterOfGasoline * spentFuel;
             Float dieselEmissions = co2EmissionPer1LiterOfDiesel * spentFuel;
-            editorFuelStats.putFloat(APP_PREFERENCES_GASOLINE_EMISSIONS, formattedNumber(gasolineEmissions));
-            editorFuelStats.putFloat(APP_PREFERENCES_DIESEL_EMISSIONS, formattedNumber(dieselEmissions));
-            editorFuelStats.apply();
+            editor.putFloat(APP_PREFERENCES_GASOLINE_EMISSIONS, formattedNumber(gasolineEmissions));
+            editor.putFloat(APP_PREFERENCES_DIESEL_EMISSIONS, formattedNumber(dieselEmissions));
         }
+        editor.apply();
     }
 
     public void countSpendFuel(String currentFragment) {
         if (currentFragment.toLowerCase(Locale.ROOT).equals("new")){
-            Float willBeUsed = consumptionPer1km() * newRideData.getFloat(APP_NEW_RIDE_DISTANCE, 0.0f);
-            editorNewRideData.putFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, formattedNumber(willBeUsed));
-            editorNewRideData.apply();
+            Float willBeUsed = consumptionPer1km() * fuelStats.getFloat(APP_NEW_RIDE_DISTANCE, 0.0f);
+            editor.putFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, formattedNumber(willBeUsed));
         } else if (currentFragment.toLowerCase(Locale.ROOT).equals("last")){
             Float spentFuel = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f);
-            editorFuelStats.putFloat(APP_PREFERENCES_SPENT_FUEL, formattedNumber(spentFuel));
-            editorFuelStats.apply();
+            editor.putFloat(APP_PREFERENCES_SPENT_FUEL, formattedNumber(spentFuel));
         }
+        editor.apply();
     }
 
     public void countPrice(String currentFragment) {
         if (currentFragment.toLowerCase(Locale.ROOT).equals("new")) {
-            Float price = consumptionPer1km() * newRideData.getFloat(APP_NEW_RIDE_DISTANCE, 0.0f) * newRideData.getFloat(APP_NEW_RIDE_PRE_PRICE, 0.0f);
-            editorNewRideData.putFloat(APP_NEW_RIDE_PRICE, formattedNumber(price));
-            editorNewRideData.apply();
+            Float price = consumptionPer1km() * fuelStats.getFloat(APP_NEW_RIDE_DISTANCE, 0.0f) * fuelStats.getFloat(APP_NEW_RIDE_PRE_PRICE, 0.0f);
+            editor.putFloat(APP_NEW_RIDE_PRICE, formattedNumber(price));
         } else if (currentFragment.toLowerCase(Locale.ROOT).equals("last")){
             Float price = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f) * fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f);
-            editorFuelStats.putFloat(APP_PREFERENCES_PRICE, formattedNumber(price));
-            editorFuelStats.apply();
+            editor.putFloat(APP_PREFERENCES_PRICE, formattedNumber(price));
         }
+        editor.apply();
     }
 
     public void showCustomDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.WelcomeAlertDialog);
-        View view = LayoutInflater.from(context).inflate(R.layout.fuel_alert_dialog_layout, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(sharedHolderContext, R.style.WelcomeAlertDialog);
+        View view = LayoutInflater.from(sharedHolderContext).inflate(R.layout.fuel_alert_dialog_layout, null);
         builder.setView(view);
         AlertDialog alertDialog = builder.create();
         view.findViewById(R.id.alert_dialog_fuel_ok_button).setOnClickListener(view1 -> alertDialog.dismiss());
@@ -132,8 +125,8 @@ public class SharedPreferencesHolder {
     }
 
     public Float oldOdometerValue() {
-        editorFuelStats.putFloat(APP_PREFERENCES_ODOMETER_OLD, formattedNumber(fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0)));
-        editorFuelStats.apply();
+        editor.putFloat(APP_PREFERENCES_ODOMETER_OLD, formattedNumber(fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0)));
+        editor.apply();
         return fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f);
     }
 
@@ -141,8 +134,8 @@ public class SharedPreferencesHolder {
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f) {
             showCustomDialog();
         } else {
-            editorFuelStats.putFloat(APP_PREFERENCES_DISTANCE, formattedNumber(odometerValue - oldOdometerValue));
-            editorFuelStats.apply();
+            editor.putFloat(APP_PREFERENCES_DISTANCE, formattedNumber(odometerValue - oldOdometerValue));
+            editor.apply();
         }
     }
 
@@ -153,6 +146,6 @@ public class SharedPreferencesHolder {
     }
 
     private Float consumptionPer1km() {
-        return formattedNumber(regData.getFloat(CONSUMPTION_PER_100KM, 0.0f) / 100);
+        return formattedNumber(fuelStats.getFloat(CONSUMPTION_PER_100KM, 0.0f) / 100);
     }
 }

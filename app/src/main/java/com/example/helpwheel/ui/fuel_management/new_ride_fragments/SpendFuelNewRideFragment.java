@@ -15,7 +15,7 @@ import com.example.helpwheel.databinding.FragmentSpendFuelNewRideBinding;
 
 public class SpendFuelNewRideFragment extends Fragment {
     FragmentSpendFuelNewRideBinding binding;
-    public static final String APP_NEW_RIDE_PREFERENCES = "new_ride_prefs";
+    public static final String APP_PREFERENCES = "fuelStats";
     public static final String APP_NEW_RIDE_WILL_BE_USED_FUEL = "will_be_used_fuel";
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -27,7 +27,7 @@ public class SpendFuelNewRideFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences newRideData = requireContext().getSharedPreferences(APP_NEW_RIDE_PREFERENCES, requireContext().MODE_PRIVATE);
-        binding.spendFuelNewRide.setText(String.format("%s %s", newRideData.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f), getString(R.string.litres_symbol)));
+        SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
+        binding.spendFuelNewRide.setText(String.format("%s %s", fuelStats.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f), getString(R.string.litres_symbol)));
     }
 }

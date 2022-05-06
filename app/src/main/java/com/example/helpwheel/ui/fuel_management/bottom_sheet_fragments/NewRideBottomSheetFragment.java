@@ -18,7 +18,7 @@ import com.example.helpwheel.utils.SharedPreferencesHolder;
 import java.util.Objects;
 
 public class NewRideBottomSheetFragment extends Fragment {
-    public static final String APP_NEW_RIDE_PREFERENCES = "new_ride_prefs";
+    public static final String APP_PREFERENCES = "fuelStats";
     public static final String APP_NEW_RIDE_DISTANCE = "new_ride_distance";
     public static final String APP_NEW_RIDE_PRE_PRICE = "new_ride_pre_price";
     private FragmentNewRideBottomSheetBinding binding;
@@ -34,15 +34,17 @@ public class NewRideBottomSheetFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentNewRideBottomSheetBinding.inflate(inflater, container, false);
+        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
-        SharedPreferences newRideData = requireContext().getSharedPreferences(APP_NEW_RIDE_PREFERENCES, requireContext().MODE_PRIVATE);
-        editor = newRideData.edit();
+        SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
+        editor = fuelStats.edit();
+        sharedPreferencesHolder.setFuelStats(fuelStats);
+        sharedPreferencesHolder.setEditor(editor);
         binding.submitBtnFuel.setOnClickListener(v -> {
             String distance = Objects.requireNonNull(binding.distanceNewRideText.getText()).toString();
             String price = Objects.requireNonNull(binding.priceNewRideText.getText()).toString();

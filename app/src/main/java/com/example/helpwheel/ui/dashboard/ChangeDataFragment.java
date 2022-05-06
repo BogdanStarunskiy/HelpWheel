@@ -19,9 +19,9 @@ import java.util.Objects;
 
 public class ChangeDataFragment extends Fragment {
     FragmentChangeDataBinding binding;
-    SharedPreferences preferences;
+    SharedPreferences fuelStats;
     SharedPreferences.Editor editor;
-    public static final String PREF = "user";
+    public static final String APP_PREFERENCES = "fuelStats";
     public static final String USERNAME_PREF = "usernamePref";
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
     public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
@@ -29,8 +29,8 @@ public class ChangeDataFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentChangeDataBinding.inflate(inflater, container, false);
-        preferences = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
-        editor = preferences.edit();
+        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
+        editor = fuelStats.edit();
         return binding.getRoot();
     }
 

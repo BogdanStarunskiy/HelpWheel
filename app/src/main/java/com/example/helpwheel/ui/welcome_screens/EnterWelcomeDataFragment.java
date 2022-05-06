@@ -20,7 +20,7 @@ import java.util.Objects;
 public class EnterWelcomeDataFragment extends Fragment {
     FragmentEnterWelcomeDataBinding binding;
     SharedPreferences.Editor editor;
-    public static final String PREF = "user";
+    public static final String APP_PREFERENCES = "fuelStats";
     public static final String USERNAME = "usernamePref";
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
     public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
@@ -29,8 +29,8 @@ public class EnterWelcomeDataFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentEnterWelcomeDataBinding.inflate(inflater, container, false);
-        SharedPreferences sharedPrefs = requireContext().getSharedPreferences(PREF, getContext().MODE_PRIVATE);
-        editor = sharedPrefs.edit();
+        SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
+        editor = fuelStats.edit();
         return binding.getRoot();
     }
 
