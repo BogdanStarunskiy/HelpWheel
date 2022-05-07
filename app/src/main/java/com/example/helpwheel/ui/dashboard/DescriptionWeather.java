@@ -100,7 +100,7 @@ public class DescriptionWeather extends Fragment {
 
 
         return binding.getRoot();
-
+//sdf
 
     }
 
