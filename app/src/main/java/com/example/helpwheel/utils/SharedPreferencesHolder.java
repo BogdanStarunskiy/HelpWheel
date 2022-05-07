@@ -33,6 +33,7 @@ public class SharedPreferencesHolder {
     public static final String APP_PREFERENCES_GASOLINE_EMISSIONS = "gasoline_emissions";
     public static final String APP_PREFERENCES_DIESEL_EMISSIONS = "diesel_emissions";
     public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
+    public static final String FUEL_TANK_CAPACITY_OLD = "fuel_tank_capacity_old";
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
     private static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     private static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
@@ -119,7 +120,7 @@ public class SharedPreferencesHolder {
         editor.apply();
     }
 
-    public void showCustomDialog() {
+    private void showCustomDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(sharedHolderContext, R.style.WelcomeAlertDialog);
         View view = LayoutInflater.from(sharedHolderContext).inflate(R.layout.fuel_alert_dialog_layout, null);
         builder.setView(view);
@@ -149,6 +150,15 @@ public class SharedPreferencesHolder {
         return BigDecimal.valueOf(number)
                 .setScale(2, BigDecimal.ROUND_HALF_DOWN)
                 .floatValue();
+    }
+
+    public void updateFuelTankCapacity (){
+        float fuelTankCapacity = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f);
+        float fuelTankCapacityOld = fuelStats.getFloat(FUEL_TANK_CAPACITY_OLD, 0.0f);
+        float differenceBetweenFuelTanks = fuelTankCapacity - fuelTankCapacityOld;
+        float currentFuelLevel = fuelStats.getFloat(FUEL_LEVEL, 0.0f) + differenceBetweenFuelTanks;
+        editor.putFloat(FUEL_LEVEL, formattedNumber(currentFuelLevel));
+        editor.apply();
     }
 
     private Float consumptionPer1km() {

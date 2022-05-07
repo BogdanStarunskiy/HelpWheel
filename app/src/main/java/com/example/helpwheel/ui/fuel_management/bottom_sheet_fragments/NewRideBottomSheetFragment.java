@@ -51,19 +51,20 @@ public class NewRideBottomSheetFragment extends Fragment {
             if (!distance.isEmpty() && !price.isEmpty()) {
                 editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
                 editor.putFloat(APP_NEW_RIDE_PRE_PRICE, Float.parseFloat(price));
+                editor.apply();
                 sharedPreferencesHolder.countPrice("new");
                 callMethods();
                 callBack.dismissBottomSheet();
             } else if (!distance.isEmpty()) {
                 editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
                 editor.putFloat(APP_NEW_RIDE_PRE_PRICE, 0.0f);
+                editor.apply();
                 callMethods();
                 callBack.dismissBottomSheet();
             } else if (!price.isEmpty()) {
                 binding.distanceNewRideEditText.setError(getString(R.string.edit_text_odometer_error));
             } else
             callBack.dismissBottomSheet();
-            editor.apply();
         });
     }
 

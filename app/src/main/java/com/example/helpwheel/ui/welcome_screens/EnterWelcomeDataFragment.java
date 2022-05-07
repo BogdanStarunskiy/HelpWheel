@@ -28,7 +28,7 @@ public class EnterWelcomeDataFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentEnterWelcomeDataBinding.inflate(inflater, container, false);
-        SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
+        SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
         editor = fuelStats.edit();
         return binding.getRoot();
     }
