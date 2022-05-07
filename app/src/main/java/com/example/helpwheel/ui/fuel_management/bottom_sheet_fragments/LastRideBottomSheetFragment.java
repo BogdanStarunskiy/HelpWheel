@@ -55,9 +55,9 @@ public class LastRideBottomSheetFragment extends Fragment {
             if (!odometerValue.isEmpty() && !priceValue.isEmpty()) {
                 editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
                 editor.putFloat(APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
-                editor.apply();
                 sharedPreferencesHolder.calculatingDistance(sharedPreferencesHolder.oldOdometerValue(), Float.parseFloat(odometerValue));
                 sharedPreferencesHolder.countPrice("last");
+                editor.apply();
                 callMethods();
                 callBack.dismissBottomSheet();
             } else if (!odometerValue.isEmpty()) {
@@ -84,6 +84,7 @@ public class LastRideBottomSheetFragment extends Fragment {
         sharedPreferencesHolder.countSpendFuel("last");
         sharedPreferencesHolder.countImpactOnEcology("last");
         sharedPreferencesHolder.countFuelInTank();
+        sharedPreferencesHolder.calculateRemainsFuel();
     }
 
 

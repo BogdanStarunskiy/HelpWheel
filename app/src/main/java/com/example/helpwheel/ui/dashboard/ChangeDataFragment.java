@@ -44,10 +44,20 @@ public class ChangeDataFragment extends Fragment {
         sharedPreferencesHolder.setEditor(editor);
         sharedPreferencesHolder.setFuelStats(fuelStats);
         binding.buttonOK.setOnClickListener(v -> {
-            if (!Objects.requireNonNull(binding.enterName.getText()).toString().trim().isEmpty())
+            if (!Objects.requireNonNull(binding.enterName.getText()).toString().trim().isEmpty()) {
                 editor.putString(USERNAME_PREF, binding.enterName.getText().toString().trim());
-            if (!Objects.requireNonNull(binding.consumptionPer100km.getText()).toString().trim().isEmpty())
+                editor.apply();
+            }
+            if (!Objects.requireNonNull(binding.consumptionPer100km.getText()).toString().trim().isEmpty()) {
                 editor.putFloat(CONSUMPTION_PER_100KM, Float.parseFloat(binding.consumptionPer100km.getText().toString()));
+                editor.apply();
+                sharedPreferencesHolder.countSpendFuel("new");
+                sharedPreferencesHolder.countSpendFuel("last");
+                sharedPreferencesHolder.countPrice("new");
+                sharedPreferencesHolder.countPrice("last");
+                sharedPreferencesHolder.countFuelInTank();
+                sharedPreferencesHolder.calculateRemainsFuel();
+            }
             if (!Objects.requireNonNull(binding.fuelTankCapacity.getText()).toString().isEmpty()) {
                 float temp2 = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f);
                 editor.putFloat(FUEL_TANK_CAPACITY_OLD, temp2);
@@ -55,8 +65,8 @@ public class ChangeDataFragment extends Fragment {
                 editor.putFloat(FUEL_TANK_CAPACITY, temp3);
                 editor.apply();
                 sharedPreferencesHolder.updateFuelTankCapacity();
+                sharedPreferencesHolder.calculateRemainsFuel();
             }
-            editor.apply();
             NavHostFragment.findNavController(this).navigate(R.id.action_changeDataFragment_to_navigation_dashboard);
         });
     }
