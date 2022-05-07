@@ -302,6 +302,7 @@ public class DashboardFragment extends Fragment {
                         Log.wtf("LOCATION", location.toString());
                         String url2 = "https://api.openweathermap.org/data/2.5/weather?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + key + "&units=metric&lang=en";
                         dashboardViewModel.getTemperature(url2);
+                        //ругаеться на 302 строчку, меня кажется, что что-то с lifecycle
                         dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
                             if (s != null && !s.equals("")) {
 
