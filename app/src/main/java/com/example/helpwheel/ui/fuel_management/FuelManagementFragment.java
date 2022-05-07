@@ -30,7 +30,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     private FragmentFuelManagementBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String FUEL_LEVEL = "fuel_level";
-    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
+    public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
     private BottomSheetDialog bottomSheetDialogFuelStats, bottomSheetDialogFuelInTank;
     private View currentView;
     private Bundle currentBundle;
@@ -56,10 +56,8 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         initializeViewPagersAndTabs();
         initializeBottomSheetDialogs();
 
-        float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
-        binding.fuelLevel.setText(String.format("%s %s", fuelLevel, getString(R.string.litres_have_left)));
-
         getViewAndBundle(view, savedInstanceState);
+        binding.fuelLevel.setText(String.format("%s %s", fuelStats.getFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f)), getString(R.string.litres_have_left)));
         binding.fuelInputButton.setOnClickListener(v -> {
             bottomSheetDialogFuelStats.show();
             ViewPager2 viewPager2BottomSheet = bottomSheetDialogFuelStats.findViewById(R.id.view_pager_bottom_sheet);

@@ -32,7 +32,7 @@ public class SharedPreferencesHolder {
     public static final String APP_PREFERENCES_SPENT_FUEL = "spent_fuel";
     public static final String APP_PREFERENCES_GASOLINE_EMISSIONS = "gasoline_emissions";
     public static final String APP_PREFERENCES_DIESEL_EMISSIONS = "diesel_emissions";
-    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
+    public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
     private static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     private static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
@@ -54,8 +54,9 @@ public class SharedPreferencesHolder {
     }
 
     public void countFuelInTank() {
-        if (fuelStats.getFloat(FUEL_LEVEL, 0.0f) == 0.0f) {
-            editor.putFloat(FUEL_LEVEL_OLD, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
+        if (fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) == 0.0f) {
+            float fuelLevel = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
+            editor.putFloat(FUEL_LEVEL_OLD, fuelLevel);
         } else {
             float newFuelLevel = fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) - fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
             editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(newFuelLevel));

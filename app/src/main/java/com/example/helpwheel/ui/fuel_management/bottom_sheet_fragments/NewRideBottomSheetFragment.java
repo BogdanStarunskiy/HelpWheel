@@ -1,12 +1,10 @@
 package com.example.helpwheel.ui.fuel_management.bottom_sheet_fragments;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,8 +51,8 @@ public class NewRideBottomSheetFragment extends Fragment {
             if (!distance.isEmpty() && !price.isEmpty()) {
                 editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
                 editor.putFloat(APP_NEW_RIDE_PRE_PRICE, Float.parseFloat(price));
-                callMethods();
                 sharedPreferencesHolder.countPrice("new");
+                callMethods();
                 callBack.dismissBottomSheet();
             } else if (!distance.isEmpty()) {
                 editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
