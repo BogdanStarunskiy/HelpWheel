@@ -19,12 +19,11 @@ import java.util.Objects;
 
 public class EnterWelcomeDataFragment extends Fragment {
     FragmentEnterWelcomeDataBinding binding;
-    SharedPreferences.Editor editor;
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String USERNAME = "usernamePref";
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
     public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
-
+    SharedPreferences.Editor editor;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

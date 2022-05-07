@@ -131,4 +131,5 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         sharedPreferencesHolder.countFuelInTank();
         updateUI();
     }
+
 }

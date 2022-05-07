@@ -1,10 +1,12 @@
 package com.example.helpwheel.ui.fuel_management.bottom_sheet_fragments;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,8 +53,8 @@ public class NewRideBottomSheetFragment extends Fragment {
             if (!distance.isEmpty() && !price.isEmpty()) {
                 editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
                 editor.putFloat(APP_NEW_RIDE_PRE_PRICE, Float.parseFloat(price));
-                sharedPreferencesHolder.countPrice("new");
                 callMethods();
+                sharedPreferencesHolder.countPrice("new");
                 callBack.dismissBottomSheet();
             } else if (!distance.isEmpty()) {
                 editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
@@ -63,6 +65,7 @@ public class NewRideBottomSheetFragment extends Fragment {
                 binding.distanceNewRideEditText.setError(getString(R.string.edit_text_odometer_error));
             } else
             callBack.dismissBottomSheet();
+            editor.apply();
         });
     }
 
@@ -77,5 +80,6 @@ public class NewRideBottomSheetFragment extends Fragment {
         sharedPreferencesHolder.countImpactOnEcology("new");
         sharedPreferencesHolder.calculateRemainsFuel();
     }
+
 
 }

@@ -54,9 +54,8 @@ public class SharedPreferencesHolder {
     }
 
     public void countFuelInTank() {
-        if (fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) == 0.0f) {
-            float fuelLevel = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
-            editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(fuelLevel));
+        if (fuelStats.getFloat(FUEL_LEVEL, 0.0f) == 0.0f) {
+            editor.putFloat(FUEL_LEVEL_OLD, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
         } else {
             float newFuelLevel = fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) - fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
             editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(newFuelLevel));
@@ -104,10 +103,16 @@ public class SharedPreferencesHolder {
 
     public void countPrice(String currentFragment) {
         if (currentFragment.toLowerCase(Locale.ROOT).equals("new")) {
-            Float price = consumptionPer1km() * fuelStats.getFloat(APP_NEW_RIDE_DISTANCE, 0.0f) * fuelStats.getFloat(APP_NEW_RIDE_PRE_PRICE, 0.0f);
+            float consumptionPer1km = consumptionPer1km();
+            float distance = fuelStats.getFloat(APP_NEW_RIDE_DISTANCE, 0.0f);
+            float priceFromEditText = fuelStats.getFloat(APP_NEW_RIDE_PRE_PRICE, 0.0f);
+            Float price = consumptionPer1km * distance * priceFromEditText;
             editor.putFloat(APP_NEW_RIDE_PRICE, formattedNumber(price));
         } else if (currentFragment.toLowerCase(Locale.ROOT).equals("last")){
-            Float price = consumptionPer1km() * fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f) * fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f);
+            float consumptionPer1km = consumptionPer1km();
+            float distance = fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f);
+            float priceFromEditText = fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f);
+            Float price = consumptionPer1km * distance * priceFromEditText;
             editor.putFloat(APP_PREFERENCES_PRICE, formattedNumber(price));
         }
         editor.apply();
