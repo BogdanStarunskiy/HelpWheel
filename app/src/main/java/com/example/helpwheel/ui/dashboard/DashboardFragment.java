@@ -60,8 +60,7 @@ public class DashboardFragment extends Fragment {
     public static final String WEATHER_WIND = "weatherWind";
     public static final String WEATHER_TEMP_AUTO = "weatherTempAuto";
     public final static String WEATHER_DESC_AUTO = "weatherDescAuto";
-    public double longitude;
-    public double latitude;
+    public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -278,12 +277,16 @@ public class DashboardFragment extends Fragment {
         if (binding.manualInput.isChecked()) {
             DescriptionWeather descriptionWeather = new DescriptionWeather();
             descriptionWeather.setIsChecked(true);
+            WeatherWindSpeed weatherWindSpeed = new WeatherWindSpeed();
+            weatherWindSpeed.setChecked(true);
             binding.weatherBtn.setVisibility(View.GONE);
             binding.enterCity.setVisibility(View.GONE);
 
         } else {
             DescriptionWeather descriptionWeather = new DescriptionWeather();
             descriptionWeather.setIsChecked(false);
+            WeatherWindSpeed weatherWindSpeed = new WeatherWindSpeed();
+            weatherWindSpeed.setChecked(false);
             binding.weatherBtn.setVisibility(View.VISIBLE);
             binding.enterCity.setVisibility(View.VISIBLE);
         }
@@ -319,6 +322,7 @@ public class DashboardFragment extends Fragment {
 
                                 editor.putString(WEATHER_TEMP_AUTO, temperature);
                                 editor.putString(WEATHER_DESC_AUTO, description);
+                                editor.putString(WEATHER_WIND_AUTO, wind);
                                 editor.apply();
 
                             }

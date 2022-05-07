@@ -37,6 +37,7 @@ public class DescriptionWeather extends Fragment {
     FragmentDescriptionWeatherBinding binding;
     String temperature = null;
     SharedPreferences.Editor editor;
+    public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
     String description = null;
     String wind = null;
 
@@ -136,10 +137,11 @@ public class DescriptionWeather extends Fragment {
                     e.printStackTrace();
                 }
 
-
+                editor.putString(WEATHER_WIND_AUTO,wind);
                 editor.putString(WEATHER_TEMP_AUTO, temperature);
                 editor.putString(WEATHER_DESC_AUTO, description);
                 editor.apply();
+
 
             } else {
 
