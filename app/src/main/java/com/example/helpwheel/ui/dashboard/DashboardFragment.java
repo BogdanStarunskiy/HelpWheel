@@ -110,7 +110,7 @@ public class DashboardFragment extends Fragment {
                 binding.weatherLoading.setVisibility(View.VISIBLE);
             }
         });
-
+//dsd
 
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
             binding.weatherLoading.setVisibility(View.INVISIBLE);
