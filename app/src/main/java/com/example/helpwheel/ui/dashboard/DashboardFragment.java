@@ -94,7 +94,6 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
         initStrings();
         changeUi();
-        changeInputTypeWeather();
         binding.manualInput.setOnCheckedChangeListener((compoundButton, b) -> {
             changeInputTypeWeather();
         });
@@ -153,7 +152,7 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-        checkPermissions();
+
         viewPager2 = binding.weatherViewPager;
         pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
         viewPager2.setAdapter(pagerAdapter);
@@ -270,6 +269,7 @@ public class DashboardFragment extends Fragment {
     public void onStart() {
         super.onStart();
         requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
+        checkPermissions();
     }
 
     @SuppressLint("MissingPermission")
@@ -302,7 +302,6 @@ public class DashboardFragment extends Fragment {
                         Log.wtf("LOCATION", location.toString());
                         String url2 = "https://api.openweathermap.org/data/2.5/weather?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + key + "&units=metric&lang=en";
                         dashboardViewModel.getTemperature(url2);
-                        //ругаеться на 302 строчку, меня кажется, что что-то с lifecycle
                         dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
                             if (s != null && !s.equals("")) {
 
