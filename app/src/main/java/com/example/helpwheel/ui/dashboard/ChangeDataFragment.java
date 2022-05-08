@@ -14,35 +14,59 @@ import android.view.ViewGroup;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentChangeDataBinding;
+import com.example.helpwheel.utils.SharedPreferencesHolder;
+
+import java.util.Objects;
 
 public class ChangeDataFragment extends Fragment {
     FragmentChangeDataBinding binding;
-    SharedPreferences preferences;
+    SharedPreferences fuelStats;
     SharedPreferences.Editor editor;
-    public static final String PREF = "user";
+    SharedPreferencesHolder sharedPreferencesHolder;
+    public static final String APP_PREFERENCES = "fuelStats";
     public static final String USERNAME_PREF = "usernamePref";
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
-    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
+    public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
+    public static final String FUEL_TANK_CAPACITY_OLD = "fuel_tank_capacity_old";
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentChangeDataBinding.inflate(inflater, container, false);
-        preferences = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
-        editor = preferences.edit();
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
+        editor = fuelStats.edit();
+        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
+        sharedPreferencesHolder.setEditor(editor);
+        sharedPreferencesHolder.setFuelStats(fuelStats);
         binding.buttonOK.setOnClickListener(v -> {
-            if (!binding.enterName.getText().toString().trim().isEmpty())
+            if (!Objects.requireNonNull(binding.enterName.getText()).toString().trim().isEmpty()) {
                 editor.putString(USERNAME_PREF, binding.enterName.getText().toString().trim());
-            if (!binding.consumptionPer100km.getText().toString().trim().isEmpty())
+                editor.apply();
+            }
+            if (!Objects.requireNonNull(binding.consumptionPer100km.getText()).toString().trim().isEmpty()) {
                 editor.putFloat(CONSUMPTION_PER_100KM, Float.parseFloat(binding.consumptionPer100km.getText().toString()));
-            if (!binding.fuelTankCapacity.getText().toString().trim().isEmpty())
-                editor.putFloat(FUEL_TANK_CAPACITY, Float.parseFloat(binding.fuelTankCapacity.getText().toString()));
-            editor.apply();
+                editor.apply();
+                sharedPreferencesHolder.countSpendFuel("new");
+                sharedPreferencesHolder.countSpendFuel("last");
+                sharedPreferencesHolder.countPrice("new");
+                sharedPreferencesHolder.countPrice("last");
+                sharedPreferencesHolder.countFuelInTank();
+                sharedPreferencesHolder.calculateRemainsFuel();
+            }
+            if (!Objects.requireNonNull(binding.fuelTankCapacity.getText()).toString().isEmpty()) {
+                float temp2 = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f);
+                editor.putFloat(FUEL_TANK_CAPACITY_OLD, temp2);
+                float temp3 = Float.parseFloat(binding.fuelTankCapacity.getText().toString());
+                editor.putFloat(FUEL_TANK_CAPACITY, temp3);
+                editor.apply();
+                sharedPreferencesHolder.updateFuelTankCapacity();
+                sharedPreferencesHolder.calculateRemainsFuel();
+            }
             NavHostFragment.findNavController(this).navigate(R.id.action_changeDataFragment_to_navigation_dashboard);
         });
     }

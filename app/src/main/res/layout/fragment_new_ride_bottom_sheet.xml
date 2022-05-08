@@ -35,7 +35,8 @@
             android:hint="@string/distance"
             android:inputType="numberDecimal"
             android:maxLength="14"
-            android:textColorHint="@color/gray" />
+            android:textColorHint="@color/gray"
+            android:nextFocusDown="@id/price_new_ride_text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -57,10 +58,11 @@
             android:hint="@string/enter_price"
             android:inputType="numberDecimal"
             android:maxLength="14"
-            android:textColorHint="@color/gray" />
+            android:textColorHint="@color/gray"
+            android:nextFocusDown="@id/submit_btn_fuel"/>
 
         <com.google.android.material.button.MaterialButton
-            android:layout_marginHorizontal="30dp"
+
             android:layout_marginTop="30dp"
             android:id="@+id/submit_btn_fuel"
             android:layout_width="match_parent"

@@ -118,8 +118,8 @@ public class NotesFragment extends Fragment implements NotesInterface {
         action.setDescription(description);
         action.setId(id);
         NavHostFragment.findNavController(this).navigate(action);
-
     }
+
 
     @Override
     public void onDestroyView() {

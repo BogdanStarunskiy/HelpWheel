@@ -101,4 +101,5 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
         notesList.add(position, item);
         notifyItemInserted(position);
     }
+
 }

@@ -53,7 +53,7 @@ public class DashboardFragment extends Fragment {
     private String weather_desc = "";
     private String degree_cels = "";
     private String speed = "";
-    public static final String PREF = "user";
+    public static final String APP_PREFERENCES = "fuelStats";
     public static final String USERNAME_PREF = "usernamePref";
     public static final String WEATHER_TEMPERATURE = "weatherTemp";
     public static final String WEATHER_DESCRIPTION = "weatherDesc";
@@ -83,7 +83,7 @@ public class DashboardFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        preferences = requireContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = preferences.edit();
         if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
             showWelcomeScreen();

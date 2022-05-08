@@ -96,18 +96,6 @@
             android:nextFocusDown="@id/web_ulr" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <Button
-        android:id="@+id/addNote"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/dark"
-        android:text="@string/save_a_note"
-        android:textColor="@color/white"
-        android:textSize="26sp" />
-
     <ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -117,4 +105,19 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="40dp"
         android:src="@drawable/ic_add_notes_image" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addNote"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/dark"
+        android:text="@string/save_a_note"
+        app:cornerRadius="15dp"
+        android:textColor="@color/white"
+        android:textSize="26sp" />
 </RelativeLayout>

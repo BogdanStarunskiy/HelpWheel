@@ -1,116 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fuel_management.FuelManagementFragment">
- <androidx.constraintlayout.widget.ConstraintLayout
-     android:layout_width="match_parent"
-     android:layout_height="match_parent">
+    android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="8dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:id="@+id/fuel_input_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/dark"
-        app:cardCornerRadius="15dp"
+        android:contentDescription="@string/add_a_note"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/yellow"
+        app:srcCompat="@drawable/ic_plus"
+        app:tint="@color/white" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:textAlignment="center"
-            android:id="@+id/fuel_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/zero"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
-    </androidx.cardview.widget.CardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.fuel_management.FuelManagementFragment">
 
-    <TextView
-        android:id="@+id/your_last_ride"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="15dp"
-        android:text="@string/kms_placeholder"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/view_pager_last_ride"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_view" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
+                android:backgroundTint="@color/dark"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toTopOf="@id/your_last_ride"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager_last_ride"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_marginVertical="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/your_last_ride" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="15dp">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_last_ride"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/transparent"
-        app:layout_constraintTop_toBottomOf="@id/view_pager_last_ride"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabGravity="center"
-        app:tabIndicator="@color/transparent" />
+                    <TextView
+                        android:id="@+id/fuel_level"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:text="@string/zero"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-     <com.google.android.material.button.MaterialButton
-         android:id="@+id/fuel_input_button"
-         android:layout_width="match_parent"
-         android:layout_height="60dp"
-         android:layout_marginVertical="5dp"
-         android:layout_marginHorizontal="10dp"
-         android:backgroundTint="@color/dark"
-         android:text="@string/enter_data"
-         android:textAllCaps="false"
-         android:textColor="@color/white"
-         android:textSize="25sp"
-         app:cardElevation="200dp"
-         app:cornerRadius="15dp"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@id/tab_new_ride" />
+                    <ImageButton
+                        android:id="@+id/edit_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/transparent"
+                        android:src="@drawable/ic_edit_button"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/new_ride_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:text="@string/plan_a_ride"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@id/view_pager_new_ride"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tab_last_ride" />
+            <TextView
+                android:id="@+id/your_last_ride"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="15dp"
+                android:text="@string/kms_placeholder"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toTopOf="@id/view_pager_last_ride"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_view" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager_new_ride"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_marginVertical="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/new_ride_text" />
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager_last_ride"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginVertical="5dp"
+                app:layout_constraintBottom_toTopOf="@id/tab_last_ride"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/your_last_ride" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_new_ride"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/transparent"
-        app:layout_constraintTop_toBottomOf="@id/view_pager_new_ride"
-        app:tabBackground="@drawable/tab_selector"
-        app:tabGravity="center"
-        app:tabIndicator="@color/transparent" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_last_ride"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                app:layout_constraintBottom_toTopOf="@id/new_ride_text"
+                app:layout_constraintTop_toBottomOf="@id/view_pager_last_ride"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicator="@color/transparent" />
 
- </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+            <TextView
+                android:id="@+id/new_ride_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="@string/plan_a_ride"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toTopOf="@id/view_pager_new_ride"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tab_last_ride" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager_new_ride"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginVertical="5dp"
+                app:layout_constraintBottom_toTopOf="@id/tab_new_ride"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/new_ride_text" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_new_ride"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_pager_new_ride"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicator="@color/transparent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

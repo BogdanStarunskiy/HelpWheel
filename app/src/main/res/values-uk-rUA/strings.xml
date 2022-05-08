@@ -26,10 +26,9 @@
     <string name="both_fields_required">Ви повинні заповнити обидва поля</string>
     <string name="kms_placeholder">Ваша остання поїздка:</string>
     <string name="enter_data">Ввести дані</string>
-    <string name="enter_odometer">Одометр (км)</string>
+    <string name="enter_odometer">Одометр (КМ)</string>
     <string name="enter_price">Ціна (за 1 літр)</string>
     <string name="submit">Зберегти</string>
-    <string name="alert_fuel_text">Після настопної поїздки введіть показання одометра</string>
     <string name="last_ride_price">Ціна:</string>
     <string name="welcome_to_helpwheel">Вітаємо в HelpWheel!</string>
     <string name="manage_your_car_like_you_want">Керуйте своїм авто як ви бажаєте</string>
@@ -59,7 +58,11 @@
     <string name="grams_sign">гр</string>
     <string name="you_will_spend">Ви використаете:</string>
     <string name="co2_you_will_produce">CO2 в атмосферу</string>
-    <string name="distance">Відстань</string>
+    <string name="distance">Відстань (КМ)</string>
     <string name="next_ride">Наступна поїздка</string>
     <string name="last_ride">Минула поїздка</string>
+    <string name="enter_current_fuel_level">Введіть поточний рівень палива</string>
+    <string name="remains_in_the_tank">Залишиться в баці:</string>
+    <string name="hey_there">Привіт!</string>
+    <string name="please_let_us_know_your_odometer_reading">Будь ласка, введіть показання одометра</string>
 </resources>

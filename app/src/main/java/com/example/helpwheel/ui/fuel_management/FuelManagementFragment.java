@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.helpwheel.R;
@@ -17,59 +20,80 @@ import com.example.helpwheel.ui.fuel_management.adapter.BottomSheetVPAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.LastRideAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.NewRideAdapter;
 import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
+import com.example.helpwheel.utils.SharedPreferencesHolder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class FuelManagementFragment extends Fragment implements BottomSheetCallBack {
 
     private FragmentFuelManagementBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
-    public static final String PREF = "user";
-    public static final String FUEL_TANK_CAPACITY = "fuelTankCapacity";
+    public static final String FUEL_LEVEL = "fuel_level";
+    public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
-    public static final String FUEL_LEVEL = "fuelLevel";
-    public static final String APP_PREFERENCES_SPENT_FUEL = "spent_uel";
-    private BottomSheetDialog bottomSheetDialog;
+    public static final String APP_PREFERENCES_ODOMETER = "odometer";
+    private BottomSheetDialog bottomSheetDialogFuelStats, bottomSheetDialogFuelInTank;
     private View currentView;
     private Bundle currentBundle;
-    SharedPreferences fuelStats, regData;
-
-
+    SharedPreferences fuelStats;
     SharedPreferences.Editor editor;
+    SharedPreferencesHolder sharedPreferencesHolder;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFuelManagementBinding.inflate(inflater, container, false);
+        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
-        regData = requireContext().getSharedPreferences(PREF, requireContext().MODE_PRIVATE);
-
-        countFuelInTank();
+        sharedPreferencesHolder.setEditor(editor);
+        sharedPreferencesHolder.setFuelStats(fuelStats);
         initializeViewPagersAndTabs();
-
-        binding.fuelLevel.setText(String.format("%s %s", formattedNumber(fuelStats.getFloat(FUEL_LEVEL, regData.getFloat(FUEL_TANK_CAPACITY, 0.0f))), getString(R.string.litres_have_left)));
-        bottomSheetDialog = new BottomSheetDialog(requireContext());
-        bottomSheetDialog.setContentView(R.layout.bottom_sheet_dialog);
-
+        initializeBottomSheetDialogs();
+        if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f) {
+            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment);
+        }
         getViewAndBundle(view, savedInstanceState);
-
+        float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
+        binding.fuelLevel.setText(String.format("%s %s", fuelLevel, getString(R.string.litres_have_left)));
+        editor.putFloat(FUEL_LEVEL, fuelLevel);
+        editor.apply();
         binding.fuelInputButton.setOnClickListener(v -> {
-            bottomSheetDialog.show();
-            ViewPager2 viewPager2BottomSheet = bottomSheetDialog.findViewById(R.id.view_pager_bottom_sheet);
+            bottomSheetDialogFuelStats.show();
+            ViewPager2 viewPager2BottomSheet = bottomSheetDialogFuelStats.findViewById(R.id.view_pager_bottom_sheet);
             assert viewPager2BottomSheet != null;
             viewPager2BottomSheet.setAdapter(new BottomSheetVPAdapter(this));
-            new TabLayoutMediator(Objects.requireNonNull(bottomSheetDialog.findViewById(R.id.tab)), viewPager2BottomSheet, (tab, position) -> {
+            new TabLayoutMediator(Objects.requireNonNull(bottomSheetDialogFuelStats.findViewById(R.id.tab)), viewPager2BottomSheet, (tab, position) -> {
             }).attach();
+        });
+
+        binding.editButton.setOnClickListener(v -> {
+            bottomSheetDialogFuelInTank.show();
+            EditText tankFuelLevel = bottomSheetDialogFuelInTank.findViewById(R.id.fuel_in_tank_text);
+            Button submit = bottomSheetDialogFuelInTank.findViewById(R.id.submit_btn_fuel_in_tank);
+
+            assert submit != null;
+            submit.setOnClickListener(v1 -> {
+                assert tankFuelLevel != null;
+                if (!tankFuelLevel.getText().toString().isEmpty()) {
+                    editor.putFloat(FUEL_LEVEL_OLD, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
+                    editor.putFloat(FUEL_LEVEL, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
+                    editor.apply();
+                    bottomSheetDialogFuelInTank.dismiss();
+                    sharedPreferencesHolder.calculateRemainsFuel();
+                    updateUI();
+                } else {
+                    bottomSheetDialogFuelInTank.dismiss();
+                }
+            });
         });
     }
 
@@ -80,25 +104,14 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         binding = null;
     }
 
-    private void countFuelInTank() {
-        if (fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) == 0.0f) {
-            float fuelLevel = regData.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
-            editor.putFloat(FUEL_LEVEL_OLD, fuelLevel);
-        } else {
-            float newFuelLevel = fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) - fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
-            editor.putFloat(FUEL_LEVEL_OLD, newFuelLevel);
-            editor.putFloat(FUEL_LEVEL, newFuelLevel);
-            binding.fuelLevel.setText(String.valueOf(formattedNumber(newFuelLevel)));
-        }
-        editor.apply();
+
+    private void initializeBottomSheetDialogs(){
+        bottomSheetDialogFuelStats = new BottomSheetDialog(requireContext());
+        bottomSheetDialogFuelStats.setContentView(R.layout.bottom_sheet_dialog_fuel_stats);
+        bottomSheetDialogFuelInTank = new BottomSheetDialog(requireContext());
+        bottomSheetDialogFuelInTank.setContentView(R.layout.bottom_sheet_fuel_in_tank);
     }
 
-
-    private Float formattedNumber(Float number) {
-        return BigDecimal.valueOf(number)
-                .setScale(2, BigDecimal.ROUND_HALF_DOWN)
-                .floatValue();
-    }
 
     private void initializeViewPagersAndTabs(){
         ViewPager2 newRideVP = binding.viewPagerNewRide;
@@ -110,6 +123,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         new TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide, (tab, position) -> {
         }).attach();
     }
+
     public void getViewAndBundle(View view, Bundle savedInstanceState){
         currentView = view;
         currentBundle = savedInstanceState;
@@ -118,9 +132,11 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     private void updateUI(){
         onViewCreated(currentView, currentBundle);
     }
+
     @Override
     public void dismissBottomSheet() {
-        bottomSheetDialog.dismiss();
+        bottomSheetDialogFuelStats.dismiss();
         updateUI();
     }
+
 }

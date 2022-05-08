@@ -8,23 +8,25 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:backgroundTint="@color/dark"
         app:cardCornerRadius="15dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingVertical="10dp">
 
             <TextView
                 android:id="@+id/co2_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
                 android:text="@string/co2_you_will_produce"
                 android:textColor="@color/white"
-                android:textSize="25sp"
+                android:textSize="23sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,10 +34,11 @@
                 android:id="@+id/gasoline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
                 android:text="@string/if_you_use_gasoline"
                 android:textColor="@color/white"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/co2_text" />
 
@@ -43,11 +46,11 @@
                 android:id="@+id/gasoline_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
                 android:text="@string/zero"
                 android:textColor="@color/white"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/gasoline"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/gasoline"
                 app:layout_constraintTop_toTopOf="@+id/gasoline" />
 
@@ -55,10 +58,11 @@
                 android:id="@+id/diesel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
                 android:text="@string/if_you_use_diesel"
                 android:textColor="@color/white"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/gasoline" />
 
@@ -68,12 +72,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/zero"
                 android:textColor="@color/white"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@+id/diesel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/diesel"
+                app:layout_constraintEnd_toEndOf="@+id/gasoline_count"
+                app:layout_constraintStart_toStartOf="@+id/gasoline_count"
                 app:layout_constraintTop_toTopOf="@+id/diesel" />
 
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="20dp"
+                android:src="@drawable/ecology_new_ride"
+                app:layout_constraintBottom_toBottomOf="@+id/diesel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/gasoline" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

@@ -35,11 +35,10 @@
     <!-- fuel manager -->
     <string name="kms_placeholder">Your last ride:</string>
     <string name="enter_data">Enter data</string>
-    <string name="enter_odometer">Odometer(KM)</string>
+    <string name="enter_odometer">Odometer (KM)</string>
     <string name="enter_price">Price (Per liter)</string>
     <string name="submit">Submit</string>
     <string name="km" translatable="false"> KM</string>
-    <string name="alert_fuel_text">After your next ride let us know your odometer reading</string>
     <string name="ok" translatable="false">OK</string>
     <string name="zero" translatable="false">0.0</string>
     <string name="last_ride_price">Cost:</string>
@@ -69,9 +68,13 @@
     <string name="litres_symbol">L</string>
     <string name="grams_sign">g</string>
     <string name="you_will_spend">You will spend:</string>
-    <string name="co2_you_will_produce">CO2 you will produce</string>
-    <string name="distance">Distance</string>
+    <string name="co2_you_will_produce">CO2 you will produce:</string>
+    <string name="distance">Distance (KM)</string>
     <string name="next_ride">Next ride</string>
     <string name="last_ride">Last ride</string>
+    <string name="enter_current_fuel_level">Enter current fuel level</string>
+    <string name="remains_in_the_tank">Remains fuel:</string>
+    <string name="hey_there">Hey there!</string>
+    <string name="please_let_us_know_your_odometer_reading">Please, let us know your odometer reading</string>
 
 </resources>

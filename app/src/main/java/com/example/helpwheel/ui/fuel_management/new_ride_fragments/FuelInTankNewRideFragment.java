@@ -11,16 +11,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
-import com.example.helpwheel.databinding.FragmentSpendFuelNewRideBinding;
+import com.example.helpwheel.databinding.FragmentFuelInTankNewRideBinding;
 
-public class SpendFuelNewRideFragment extends Fragment {
-    FragmentSpendFuelNewRideBinding binding;
+public class FuelInTankNewRideFragment extends Fragment {
+    FragmentFuelInTankNewRideBinding binding;
     public static final String APP_PREFERENCES = "fuelStats";
-    public static final String APP_NEW_RIDE_WILL_BE_USED_FUEL = "will_be_used_fuel";
+    public static final String APP_NEW_RIDE_REMAINS_FUEL = "remains_fuel";
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentSpendFuelNewRideBinding.inflate(inflater, container, false);
+        binding = FragmentFuelInTankNewRideBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -28,6 +29,6 @@ public class SpendFuelNewRideFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
-        binding.spendFuelNewRide.setText(String.format("%s %s", fuelStats.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f), getString(R.string.litres_symbol)));
+        binding.remainsInTheTankCount.setText(String.format("%s %s", fuelStats.getFloat(APP_NEW_RIDE_REMAINS_FUEL, 0.0f), getString(R.string.litres_symbol)));
     }
 }
