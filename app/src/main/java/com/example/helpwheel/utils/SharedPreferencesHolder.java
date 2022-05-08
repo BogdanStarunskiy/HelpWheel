@@ -2,13 +2,6 @@ package com.example.helpwheel.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import androidx.appcompat.app.AlertDialog;
-
-import com.example.helpwheel.R;
 
 import java.math.BigDecimal;
 import java.util.Locale;
@@ -42,6 +35,7 @@ public class SharedPreferencesHolder {
     SharedPreferences.Editor editor;
     Context sharedHolderContext;
 
+
     public SharedPreferencesHolder(Context context){
         this.sharedHolderContext = context;
     }
@@ -55,15 +49,12 @@ public class SharedPreferencesHolder {
     }
 
     public void countFuelInTank() {
-        if (fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) == 0.0f) {
-            float fuelLevel = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f) - fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f);
-            editor.putFloat(FUEL_LEVEL_OLD, fuelLevel);
-        } else {
-            float newFuelLevel = fuelStats.getFloat(FUEL_LEVEL_OLD, 0.0f) - fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
-            editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(newFuelLevel));
-            editor.putFloat(FUEL_LEVEL, formattedNumber(newFuelLevel));
-        }
-        editor.apply();
+            float fuelLevelOld = fuelStats.getFloat(FUEL_LEVEL_OLD, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
+            float spentFuel = fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f);
+            float fuelLevel = fuelLevelOld - spentFuel;
+            editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(fuelLevel));
+            editor.putFloat(FUEL_LEVEL, formattedNumber(fuelLevel));
+            editor.apply();
     }
 
 
@@ -120,16 +111,6 @@ public class SharedPreferencesHolder {
         editor.apply();
     }
 
-    private void showCustomDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(sharedHolderContext, R.style.WelcomeAlertDialog);
-        View view = LayoutInflater.from(sharedHolderContext).inflate(R.layout.fuel_alert_dialog_layout, null);
-        builder.setView(view);
-        AlertDialog alertDialog = builder.create();
-        view.findViewById(R.id.alert_dialog_fuel_ok_button).setOnClickListener(view1 -> alertDialog.dismiss());
-        if (alertDialog.getWindow() != null)
-            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        alertDialog.show();
-    }
 
     public Float oldOdometerValue() {
         editor.putFloat(APP_PREFERENCES_ODOMETER_OLD, formattedNumber(fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0)));
@@ -138,12 +119,8 @@ public class SharedPreferencesHolder {
     }
 
     public void calculatingDistance(Float oldOdometerValue, Float odometerValue) {
-        if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f) {
-            showCustomDialog();
-        } else {
             editor.putFloat(APP_PREFERENCES_DISTANCE, formattedNumber(odometerValue - oldOdometerValue));
             editor.apply();
-        }
     }
 
     public Float formattedNumber(Float number) {

@@ -40,6 +40,9 @@
         android:name="com.example.helpwheel.ui.fuel_management.FuelManagementFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_fuel_management" >
+        <action
+            android:id="@+id/action_navigation_notifications_to_firstOdometerReadingFragment"
+            app:destination="@id/firstOdometerReadingFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNotesFragment"
@@ -97,6 +100,15 @@
         <action
             android:id="@+id/action_changeDataFragment_to_navigation_dashboard"
             app:destination="@id/navigation_dashboard" />
+    </fragment>
+    <fragment
+        android:id="@+id/firstOdometerReadingFragment"
+        android:name="com.example.helpwheel.ui.fuel_management.FirstOdometerReadingFragment"
+        android:label="fragment_first_odometer_reading"
+        tools:layout="@layout/fragment_first_odometer_reading" >
+        <action
+            android:id="@+id/action_firstOdometerReadingFragment_to_navigation_notifications"
+            app:destination="@id/navigation_notifications" />
     </fragment>
 
 </navigation>

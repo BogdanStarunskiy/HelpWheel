@@ -11,6 +11,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.helpwheel.R;
@@ -32,6 +33,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public static final String FUEL_LEVEL = "fuel_level";
     public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
+    public static final String APP_PREFERENCES_ODOMETER = "odometer";
     private BottomSheetDialog bottomSheetDialogFuelStats, bottomSheetDialogFuelInTank;
     private View currentView;
     private Bundle currentBundle;
@@ -56,7 +58,9 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         sharedPreferencesHolder.setFuelStats(fuelStats);
         initializeViewPagersAndTabs();
         initializeBottomSheetDialogs();
-
+        if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f) {
+            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment);
+        }
         getViewAndBundle(view, savedInstanceState);
         float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
         binding.fuelLevel.setText(String.format("%s %s", fuelLevel, getString(R.string.litres_have_left)));
