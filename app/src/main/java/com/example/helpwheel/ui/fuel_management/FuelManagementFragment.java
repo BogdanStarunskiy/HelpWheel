@@ -80,10 +80,10 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
             submit.setOnClickListener(v1 -> {
                 assert tankFuelLevel != null;
                 if (!tankFuelLevel.getText().toString().isEmpty()) {
-                    editor.putFloat(FUEL_LEVEL_OLD, Float.parseFloat(tankFuelLevel.getText().toString()));
+                    editor.putFloat(FUEL_LEVEL_OLD, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
+                    editor.putFloat(FUEL_LEVEL, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
                     editor.apply();
                     bottomSheetDialogFuelInTank.dismiss();
-                    sharedPreferencesHolder.countFuelInTank();
                     sharedPreferencesHolder.calculateRemainsFuel();
                     updateUI();
                 } else {

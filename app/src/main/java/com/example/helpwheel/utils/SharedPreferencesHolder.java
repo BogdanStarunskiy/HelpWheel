@@ -146,13 +146,13 @@ public class SharedPreferencesHolder {
         }
     }
 
-    private Float formattedNumber(Float number) {
+    public Float formattedNumber(Float number) {
         return BigDecimal.valueOf(number)
                 .setScale(2, BigDecimal.ROUND_HALF_DOWN)
                 .floatValue();
     }
 
-    public void updateFuelTankCapacity (){
+    public void updateFuelTankCapacity () {
         float fuelTankCapacity = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f);
         float fuelTankCapacityOld = fuelStats.getFloat(FUEL_TANK_CAPACITY_OLD, 0.0f);
         float differenceBetweenFuelTanks = fuelTankCapacity - fuelTankCapacityOld;
