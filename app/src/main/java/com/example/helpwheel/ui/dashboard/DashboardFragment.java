@@ -53,7 +53,7 @@ public class DashboardFragment extends Fragment {
     private String weather_desc = "";
     private String degree_cels = "";
     private String speed = "";
-    public static final String APP_PREFERENCES = "fuelStats";
+    public static final String PREF = "user";
     public static final String USERNAME_PREF = "usernamePref";
     public static final String WEATHER_TEMPERATURE = "weatherTemp";
     public static final String WEATHER_DESCRIPTION = "weatherDesc";
@@ -83,7 +83,7 @@ public class DashboardFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        preferences = requireContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
         editor = preferences.edit();
         if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
             showWelcomeScreen();
@@ -127,10 +127,10 @@ public class DashboardFragment extends Fragment {
                     main_description = Json_description.getString("main");
                     description = weather_desc + " " + Json_description.getString("description");
                     if(!binding.manualInput.isChecked()){
-                    editor.putString(WEATHER_WIND, wind);
-                    editor.putString(WEATHER_TEMPERATURE, temperature);
-                    editor.putString(WEATHER_DESCRIPTION, description);
-                    editor.apply();}
+                        editor.putString(WEATHER_WIND, wind);
+                        editor.putString(WEATHER_TEMPERATURE, temperature);
+                        editor.putString(WEATHER_DESCRIPTION, description);
+                        editor.apply();}
 
 
                 } catch (JSONException e) {
@@ -345,9 +345,9 @@ public class DashboardFragment extends Fragment {
                             String country = addresses.get(0).getCountryName();
                             String postalCode = addresses.get(0).getPostalCode();
                             String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-                             DescriptionWeather descriptionWeather = new DescriptionWeather();
-                             descriptionWeather.setLongitude(location.getLongitude());
-                             descriptionWeather.setLatitude(location.getLatitude());
+                            DescriptionWeather descriptionWeather = new DescriptionWeather();
+                            descriptionWeather.setLongitude(location.getLongitude());
+                            descriptionWeather.setLatitude(location.getLatitude());
 
 
                             Log.d("TAG", "getAddress:  address" + address);
