@@ -18,6 +18,7 @@ public class WeatherWindSpeed extends Fragment {
     public static final String PREF = "user";
     FragmentWeatherWindSpeedBinding binding;
     SharedPreferences pref;
+    public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
     private boolean isChecked;
 
     public void setChecked(boolean checked) {
@@ -38,11 +39,13 @@ public class WeatherWindSpeed extends Fragment {
         SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
             if (key.equals(WEATHER_WIND)) {
                 setWind();
+            }else if(key.equals(WEATHER_WIND_AUTO)){
+
             }
         };
 
         pref.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        if (isChecked) {
+        if (!isChecked) {
             if (pref.getString(WEATHER_WIND, "error") != null) {
                 binding.weatherWind.setText(pref.getString(WEATHER_WIND, "error"));
             }

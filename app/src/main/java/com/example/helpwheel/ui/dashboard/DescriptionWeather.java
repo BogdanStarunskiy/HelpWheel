@@ -101,7 +101,7 @@ public class DescriptionWeather extends Fragment {
 
 
         return binding.getRoot();
-//sdf
+
 
     }
 
@@ -123,7 +123,7 @@ public class DescriptionWeather extends Fragment {
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
             if (s != null && !s.equals("")) {
 
-//dfgf
+
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     temperature = jsonObject.getJSONObject("main").getDouble("temp") + " ";
