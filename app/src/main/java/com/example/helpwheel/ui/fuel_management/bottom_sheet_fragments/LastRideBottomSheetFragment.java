@@ -49,6 +49,7 @@ public class LastRideBottomSheetFragment extends Fragment {
         editor = fuelStats.edit();
         sharedPreferencesHolder.setFuelStats(fuelStats);
         sharedPreferencesHolder.setEditor(editor);
+        binding.lastOdometerText.setText(String.valueOf(fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0.0f)));
         binding.submitBtnFuel.setOnClickListener(v -> {
             String odometerValue = Objects.requireNonNull(binding.odometerText.getText()).toString();
             String priceValue = Objects.requireNonNull(binding.priceText.getText()).toString();

@@ -123,10 +123,15 @@ public class SharedPreferencesHolder {
             editor.apply();
     }
 
-    public Float formattedNumber(Float number) {
-        return BigDecimal.valueOf(number)
-                .setScale(2, BigDecimal.ROUND_HALF_DOWN)
-                .floatValue();
+
+    public void removeLastRideData (){
+        editor.remove(APP_PREFERENCES_ODOMETER);
+        editor.remove(APP_PREFERENCES_DISTANCE);
+        editor.remove(APP_PREFERENCES_PRICE);
+        editor.remove(APP_PREFERENCES_DIESEL_EMISSIONS);
+        editor.remove(APP_PREFERENCES_GASOLINE_EMISSIONS);
+        editor.remove(APP_PREFERENCES_SPENT_FUEL);
+        editor.apply();
     }
 
     public void updateFuelTankCapacity () {
@@ -136,6 +141,12 @@ public class SharedPreferencesHolder {
         float currentFuelLevel = fuelStats.getFloat(FUEL_LEVEL, 0.0f) + differenceBetweenFuelTanks;
         editor.putFloat(FUEL_LEVEL, formattedNumber(currentFuelLevel));
         editor.apply();
+    }
+
+    public Float formattedNumber(Float number) {
+        return BigDecimal.valueOf(number)
+                .setScale(2, BigDecimal.ROUND_HALF_DOWN)
+                .floatValue();
     }
 
     private Float consumptionPer1km() {

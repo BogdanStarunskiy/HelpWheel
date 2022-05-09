@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -68,6 +69,19 @@ public class ChangeDataFragment extends Fragment {
                 sharedPreferencesHolder.calculateRemainsFuel();
             }
             NavHostFragment.findNavController(this).navigate(R.id.action_changeDataFragment_to_navigation_dashboard);
+        });
+        binding.removeOdometerReadings.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            final View customLayout = getLayoutInflater().inflate(R.layout.remove_odometer_readings_dialog, null);
+            builder.setView(customLayout);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+            dialog.findViewById(R.id.yes_btn).setOnClickListener(v1 -> {
+                sharedPreferencesHolder.removeLastRideData();
+                dialog.dismiss();
+            });
+            dialog.findViewById(R.id.no_btn).setOnClickListener(v2 -> dialog.dismiss());
         });
     }
 

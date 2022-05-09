@@ -43,11 +43,13 @@
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/drawable_round_bottom_sheet_white.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/figure.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_calendar.xml" value="0.139" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_delete_confirmation.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_edit_button.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_empty_vector.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1365" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_notes.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_pikb29.xml" value="0.139" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/ic_speedometer_day.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/non_active_point.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/registration_layout.xml" value="0.139" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/drawable/round_bottom_sheet_layout.xml" value="0.139" />
@@ -90,6 +92,7 @@
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/layout_ok_dialog.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/notes_recycler_view_layout.xml" value="0.264" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/registration_layout.xml" value="0.25" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/remove_odometer_readings_dialog.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/view_pager_item.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/welcome_screen_layout.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />

@@ -75,5 +75,10 @@
     <string name="remains_in_the_tank">Remains fuel:</string>
     <string name="hey_there">Hey there!</string>
     <string name="please_let_us_know_your_odometer_reading">Please, let us know your odometer reading</string>
+    <string name="remove_odometer_reading">Remove odometer reading</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="you_ll_delete_all_data_about_your_n_last_ride_and_odometer_reading">You`ll delete all data about your \n last ride and odometer reading</string>
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
 
 </resources>
