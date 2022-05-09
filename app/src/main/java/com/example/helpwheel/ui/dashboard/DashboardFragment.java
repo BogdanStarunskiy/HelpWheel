@@ -80,23 +80,78 @@ public class DashboardFragment extends Fragment {
         binding.currentWeather.setText(R.string.error_weather);
     }
 
-    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+
+//        View root = binding.getRoot();
+
+//        binding.manualInput.setOnCheckedChangeListener((compoundButton, b) -> {
+//            changeInputTypeWeather();
+//        });
+
+
+
+//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
+//            binding.weatherLoading.setVisibility(View.INVISIBLE);
+//            if (s != null && !s.equals("")) {
+//
+//
+//                try {
+//                    JSONObject jsonObject = new JSONObject(s);
+//                    temperature = currentTemperature + " " + jsonObject.getJSONObject("main").getDouble("temp") + degree_cels;
+//                    feel_temperature = feels_like + " " + jsonObject.getJSONObject("main").getDouble("feels_like") + degree_cels;
+//                    wind = wind_speed + " " + jsonObject.getJSONObject("wind").getDouble("speed") + " " + speed;
+//                    JSONArray jsonArray = jsonObject.getJSONArray("weather");
+//                    JSONObject Json_description = jsonArray.getJSONObject(0);
+//                    main_description = Json_description.getString("main");
+//                    description = weather_desc + " " + Json_description.getString("description");
+//                    if(!binding.manualInput.isChecked()){
+//                        editor.putString(WEATHER_WIND, wind);
+//                        editor.putString(WEATHER_TEMPERATURE, temperature);
+//                        editor.putString(WEATHER_DESCRIPTION, description);
+//                        editor.apply();}
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                binding.weatherLoading.setVisibility(View.INVISIBLE);
+//            } else {
+//                binding.weatherLoading.setVisibility(View.INVISIBLE);
+//
+//            }
+//
+//        });
+
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
         editor = preferences.edit();
-        if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
-            showWelcomeScreen();
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        //        if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
+//            showWelcomeScreen();
         initStrings();
         changeUi();
-        binding.manualInput.setOnCheckedChangeListener((compoundButton, b) -> {
-            changeInputTypeWeather();
-        });
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+
+        viewPager2 = binding.weatherViewPager;
+        pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
+        viewPager2.setAdapter(pagerAdapter);
+        viewPager2.setPageTransformer(new ZoomPageTransformer());
+        new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {
+        }).attach();
+        initObservers();
+        setupSwitcher();
+        initListeners();
+    }
+
+    private void initListeners() {
         binding.greetingText.setOnClickListener(view -> showEditDataFragment());
         binding.weatherBtn.setOnClickListener(v -> {
             if (binding.enterCity.getText().toString().trim().equals("")) {
@@ -110,55 +165,52 @@ public class DashboardFragment extends Fragment {
                 binding.weatherLoading.setVisibility(View.VISIBLE);
             }
         });
+    }
 
+    private void setupSwitcher() {
+        binding.manualInput.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (isChecked) {
+                checkPermissions();
 
+            }else {
+                String user_city = binding.enterCity.getText().toString().trim();
+                String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
+                dashboardViewModel.getTemperature(url);
+            }
+            changeInputTypeWeather();
+        });
+    }
+
+    private void initObservers() {
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-            binding.weatherLoading.setVisibility(View.INVISIBLE);
             if (s != null && !s.equals("")) {
 
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    temperature = currentTemperature + " " + jsonObject.getJSONObject("main").getDouble("temp") + degree_cels;
-                    feel_temperature = feels_like + " " + jsonObject.getJSONObject("main").getDouble("feels_like") + degree_cels;
-                    wind = wind_speed + " " + jsonObject.getJSONObject("wind").getDouble("speed") + " " + speed;
+                    temperature = jsonObject.getJSONObject("main").getDouble("temp") + " ";
+                    wind = jsonObject.getJSONObject("wind").getDouble("speed") + " ";
                     JSONArray jsonArray = jsonObject.getJSONArray("weather");
                     JSONObject Json_description = jsonArray.getJSONObject(0);
-                    main_description = Json_description.getString("main");
-                    description = weather_desc + " " + Json_description.getString("description");
-                    if(!binding.manualInput.isChecked()){
-                        editor.putString(WEATHER_WIND, wind);
-                        editor.putString(WEATHER_TEMPERATURE, temperature);
-                        editor.putString(WEATHER_DESCRIPTION, description);
-                        editor.apply();}
+                    description = Json_description.getString("description");
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                binding.weatherLoading.setVisibility(View.INVISIBLE);
+
+
+                editor.putString(WEATHER_TEMP_AUTO, temperature);
+                editor.putString(WEATHER_DESC_AUTO, description);
+                editor.putString(WEATHER_WIND_AUTO, wind);
+                editor.apply();
+
+              binding.weatherLoading.setVisibility(View.INVISIBLE);
             } else {
                 binding.weatherLoading.setVisibility(View.INVISIBLE);
-
             }
-
         });
 
-
-        return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-
-        viewPager2 = binding.weatherViewPager;
-        pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
-        viewPager2.setAdapter(pagerAdapter);
-        viewPager2.setPageTransformer(new ZoomPageTransformer());
-        new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {
-        }).attach();
     }
 
     private class ZoomPageTransformer implements ViewPager2.PageTransformer {
@@ -302,32 +354,6 @@ public class DashboardFragment extends Fragment {
                         Log.wtf("LOCATION", location.toString());
                         String url2 = "https://api.openweathermap.org/data/2.5/weather?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + key + "&units=metric&lang=en";
                         dashboardViewModel.getTemperature(url2);
-                        dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-                            if (s != null && !s.equals("")) {
-
-
-                                try {
-                                    JSONObject jsonObject = new JSONObject(s);
-                                    temperature = jsonObject.getJSONObject("main").getDouble("temp") + " ";
-                                    wind = jsonObject.getJSONObject("wind").getDouble("speed") + " ";
-                                    JSONArray jsonArray = jsonObject.getJSONArray("weather");
-                                    JSONObject Json_description = jsonArray.getJSONObject(0);
-                                    description = Json_description.getString("description");
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-
-                                editor.putString(WEATHER_TEMP_AUTO, temperature);
-                                editor.putString(WEATHER_DESC_AUTO, description);
-                                editor.putString(WEATHER_WIND_AUTO, wind);
-                                editor.apply();
-
-                            }
-
-                        });
 
                         Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
                         List<Address> addresses = null;
