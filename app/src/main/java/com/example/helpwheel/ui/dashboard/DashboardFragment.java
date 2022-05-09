@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,11 +53,14 @@ public class DashboardFragment extends Fragment {
     private String weather_desc = "";
     private String degree_cels = "";
     private String speed = "";
-    public static final String APP_PREFERENCES = "fuelStats";
+    public static final String PREF = "user";
     public static final String USERNAME_PREF = "usernamePref";
     public static final String WEATHER_TEMPERATURE = "weatherTemp";
     public static final String WEATHER_DESCRIPTION = "weatherDesc";
     public static final String WEATHER_WIND = "weatherWind";
+    public static final String WEATHER_TEMP_AUTO = "weatherTempAuto";
+    public final static String WEATHER_DESC_AUTO = "weatherDescAuto";
+    public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private FusedLocationProviderClient mFusedLocationClient;
@@ -76,20 +80,37 @@ public class DashboardFragment extends Fragment {
         binding.currentWeather.setText(R.string.error_weather);
     }
 
-    @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        preferences = requireContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        editor = preferences.edit();
-        if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
-            showWelcomeScreen();
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-
+        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        initStrings();
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        //        if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
+//            showWelcomeScreen();
+//        initStrings();
         changeUi();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+
+        viewPager2 = binding.weatherViewPager;
+        pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
+        viewPager2.setAdapter(pagerAdapter);
+        viewPager2.setPageTransformer(new ZoomPageTransformer());
+        new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {
+        }).attach();
+        initObservers();
+        setupSwitcher();
+        initListeners();
+    }
+
+    private void initListeners() {
         binding.greetingText.setOnClickListener(view -> showEditDataFragment());
         binding.weatherBtn.setOnClickListener(v -> {
             if (binding.enterCity.getText().toString().trim().equals("")) {
@@ -103,84 +124,72 @@ public class DashboardFragment extends Fragment {
                 binding.weatherLoading.setVisibility(View.VISIBLE);
             }
         });
+    }
 
+    private void setupSwitcher() {
+        binding.manualInput.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (isChecked) {
+                checkPermissions();
 
+            }else {
+                String user_city = binding.enterCity.getText().toString().trim();
+                String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
+                dashboardViewModel.getTemperature(url);
+            }
+            changeInputTypeWeather();
+        });
+    }
+
+    private void initObservers() {
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-            binding.weatherLoading.setVisibility(View.INVISIBLE);
             if (s != null && !s.equals("")) {
 
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    temperature = currentTemperature + " " + jsonObject.getJSONObject("main").getDouble("temp") + degree_cels;
-                    feel_temperature = feels_like + " " + jsonObject.getJSONObject("main").getDouble("feels_like") + degree_cels;
-                    wind = wind_speed + " " + jsonObject.getJSONObject("wind").getDouble("speed") + " " + speed;
+                    temperature = jsonObject.getJSONObject("main").getDouble("temp") + " ";
+                    wind = jsonObject.getJSONObject("wind").getDouble("speed") + " ";
                     JSONArray jsonArray = jsonObject.getJSONArray("weather");
                     JSONObject Json_description = jsonArray.getJSONObject(0);
-                    main_description = Json_description.getString("main");
-                    description = weather_desc + " " + Json_description.getString("description");
-                    if (preferences.getString(WEATHER_TEMPERATURE, null)!=null || preferences.getString(WEATHER_DESCRIPTION, null)!=null || preferences.getString(WEATHER_WIND, null)!=null){
-                        editor.remove(WEATHER_WIND);
-                        editor.remove(WEATHER_TEMPERATURE);
-                        editor.remove(WEATHER_DESCRIPTION);
-                        editor.putString(WEATHER_WIND, wind);
-                        editor.putString(WEATHER_TEMPERATURE, temperature);
-                        editor.putString(WEATHER_DESCRIPTION, description);
-                        editor.apply();
-                    }else{
-                        editor.putString(WEATHER_WIND, wind);
-                        editor.putString(WEATHER_TEMPERATURE, temperature);
-                        editor.putString(WEATHER_DESCRIPTION, description);
-                        editor.apply();
-                    }
+                    description = Json_description.getString("description");
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                assert main_description != null;
-                assert description != null;
-                binding.weatherLoading.setVisibility(View.INVISIBLE);
+
+
+                editor.putString(WEATHER_TEMP_AUTO, temperature);
+                editor.putString(WEATHER_DESC_AUTO, description);
+                editor.putString(WEATHER_WIND_AUTO, wind);
+                editor.apply();
+
+              binding.weatherLoading.setVisibility(View.INVISIBLE);
             } else {
-                showErrorMessage();
                 binding.weatherLoading.setVisibility(View.INVISIBLE);
-
             }
-
         });
 
-
-        return root;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-        checkPermissions();
-        viewPager2 = binding.weatherViewPager;
-        pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
-        viewPager2.setAdapter(pagerAdapter);
-        viewPager2.setPageTransformer(new ZoomPageTransformer());
-        new TabLayoutMediator(binding.tab, binding.weatherViewPager,(tab, position) -> {}).attach();
-    }
-    private class ZoomPageTransformer implements ViewPager2.PageTransformer{
+    private class ZoomPageTransformer implements ViewPager2.PageTransformer {
         private static final float MIN_SCALE = 0.85f;
 
         @Override
         public void transformPage(@NonNull View page, float position) {
             int pageWidth = page.getWidth();
             int pageHeight = page.getHeight();
-            if(position<-1){
+            if (position < -1) {
                 page.setAlpha(0f);
-            }else if(position <=1 ){
-                float scaleFactor = Math.max(MIN_SCALE, 1-Math.abs(position));
-                float vertMargin = pageHeight*(1-scaleFactor)/2;
-                float horzMargin = pageWidth*(1-scaleFactor)/2;
-                if(position<0){
-                    page.setTranslationX(horzMargin- vertMargin/2);
+            } else if (position <= 1) {
+                float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
+                float vertMargin = pageHeight * (1 - scaleFactor) / 2;
+                float horzMargin = pageWidth * (1 - scaleFactor) / 2;
+                if (position < 0) {
+                    page.setTranslationX(horzMargin - vertMargin / 2);
 
-                }else{
-                    page.setTranslationX(-horzMargin+vertMargin/2);
+                } else {
+                    page.setTranslationX(-horzMargin + vertMargin / 2);
                 }
                 page.setScaleX(scaleFactor);
                 page.setScaleY(scaleFactor);
@@ -189,7 +198,8 @@ public class DashboardFragment extends Fragment {
 
         }
     }
-    private class ScreenSlidePageAdapterWeather extends FragmentStateAdapter{
+
+    private class ScreenSlidePageAdapterWeather extends FragmentStateAdapter {
         public ScreenSlidePageAdapterWeather(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
         }
@@ -197,7 +207,7 @@ public class DashboardFragment extends Fragment {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     return new DescriptionWeather();
                 case 1:
@@ -236,55 +246,16 @@ public class DashboardFragment extends Fragment {
 
     }
 
-    @SuppressLint("MissingPermission")
-    private void getMyLocation() {
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(requireActivity(), location -> {
 
-                    if (location != null) {
-                        Log.wtf("LOCATION",location.toString());
-                        String url2 = "https://api.openweathermap.org/data/2.5/weather?lat="+location.getLatitude()+"&lon="+location.getLongitude()+"&appid="+key+"&units=metric&lang=en";
-                        dashboardViewModel.getTemperature(url2);
-
-
-                        Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
-                        List<Address> addresses = null;
-                        try {
-                            addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        if (addresses != null && !addresses.isEmpty()) {
-                            Log.wtf("ADDRESSES", (addresses.get(0).getLocality()) + (addresses.get(0).getAdminArea()));
-
-                            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                            String city = addresses.get(0).getLocality();
-                            String state = addresses.get(0).getAdminArea();
-                            String country = addresses.get(0).getCountryName();
-                            String postalCode = addresses.get(0).getPostalCode();
-                            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
-
-                            Log.d("TAG", "getAddress:  address" + address);
-                            Log.d("TAG",  ""+ city);
-                            Log.d("TAG", "getAddress:  state" + state);
-                            Log.d("TAG", "getAddress:  postalCode" + postalCode);
-                            Log.d("TAG", "getAddress:  knownName" + knownName);
-
-                        }
-                    }
-                });
-
-    }
-
-    private void initStrings() {
-        currentTemperature = requireContext().getResources().getString(R.string.temperature_is);
-        feels_like = requireContext().getResources().getString(R.string.feels_like);
-        wind_speed = requireContext().getResources().getString(R.string.wind_speed);
-        weather_desc = requireContext().getResources().getString(R.string.weather_desc);
-        degree_cels = requireContext().getResources().getString(R.string.degree_cels);
-        speed = requireContext().getResources().getString(R.string.speed);
-
-    }
+//    private void initStrings() {
+//        currentTemperature = requireContext().getResources().getString(R.string.temperature_is);
+//        feels_like = requireContext().getResources().getString(R.string.feels_like);
+//        wind_speed = requireContext().getResources().getString(R.string.wind_speed);
+//        weather_desc = requireContext().getResources().getString(R.string.weather_desc);
+//        degree_cels = requireContext().getResources().getString(R.string.degree_cels);
+//        speed = requireContext().getResources().getString(R.string.speed);
+//
+//    }
 
     @Override
     public void onDestroyView() {
@@ -309,6 +280,76 @@ public class DashboardFragment extends Fragment {
     public void onStart() {
         super.onStart();
         requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
+        checkPermissions();
     }
+
+    @SuppressLint("MissingPermission")
+    private void changeInputTypeWeather() {
+        if (binding.manualInput.isChecked()) {
+            DescriptionWeather descriptionWeather = new DescriptionWeather();
+            descriptionWeather.setIsChecked(true);
+            WeatherWindSpeed weatherWindSpeed = new WeatherWindSpeed();
+            weatherWindSpeed.setChecked(true);
+            binding.weatherBtn.setVisibility(View.GONE);
+            binding.enterCity.setVisibility(View.GONE);
+
+        } else {
+            DescriptionWeather descriptionWeather = new DescriptionWeather();
+            descriptionWeather.setIsChecked(false);
+            WeatherWindSpeed weatherWindSpeed = new WeatherWindSpeed();
+            weatherWindSpeed.setChecked(false);
+            binding.weatherBtn.setVisibility(View.VISIBLE);
+            binding.enterCity.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getMyLocation() {
+
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(requireActivity(), location -> {
+
+                    if (location != null) {
+                        Log.wtf("LOCATION", location.toString());
+                        String url2 = "https://api.openweathermap.org/data/2.5/weather?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + key + "&units=metric&lang=en";
+                        dashboardViewModel.getTemperature(url2);
+
+                        Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
+                        List<Address> addresses = null;
+                        try {
+                            addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        if (addresses != null && !addresses.isEmpty()) {
+                            Log.wtf("ADDRESSES", (addresses.get(0).getLocality()) + (addresses.get(0).getAdminArea()));
+
+                            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                            String city = addresses.get(0).getLocality();
+                            String state = addresses.get(0).getAdminArea();
+                            String country = addresses.get(0).getCountryName();
+                            String postalCode = addresses.get(0).getPostalCode();
+                            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
+                            DescriptionWeather descriptionWeather = new DescriptionWeather();
+                            descriptionWeather.setLongitude(location.getLongitude());
+                            descriptionWeather.setLatitude(location.getLatitude());
+
+
+                            Log.d("TAG", "getAddress:  address" + address);
+                            Log.d("TAG", "" + city);
+                            Log.d("TAG", "getAddress:  state" + state);
+                            Log.d("TAG", "getAddress:  postalCode" + postalCode);
+                            Log.d("TAG", "getAddress:  knownName" + knownName);
+
+                        }
+
+                    }
+                });
+
+    }
+
+
+
+
 
 }
