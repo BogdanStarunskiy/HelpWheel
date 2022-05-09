@@ -12,7 +12,7 @@
     <FrameLayout
         android:id="@+id/notes_fragment_place"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
 
     </FrameLayout>
@@ -30,19 +30,24 @@
         app:rippleColor="@color/yellow"
         app:srcCompat="@drawable/ic_plus"
         app:tint="@color/white" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/empty_image"
-            android:src="@drawable/ic_empty_vector"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/empty_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"/>
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/ic_notes" />
+
         <TextView
             android:id="@+id/empty_text"
             android:layout_width="match_parent"
@@ -65,5 +70,5 @@
         app:layout_anchor="@+id/notes_fragment_place"
         app:layout_anchorGravity="center"
         tools:itemCount="3"
-        tools:listitem="@layout/notes_recycler_view_layout"/>
+        tools:listitem="@layout/notes_recycler_view_layout" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

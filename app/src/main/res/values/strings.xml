@@ -77,7 +77,7 @@
     <string name="please_let_us_know_your_odometer_reading">Please, let us know your odometer reading</string>
     <string name="remove_odometer_reading">Remove odometer reading</string>
     <string name="are_you_sure">Are you sure?</string>
-    <string name="delete_all_data">You`ll delete all data about your last ride and odometer reading</string>
+    <string name="delete_all_data">You`ll delete all data about your last ride and odometer readings</string>
     <string name="no">NO</string>
     <string name="yes">YES</string>
     <string name="fuel_level_is_bigger_than_capacity">You can`t have more fuel than your tank can contain!</string>

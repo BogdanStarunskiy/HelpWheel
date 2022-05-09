@@ -66,6 +66,7 @@ public class NotesFragment extends Fragment implements NotesInterface {
             try {
                 binding.emptyText.setVisibility(View.VISIBLE);
                 binding.emptyImage.setVisibility(View.VISIBLE);
+                binding.emptyImage.playAnimation();
             } catch (Exception e){
 
             }
