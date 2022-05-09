@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fuel_managment.fuel_stats_fragments.EcologyImpactFragment">
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -21,6 +19,7 @@
                 android:id="@+id/ImageViewWind"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:src="@mipmap/ic_weather_wind_foreground"
                 app:layout_constraintBottom_toTopOf="@+id/weather_wind"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
@@ -32,15 +31,14 @@
                 android:id="@+id/weather_wind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_margin="5dp"
                 android:text="wind"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.167" />
+                app:layout_constraintTop_toBottomOf="@+id/ImageViewWind" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
