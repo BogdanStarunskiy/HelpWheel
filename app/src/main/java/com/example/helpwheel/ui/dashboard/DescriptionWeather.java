@@ -1,6 +1,7 @@
 package com.example.helpwheel.ui.dashboard;
 
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -40,7 +41,7 @@ public class DescriptionWeather extends Fragment {
     public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
     String description = null;
     String wind = null;
-
+    String degree_cels;
     String key = "a98ca7720a8fd711bb8548bf2373e263";
 
     @Override
@@ -69,7 +70,7 @@ public class DescriptionWeather extends Fragment {
         pref = requireContext().getSharedPreferences(PREF, getContext().MODE_PRIVATE);
         getWeather();
         editor = pref.edit();
-        SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+        @SuppressLint("SetTextI18n") SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
 
 
 
@@ -84,7 +85,7 @@ public class DescriptionWeather extends Fragment {
                     binding.weatherDescription.setText(autoDesc);
                 } else if (key.equals(WEATHER_TEMP_AUTO)) {
                     autoTemp = pref.getString(WEATHER_TEMP_AUTO, "no data");
-                    binding.weatherTemperature.setText(autoTemp);
+                    binding.weatherTemperature.setText(autoTemp+requireContext().getResources().getString(R.string.degree_cels));
                 }
 
 
@@ -106,9 +107,10 @@ public class DescriptionWeather extends Fragment {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private void setTemp() {
         String temperature = pref.getString(WEATHER_TEMPERATURE, "error");
-        binding.weatherTemperature.setText(temperature);
+        binding.weatherTemperature.setText(temperature+requireContext().getResources().getString(R.string.degree_cels));
     }
 
     private void setDesc() {

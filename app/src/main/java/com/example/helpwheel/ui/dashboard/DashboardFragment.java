@@ -85,47 +85,6 @@ public class DashboardFragment extends Fragment {
         dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
 
-//        View root = binding.getRoot();
-
-//        binding.manualInput.setOnCheckedChangeListener((compoundButton, b) -> {
-//            changeInputTypeWeather();
-//        });
-
-
-
-//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-//            binding.weatherLoading.setVisibility(View.INVISIBLE);
-//            if (s != null && !s.equals("")) {
-//
-//
-//                try {
-//                    JSONObject jsonObject = new JSONObject(s);
-//                    temperature = currentTemperature + " " + jsonObject.getJSONObject("main").getDouble("temp") + degree_cels;
-//                    feel_temperature = feels_like + " " + jsonObject.getJSONObject("main").getDouble("feels_like") + degree_cels;
-//                    wind = wind_speed + " " + jsonObject.getJSONObject("wind").getDouble("speed") + " " + speed;
-//                    JSONArray jsonArray = jsonObject.getJSONArray("weather");
-//                    JSONObject Json_description = jsonArray.getJSONObject(0);
-//                    main_description = Json_description.getString("main");
-//                    description = weather_desc + " " + Json_description.getString("description");
-//                    if(!binding.manualInput.isChecked()){
-//                        editor.putString(WEATHER_WIND, wind);
-//                        editor.putString(WEATHER_TEMPERATURE, temperature);
-//                        editor.putString(WEATHER_DESCRIPTION, description);
-//                        editor.apply();}
-//
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                binding.weatherLoading.setVisibility(View.INVISIBLE);
-//            } else {
-//                binding.weatherLoading.setVisibility(View.INVISIBLE);
-//
-//            }
-//
-//        });
-
-
         return binding.getRoot();
     }
 
@@ -136,7 +95,7 @@ public class DashboardFragment extends Fragment {
         editor = preferences.edit();
         //        if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
 //            showWelcomeScreen();
-        initStrings();
+//        initStrings();
         changeUi();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
@@ -288,15 +247,15 @@ public class DashboardFragment extends Fragment {
     }
 
 
-    private void initStrings() {
-        currentTemperature = requireContext().getResources().getString(R.string.temperature_is);
-        feels_like = requireContext().getResources().getString(R.string.feels_like);
-        wind_speed = requireContext().getResources().getString(R.string.wind_speed);
-        weather_desc = requireContext().getResources().getString(R.string.weather_desc);
-        degree_cels = requireContext().getResources().getString(R.string.degree_cels);
-        speed = requireContext().getResources().getString(R.string.speed);
-
-    }
+//    private void initStrings() {
+//        currentTemperature = requireContext().getResources().getString(R.string.temperature_is);
+//        feels_like = requireContext().getResources().getString(R.string.feels_like);
+//        wind_speed = requireContext().getResources().getString(R.string.wind_speed);
+//        weather_desc = requireContext().getResources().getString(R.string.weather_desc);
+//        degree_cels = requireContext().getResources().getString(R.string.degree_cels);
+//        speed = requireContext().getResources().getString(R.string.speed);
+//
+//    }
 
     @Override
     public void onDestroyView() {
