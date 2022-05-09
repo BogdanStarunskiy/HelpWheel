@@ -30,5 +30,8 @@ public class FuelInTankNewRideFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
         binding.remainsInTheTankCount.setText(String.format("%s %s", fuelStats.getFloat(APP_NEW_RIDE_REMAINS_FUEL, 0.0f), getString(R.string.litres_symbol)));
+        if (fuelStats.getFloat(APP_NEW_RIDE_REMAINS_FUEL, 0.0f) <= 0){
+            binding.remainsInTheTankCount.setTextColor(requireContext().getColor(R.color.red));
+        }
     }
 }

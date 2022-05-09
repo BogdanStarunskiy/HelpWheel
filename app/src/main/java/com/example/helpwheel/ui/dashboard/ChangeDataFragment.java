@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentChangeDataBinding;
@@ -70,19 +71,24 @@ public class ChangeDataFragment extends Fragment {
             }
             NavHostFragment.findNavController(this).navigate(R.id.action_changeDataFragment_to_navigation_dashboard);
         });
-        binding.removeOdometerReadings.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            final View customLayout = getLayoutInflater().inflate(R.layout.remove_odometer_readings_dialog, null);
-            builder.setView(customLayout);
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
-            dialog.findViewById(R.id.yes_btn).setOnClickListener(v1 -> {
-                sharedPreferencesHolder.removeLastRideData();
-                dialog.dismiss();
-            });
-            dialog.findViewById(R.id.no_btn).setOnClickListener(v2 -> dialog.dismiss());
+        binding.removeOdometerReadings.setOnClickListener(v -> showDialog());
+    }
+    private void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        final View customLayout = getLayoutInflater().inflate(R.layout.remove_odometer_readings_dialog, null);
+        builder.setView(customLayout);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        Button yesBtn =  dialog.findViewById(R.id.yes_btn);
+        Button noBtn = dialog.findViewById(R.id.no_btn);
+        assert yesBtn != null;
+        yesBtn.setOnClickListener(v1 -> {
+            sharedPreferencesHolder.removeLastRideData();
+            dialog.dismiss();
         });
+        assert noBtn != null;
+        noBtn.setOnClickListener(v2 -> dialog.dismiss());
     }
 
     @Override

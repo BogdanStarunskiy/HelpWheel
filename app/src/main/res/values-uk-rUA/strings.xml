@@ -64,4 +64,10 @@
     <string name="remains_in_the_tank">Залишиться в баці:</string>
     <string name="hey_there">Привіт!</string>
     <string name="please_let_us_know_your_odometer_reading">Будь ласка, введіть показання одометра</string>
+    <string name="remove_odometer_reading">Видалити показання одометра</string>
+    <string name="are_you_sure">Ви впевнені?</string>
+    <string name="delete_all_data">Ви видалите всі данні про останню поїздку та показання одометра</string>
+    <string name="no">Ні</string>
+    <string name="yes">Так</string>
+    <string name="fuel_level_is_bigger_than_capacity">Рівень палива в баці не може бути більшим, ніж місткість баку</string>
 </resources>

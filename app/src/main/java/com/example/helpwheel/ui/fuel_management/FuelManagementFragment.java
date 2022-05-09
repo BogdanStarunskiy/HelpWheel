@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -51,21 +52,21 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
         sharedPreferencesHolder.setEditor(editor);
         sharedPreferencesHolder.setFuelStats(fuelStats);
+
         initializeViewPagersAndTabs();
         initializeBottomSheetDialogs();
+        getViewAndBundle(view, savedInstanceState);
+
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f) {
             NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment);
         }
-        getViewAndBundle(view, savedInstanceState);
-        float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
-        binding.fuelLevel.setText(String.format("%s %s", fuelLevel, getString(R.string.litres_have_left)));
-        editor.putFloat(FUEL_LEVEL, fuelLevel);
-        editor.apply();
+
+        displayFuelInTank();
+
         binding.fuelInputButton.setOnClickListener(v -> {
             bottomSheetDialogFuelStats.show();
             ViewPager2 viewPager2BottomSheet = bottomSheetDialogFuelStats.findViewById(R.id.view_pager_bottom_sheet);
@@ -84,17 +85,27 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
             submit.setOnClickListener(v1 -> {
                 assert tankFuelLevel != null;
                 if (!tankFuelLevel.getText().toString().isEmpty()) {
-                    editor.putFloat(FUEL_LEVEL_OLD, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
-                    editor.putFloat(FUEL_LEVEL, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
-                    editor.apply();
-                    bottomSheetDialogFuelInTank.dismiss();
-                    sharedPreferencesHolder.calculateRemainsFuel();
-                    updateUI();
+                    if (Float.parseFloat(tankFuelLevel.getText().toString()) > fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f))
+                        showDialog();
+                    else {
+                        editor.putFloat(FUEL_LEVEL_OLD, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
+                        editor.putFloat(FUEL_LEVEL, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
+                        editor.apply();
+                        bottomSheetDialogFuelInTank.dismiss();
+                        sharedPreferencesHolder.calculateRemainsFuel();
+                        updateUI();
+                    }
                 } else {
                     bottomSheetDialogFuelInTank.dismiss();
                 }
             });
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -131,6 +142,33 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
 
     private void updateUI(){
         onViewCreated(currentView, currentBundle);
+    }
+
+    private void displayFuelInTank(){
+        float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
+        if (fuelLevel <= 0.0f){
+            editor.putFloat(FUEL_LEVEL, 0.0f);
+            editor.apply();
+            binding.fuelLevel.setText(String.format("%s %s", 0.0f , getString(R.string.litres_have_left)));
+            binding.fuelLevel.setTextColor(requireContext().getColor(R.color.red));
+        } else {
+            binding.fuelLevel.setTextColor(requireContext().getColor(R.color.white));
+            binding.fuelLevel.setText(String.format("%s %s", fuelLevel, getString(R.string.litres_have_left)));
+            editor.putFloat(FUEL_LEVEL, fuelLevel);
+            editor.apply();
+        }
+    }
+
+    private void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        final View customLayout = getLayoutInflater().inflate(R.layout.edit_fuel_level_error_diallog, null);
+        builder.setView(customLayout);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        Button okBtn = dialog.findViewById(R.id.ok_button);
+        assert okBtn != null;
+        okBtn.setOnClickListener(v -> dialog.dismiss());
     }
 
     @Override
