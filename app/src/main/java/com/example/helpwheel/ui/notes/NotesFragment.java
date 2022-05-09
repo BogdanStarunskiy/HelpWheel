@@ -100,8 +100,7 @@ public class NotesFragment extends Fragment implements NotesInterface {
                         public void onDismissed(Snackbar transientBottomBar, int event) {
                             super.onDismissed(transientBottomBar, event);
                             if (!(event == DISMISS_EVENT_ACTION)){
-                                DatabaseClass db = new DatabaseClass(getContext());
-                                db.deleteSingleItem(item.getId());
+                                databaseClass.deleteSingleItem(item.getId());
                                 fetchAllNotesFromDatabase();
                             }
                         }
@@ -111,6 +110,8 @@ public class NotesFragment extends Fragment implements NotesInterface {
             snackbar.show();
         }
     };
+
+
 
     @Override
     public void fragmentChange(String title, String description, String id) {

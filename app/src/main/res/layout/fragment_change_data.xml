@@ -40,17 +40,20 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView10" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/vector_image"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_margin="20dp"
-            android:src="@drawable/ic_edit_data_image"
+            app:lottie_rawRes="@raw/ic_change_data"
+            app:lottie_loop="true"
+            android:scaleY="2"
+            android:scaleX="2"
+            app:lottie_autoPlay="true"
             app:layout_constraintBottom_toTopOf="@id/enter_new_data_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/enter_new_data_text"
