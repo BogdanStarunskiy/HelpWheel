@@ -95,17 +95,19 @@
             android:maxLines="1"
             android:nextFocusDown="@id/web_ulr" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.airbnb.lottie.LottieAnimationView
+        android:layout_marginHorizontal="15dp"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        app:lottie_rawRes="@raw/ic_add_notes"
         android:layout_below="@id/web_ulr_edit_text"
         android:layout_alignBottom="@id/addNote"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="40dp"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"/>
+        app:lottie_loop="true"
+        style="@style/AddNotesAnimationStyle" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/addNote"

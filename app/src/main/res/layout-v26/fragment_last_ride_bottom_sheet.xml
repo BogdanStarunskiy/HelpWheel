@@ -8,22 +8,20 @@
     android:paddingTop="14dp"
     android:paddingEnd="30dp"
     android:paddingBottom="30dp">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/last_ride_title"
+            android:lines="1"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="12dp"
+            android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginEnd="15dp"
-            android:autoSizeMaxTextSize="30sp"
-            android:autoSizeMinTextSize="12sp"
-            android:autoSizeTextType="uniform"
-            android:lines="1"
             android:text="@string/last_ride"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/speedometer_icon"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,12 +32,10 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginStart="15dp"
-            android:src="@drawable/ic_speedometer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/last_odometer_text"
-            app:layout_constraintStart_toEndOf="@id/last_ride_title"
-            app:layout_constraintTop_toTopOf="@+id/last_ride_title" />
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            android:src="@drawable/ic_speedometer"/>
 
         <TextView
             android:id="@+id/last_odometer_text"
@@ -49,7 +45,6 @@
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@+id/speedometer_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/speedometer_icon"
             app:layout_constraintTop_toTopOf="@+id/speedometer_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -71,8 +66,8 @@
             android:hint="@string/enter_odometer"
             android:inputType="numberDecimal"
             android:maxLength="14"
-            android:nextFocusDown="@id/price_text"
-            android:textColorHint="@color/gray" />
+            android:textColorHint="@color/gray"
+            android:nextFocusDown="@id/price_text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -80,7 +75,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop = "20dp"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
         app:boxCornerRadiusTopEnd="10dp"
@@ -94,15 +89,15 @@
             android:hint="@string/enter_price"
             android:inputType="numberDecimal"
             android:maxLength="14"
-            android:nextFocusDown="@id/submit_btn_fuel"
-            android:textColorHint="@color/gray" />
+            android:textColorHint="@color/gray"
+            android:nextFocusDown="@id/submit_btn_fuel"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:layout_marginTop="30dp"
         android:id="@+id/submit_btn_fuel"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="30dp"
         android:backgroundTint="@color/dark"
         android:text="@string/submit"
         android:textAllCaps="false"

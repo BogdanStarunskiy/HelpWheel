@@ -57,7 +57,7 @@
     <string name="litres_symbol">Л</string>
     <string name="grams_sign">гр</string>
     <string name="you_will_spend">Ви використаете:</string>
-    <string name="co2_you_will_produce">CO2 в атмосферу</string>
+    <string name="co2_you_will_produce">CO2 в атмосферу:</string>
     <string name="distance">Відстань (КМ)</string>
     <string name="next_ride">Наступна поїздка</string>
     <string name="last_ride">Минула поїздка</string>
@@ -71,4 +71,5 @@
     <string name="no">Ні</string>
     <string name="yes">Так</string>
     <string name="fuel_level_is_bigger_than_capacity">Рівень палива в баці не може бути більшим, ніж місткість баку</string>
+    <string name="full_tank">Повний бак</string>
 </resources>

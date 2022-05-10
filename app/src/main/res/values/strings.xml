@@ -82,6 +82,7 @@
     <string name="no">NO</string>
     <string name="yes">YES</string>
     <string name="fuel_level_is_bigger_than_capacity">You can`t have more fuel than your tank can contain!</string>
+    <string name="full_tank">Full tank</string>
 
 
 </resources>

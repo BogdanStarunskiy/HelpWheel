@@ -51,4 +51,15 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="NotesAnimationStyle" parent="Theme.HelpWheel">
+        <item name="lottie_rawRes">@raw/ic_notes_day</item>
+    </style>
+
+    <style name="AddNotesAnimationStyle" parent="Theme.HelpWheel">
+        <item name="lottie_rawRes">@raw/ic_add_notes_day</item>
+    </style>
+
+    <style name="UpdateNotesAnimationStyle" parent="Theme.HelpWheel">
+        <item name="lottie_rawRes">@raw/ic_update_notes_day</item>
+    </style>
 </resources>

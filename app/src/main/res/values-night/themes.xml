@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/background</item>
     </style>
 
     <style name="WelcomeAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -51,4 +52,15 @@
         <item name="android:textColor">@color/dark</item>
     </style>
 
+    <style name="NotesAnimationStyle" parent="Theme.HelpWheel">
+        <item name="lottie_rawRes">@raw/ic_notes_night</item>
+    </style>
+
+    <style name="AddNotesAnimationStyle" parent="Theme.HelpWheel">
+        <item name="lottie_rawRes">@raw/ic_add_notes_night</item>
+    </style>
+
+    <style name="UpdateNotesAnimationStyle" parent="Theme.HelpWheel">
+        <item name="lottie_rawRes">@raw/ic_update_notes_night</item>
+    </style>
 </resources>

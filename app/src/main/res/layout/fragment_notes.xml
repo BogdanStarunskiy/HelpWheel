@@ -38,6 +38,7 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/empty_image"
+            style="@style/NotesAnimationStyle"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:visibility="gone"
@@ -45,8 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:lottie_autoPlay="true"
-            app:lottie_loop="false"
-            app:lottie_rawRes="@raw/ic_notes" />
+            app:lottie_loop="false" />
 
         <TextView
             android:id="@+id/empty_text"
