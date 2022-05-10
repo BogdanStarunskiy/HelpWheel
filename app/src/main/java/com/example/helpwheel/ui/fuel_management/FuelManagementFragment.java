@@ -11,6 +11,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -80,7 +81,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
             bottomSheetDialogFuelInTank.show();
             EditText tankFuelLevel = bottomSheetDialogFuelInTank.findViewById(R.id.fuel_in_tank_text);
             Button submit = bottomSheetDialogFuelInTank.findViewById(R.id.submit_btn_fuel_in_tank);
-
+            ConstraintLayout container = bottomSheetDialogFuelInTank.findViewById(R.id.full_tank);
             assert submit != null;
             submit.setOnClickListener(v1 -> {
                 assert tankFuelLevel != null;
@@ -98,6 +99,11 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
                 } else {
                     bottomSheetDialogFuelInTank.dismiss();
                 }
+            });
+            assert container != null;
+            container.setOnClickListener(v2 -> {
+                assert tankFuelLevel != null;
+                tankFuelLevel.setText(String.valueOf(fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f)));
             });
         });
     }

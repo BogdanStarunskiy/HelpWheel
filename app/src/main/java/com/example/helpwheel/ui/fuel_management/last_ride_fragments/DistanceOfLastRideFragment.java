@@ -33,7 +33,7 @@ public class DistanceOfLastRideFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER_OLD, 0.0f) == 0.0f)
-            binding.distanceCounter.setText("0.0");
+            binding.distanceCounter.setText(String.format("0.0 %s", getResources().getString(R.string.km)));
         else
             binding.distanceCounter.setText(String.format("%s %s", fuelStats.getFloat(APP_PREFERENCES_DISTANCE, 0.0f), getResources().getString(R.string.km)));
     }

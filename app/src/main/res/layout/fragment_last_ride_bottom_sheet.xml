@@ -26,13 +26,13 @@
 
         <ImageView
             android:id="@+id/imageView9"
-            android:src="@drawable/ic_speedometer"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/last_odometer_text"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            android:src="@drawable/ic_speedometer"/>
 
         <TextView
             android:id="@+id/last_odometer_text"

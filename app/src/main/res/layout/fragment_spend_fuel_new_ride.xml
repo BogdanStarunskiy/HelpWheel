@@ -19,6 +19,7 @@
             android:padding="15dp">
 
             <TextView
+                android:layout_marginVertical="20dp"
                 android:id="@+id/spend_fuel_new_ride"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -26,8 +27,8 @@
                 android:text="@string/zero"
                 android:textColor="@color/white"
                 android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spent_fuel_text" />
 
             <TextView
                 android:id="@+id/spent_fuel_text"
@@ -38,17 +39,17 @@
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_margin="20dp"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginVertical="20dp"
                 android:src="@drawable/spend_new_ride"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/spent_fuel_text" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
