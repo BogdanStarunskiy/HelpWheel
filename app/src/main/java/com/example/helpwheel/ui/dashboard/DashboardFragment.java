@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,6 +53,7 @@ public class DashboardFragment extends Fragment {
     private String degree_cels = "";
     private String speed = "";
     public static final String PREF = "user";
+    public static final String APP_PREFERENCES = "fuelStats";
     public static final String USERNAME_PREF = "usernamePref";
     public static final String WEATHER_TEMPERATURE = "weatherTemp";
     public static final String WEATHER_DESCRIPTION = "weatherDesc";
@@ -61,7 +61,7 @@ public class DashboardFragment extends Fragment {
     public static final String WEATHER_TEMP_AUTO = "weatherTempAuto";
     public final static String WEATHER_DESC_AUTO = "weatherDescAuto";
     public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
-    SharedPreferences preferences;
+    SharedPreferences preferences, fuelStats;
     SharedPreferences.Editor editor;
     private FusedLocationProviderClient mFusedLocationClient;
     String temperature = null;
@@ -93,9 +93,9 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
         editor = preferences.edit();
-        //        if (preferences.getString(USERNAME_PREF, "user").equals("user") || preferences.getString(USERNAME_PREF, "user").equals(""))
-//            showWelcomeScreen();
-//        initStrings();
+        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
+        if (fuelStats.getString(USERNAME_PREF, "user").equals("user") || fuelStats.getString(USERNAME_PREF, "user").equals(""))
+            showWelcomeScreen();
         changeUi();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
@@ -273,7 +273,7 @@ public class DashboardFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void changeUi() {
-        binding.greetingText.setText(getString(R.string.hello_user_text) + " " + preferences.getString(USERNAME_PREF, "user") + "!");
+        binding.greetingText.setText(getString(R.string.hello_user_text) + " " + fuelStats.getString(USERNAME_PREF, "user") + "!");
     }
 
     @Override

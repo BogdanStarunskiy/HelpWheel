@@ -10,9 +10,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <com.airbnb.lottie.LottieAnimationView
-        android:scaleX="1.5"
-        android:scaleY="1.5"
         android:id="@+id/vector_image"
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -30,7 +29,7 @@
         style="@style/WelcomeDialogTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-40dp"
+
         android:text="@string/almost_there_text"
         android:textAlignment="center"
         android:textSize="30sp"
