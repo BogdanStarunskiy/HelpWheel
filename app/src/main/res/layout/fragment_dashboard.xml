@@ -19,16 +19,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <!--Текст с приветсвием-->
-        <TextView
-            android:id="@+id/greeting_text"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/source_sans_pro_bold"
-            tools:text="@string/hello_user"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="35sp" />
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/user_greeting_edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/transparent"
+                android:src="@drawable/ic_edit_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/greeting_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:autoSizeMaxTextSize="30sp"
+                android:autoSizeMinTextSize="16sp"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/source_sans_pro_bold"
+                android:lines="1"
+                android:textAlignment="textStart"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/user_greeting_edit_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/hello_user" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
     <!--Обёртка погоды в card view-->
     <androidx.cardview.widget.CardView
@@ -60,14 +85,13 @@
                 android:id="@+id/manual_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/weatherViewPager"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                android:checked="true"
                 android:text="@string/type_input"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:layout_marginEnd="10dp"
-                android:checked="true"
-                />
+                app:layout_constraintBottom_toTopOf="@id/weatherViewPager"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ProgressBar
                 android:id="@+id/weather_loading"
@@ -83,7 +107,6 @@
                 app:layout_constraintVertical_bias="0.579" />
 
             <EditText
-                android:visibility="gone"
                 android:id="@+id/enter_city"
                 style="@android:style/Widget.Material.Light.EditText"
                 android:layout_width="wrap_content"
@@ -101,13 +124,13 @@
                 android:textColorHighlight="@color/white"
                 android:textColorHint="@color/white"
                 android:textColorLink="#FFFFFF"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="LabelFor" />
 
             <Button
-                android:visibility="gone"
                 android:id="@+id/weather_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,6 +139,7 @@
                 android:text="@string/weather_btn"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -153,25 +177,24 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tab"
-                app:tabBackground="@drawable/tab_weather_selector"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/transparent"
                 app:layout_constraintTop_toBottomOf="@id/weatherViewPager"
+                app:tabBackground="@drawable/tab_weather_selector"
                 app:tabGravity="center"
-                app:tabIndicator="@color/transparent"
-                />
+                app:tabIndicator="@color/transparent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_margin="10dp"-->
-<!--        android:src="@drawable/ic_dashboard_car_icon"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/weather_card_view" />-->
+    <!--    <ImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_margin="10dp"-->
+    <!--        android:src="@drawable/ic_dashboard_car_icon"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/weather_card_view" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

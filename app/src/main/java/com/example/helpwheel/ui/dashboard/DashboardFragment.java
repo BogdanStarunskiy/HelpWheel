@@ -111,7 +111,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void initListeners() {
-        binding.greetingText.setOnClickListener(view -> showEditDataFragment());
+        binding.userGreetingEditButton.setOnClickListener(view -> showEditDataFragment());
         binding.weatherBtn.setOnClickListener(v -> {
             if (binding.enterCity.getText().toString().trim().equals("")) {
                 Toast toast = Toast.makeText(binding.getRoot().getContext(), R.string.enter_city_message, Toast.LENGTH_LONG);
