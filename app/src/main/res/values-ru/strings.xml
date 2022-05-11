@@ -37,7 +37,7 @@
     <string name="enter_some_data_text">Просто введите некоторую информацию об вашем авто</string>
     <string name="enter_car_consumption_per_100km">Введите расход топлива на 100км</string>
     <string name="enter_car_fuel_tank_capacity">Введите объём топливного бака</string>
-    <string name="on_item_deleted">Заметка успешно удалено</string>
+    <string name="on_item_deleted">Заметка успешно удалена</string>
     <string name="undo">Отменить</string>
     <string name="hello_user_text">Привет,</string>
     <string name="type_input">Автоматичекски</string>

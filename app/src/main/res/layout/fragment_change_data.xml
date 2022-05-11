@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView10"
+                android:id="@+id/delete_data_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -35,9 +35,9 @@
                 android:layout_marginEnd="10dp"
                 android:text="@string/remove_odometer_reading"
                 android:textSize="17sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-                app:layout_constraintEnd_toStartOf="@+id/imageView10"
-                app:layout_constraintTop_toTopOf="@+id/imageView10" />
+                app:layout_constraintBottom_toBottomOf="@+id/delete_data_icon"
+                app:layout_constraintEnd_toStartOf="@+id/delete_data_icon"
+                app:layout_constraintTop_toTopOf="@+id/delete_data_icon" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.airbnb.lottie.LottieAnimationView

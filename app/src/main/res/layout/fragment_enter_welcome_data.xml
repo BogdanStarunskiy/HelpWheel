@@ -1,159 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.welcome_screens.EnterWelcomeDataFragment">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/vector_image"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_margin="20dp"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true"
-        app:lottie_rawRes="@raw/ic_enter_welcome_data"
-        app:layout_constraintBottom_toTopOf="@id/enter_new_data_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/enter_new_data_text"
-        style="@style/WelcomeDialogTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/vector_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toTopOf="@id/enter_new_data_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/ic_enter_welcome_data" />
 
-        android:text="@string/almost_there_text"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/enter_some_data_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vector_image" />
+        <TextView
+            android:id="@+id/enter_new_data_text"
+            style="@style/WelcomeDialogTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-    <TextView
-        android:id="@+id/enter_some_data_text"
-        style="@style/WelcomeDialogSubTextStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/enter_some_data_text"
-        android:textAlignment="center"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/enter_name_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_new_data_text" />
+            android:text="@string/almost_there_text"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/enter_some_data_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vector_image" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/enter_name_edit_text"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:layout_constraintBottom_toTopOf="@id/consumption_per_100km_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enter_some_data_text">
+        <TextView
+            android:id="@+id/enter_some_data_text"
+            style="@style/WelcomeDialogSubTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/enter_some_data_text"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@+id/enter_name_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_new_data_text" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/enter_name"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/enter_name_edit_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="username"
-            android:hint="@string/enter_name_auth"
-            android:inputType="textPersonName"
-            android:maxLength="14"
-            android:maxLines="1"
-            android:textColorHint="@color/gray"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:layout_constraintBottom_toTopOf="@id/consumption_per_100km_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/enter_some_data_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/enter_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="username"
+                android:hint="@string/enter_name_auth"
+                android:inputType="textPersonName"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:textColorHint="@color/gray"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/consumption_per_100km_edit_text"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/fuel_tank_capacity_edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_name_edit_text">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/consumption_per_100km"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/consumption_per_100km_edit_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:hint="@string/enter_car_consumption_per_100km"
-            android:inputType="numberDecimal"
-            android:maxLength="14"
-            android:textColorHint="@color/gray"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/fuel_tank_capacity_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_name_edit_text">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fuel_tank_capacity_edit_text"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="10dp"
-        app:boxCornerRadiusBottomEnd="10dp"
-        app:boxCornerRadiusBottomStart="10dp"
-        app:boxCornerRadiusTopEnd="10dp"
-        app:boxCornerRadiusTopStart="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonOK"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/consumption_per_100km_edit_text">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/consumption_per_100km"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_car_consumption_per_100km"
+                android:inputType="numberDecimal"
+                android:maxLength="14"
+                android:textColorHint="@color/gray"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/fuel_tank_capacity"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fuel_tank_capacity_edit_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:hint="@string/enter_car_fuel_tank_capacity"
-            android:inputType="numberDecimal"
-            android:maxLength="14"
-            android:textColorHint="@color/gray"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonOK"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/consumption_per_100km_edit_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fuel_tank_capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:hint="@string/enter_car_fuel_tank_capacity"
+                android:inputType="numberDecimal"
+                android:maxLength="14"
+                android:textColorHint="@color/gray"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonOK"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="10dp"
-        android:backgroundTint="@color/dark"
-        android:text="@string/continue_text"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:cornerRadius="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fuel_tank_capacity_edit_text" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonOK"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            android:backgroundTint="@color/dark"
+            android:text="@string/continue_text"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fuel_tank_capacity_edit_text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

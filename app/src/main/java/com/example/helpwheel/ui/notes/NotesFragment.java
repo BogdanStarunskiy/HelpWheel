@@ -42,8 +42,8 @@ public class NotesFragment extends Fragment implements NotesInterface {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
         super.onViewCreated(view, savedInstanceState);
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(binding.recyclerView);
 

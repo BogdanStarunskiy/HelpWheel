@@ -5,9 +5,9 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:layout_marginHorizontal="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
         app:cardCornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,21 +18,22 @@
             android:layout_height="match_parent"
             android:paddingHorizontal="15dp"
             android:paddingVertical="15dp">
+
             <com.airbnb.lottie.LottieAnimationView
-                android:layout_marginEnd="30dp"
-                android:id="@+id/image"
+                android:id="@+id/remove_odometer_readings_animation"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
+                android:layout_marginEnd="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:lottie_rawRes="@raw/ic_remove_odometer_readings"
+                app:lottie_autoPlay="true"
                 app:lottie_loop="false"
-                app:lottie_autoPlay="true"/>
+                app:lottie_rawRes="@raw/ic_remove_odometer_readings" />
 
 
             <TextView
-                android:id="@+id/top_image"
+                android:id="@+id/title"
                 style="@style/WelcomeDialogTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,10 +42,10 @@
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image" />
+                app:layout_constraintTop_toBottomOf="@id/remove_odometer_readings_animation" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/sub_title"
                 style="@style/WelcomeDialogSubTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +55,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/top_image" />
+                app:layout_constraintTop_toBottomOf="@id/title" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/no_btn"
@@ -66,8 +67,8 @@
                 android:textColor="@color/white"
                 app:cornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintStart_toStartOf="@id/sub_title"
+                app:layout_constraintTop_toBottomOf="@+id/sub_title" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/yes_btn"
@@ -79,8 +80,8 @@
                 android:textColor="@color/dark"
                 app:cornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintEnd_toEndOf="@id/sub_title"
+                app:layout_constraintTop_toBottomOf="@+id/sub_title" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

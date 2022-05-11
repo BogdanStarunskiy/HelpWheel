@@ -82,6 +82,7 @@
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_cost_of_last_ride.xml" value="0.2359375" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_cost_of_new_ride.xml" value="0.264" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_dashboard.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_description_weather.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_distance_of_last_ride.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_distance_of_new_ride.xml" value="0.264" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_ecology_impact.xml" value="0.25" />
@@ -102,6 +103,7 @@
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_spend_fuel_new_ride.xml" value="0.264" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_spent_fuel.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_update_notes.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_weather_wind_speed.xml" value="0.20512820512820512" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fragment_welcome.xml" value="0.176" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fuel_alert_dialog_layout.xml" value="0.25" />
         <entry key="..\:/Users/Bogdan/StudioProjects/HelpWheel/app/src/main/res/layout/fuel_arelt_dialog_layout.xml" value="0.25" />

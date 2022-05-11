@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/cost_new_ride_icon"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_marginVertical="20dp"

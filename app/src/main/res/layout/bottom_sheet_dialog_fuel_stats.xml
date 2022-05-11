@@ -8,6 +8,7 @@
     android:paddingTop="30dp">
 
     <ImageView
+        android:id="@+id/figure_on_bottom_sheet"
         android:layout_width="30dp"
         android:layout_height="6dp"
         android:layout_marginBottom="15dp"
