@@ -1,5 +1,7 @@
 package com.example.helpwheel;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,5 +37,13 @@ public class MainActivity extends AppCompatActivity {
         }
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        Configuration configuration = new Configuration(newBase.getResources().getConfiguration());
+        configuration.fontScale = 1.0f;
+        applyOverrideConfiguration(configuration);
     }
 }

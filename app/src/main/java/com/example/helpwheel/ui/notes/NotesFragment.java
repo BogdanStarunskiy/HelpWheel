@@ -21,7 +21,6 @@ import com.example.helpwheel.ui.notes.databases.DatabaseClass;
 import com.example.helpwheel.ui.notes.interfaces.NotesInterface;
 import com.example.helpwheel.ui.notes.interfaces.RecyclerViewLongClick;
 import com.example.helpwheel.ui.notes.models.NotesModel;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -83,23 +82,17 @@ public class NotesFragment extends Fragment implements NotesInterface, RecyclerV
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
             NotesModel item = adapter.getList().get(position);
+            databaseClass.deleteSingleItem(item.getId());
             adapter.removeItem(position);
+            showEmptyPlaceHolder();
             //Snack bar for cancelling action
             Snackbar snackbar = Snackbar.make(binding.notesLayout, R.string.on_item_deleted, Snackbar.LENGTH_LONG)
                     .setAction(R.string.undo, view -> {
                         adapter.restoreItem(item, position);
+                        databaseClass.addNotes(item.getTitle(), item.getDescription());
                         binding.recyclerView.scrollToPosition(position);
-                    }).addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                        @Override
-                        public void onDismissed(Snackbar transientBottomBar, int event) {
-                            super.onDismissed(transientBottomBar, event);
-                            if (!(event == DISMISS_EVENT_ACTION)){
-                                databaseClass.deleteSingleItem(item.getId());
-                                showEmptyPlaceHolder();
-                            }
-                        }
+                        showEmptyPlaceHolder();
                     });
-
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
         }
@@ -132,10 +125,17 @@ public class NotesFragment extends Fragment implements NotesInterface, RecyclerV
     }
 
     private void showEmptyPlaceHolder(){
-        if (adapter.getItemCount() == 0){
-            binding.emptyText.setVisibility(View.VISIBLE);
-            binding.emptyImage.setVisibility(View.VISIBLE);
-            binding.emptyImage.playAnimation();
+        try {
+            if (adapter.getItemCount() == 0) {
+                binding.emptyText.setVisibility(View.VISIBLE);
+                binding.emptyImage.setVisibility(View.VISIBLE);
+                binding.emptyImage.playAnimation();
+            } else {
+                binding.emptyText.setVisibility(View.GONE);
+                binding.emptyImage.setVisibility(View.GONE);
+            }
+        } catch (Exception e){
+
         }
     }
 }

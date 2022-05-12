@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.util.Locale;
 
 public class SharedPreferencesHolder {
-    public static final String APP_PREFERENCES = "fuelStats";
     public static final String APP_NEW_RIDE_DISTANCE = "new_ride_distance";
     public static final String APP_NEW_RIDE_PRICE = "new_ride_price";
     public static final String APP_NEW_RIDE_PRE_PRICE = "new_ride_pre_price";
@@ -30,7 +29,6 @@ public class SharedPreferencesHolder {
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
     private static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     private static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
-
     SharedPreferences fuelStats;
     SharedPreferences.Editor editor;
     Context sharedHolderContext;

@@ -95,6 +95,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.MyViewHolder
                 deleteButton.setOnClickListener(v -> callback.onRecyclerViewLongClick(getLayoutPosition()));
                 return true;
             });
+
         }
     }
 

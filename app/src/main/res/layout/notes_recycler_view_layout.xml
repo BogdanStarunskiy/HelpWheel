@@ -22,19 +22,19 @@
             android:layout_height="match_parent">
 
             <com.airbnb.lottie.LottieAnimationView
-                android:scaleX="1.2"
-                android:scaleY="1.2"
                 android:id="@+id/delete_note"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="10dp"
-                app:lottie_rawRes="@raw/ic_delete_note"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="false"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/description"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/title" />
+                app:layout_constraintTop_toTopOf="@+id/title"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false"
+                app:lottie_rawRes="@raw/ic_delete_note" />
 
             <TextView
                 android:id="@+id/title"
