@@ -42,7 +42,7 @@
     <string name="hello_user_text">Привет,</string>
     <string name="type_input">Автоматичекски</string>
     <string name="edit_text_odometer_error">Введите показания одометра</string>
-    <string name="field_must_be_filled">Все поля должны быть заполнены</string>
+    <string name="field_must_be_filled">Это поле должно быть заполнено</string>
     <string name="enter_city_message">Введите город!</string>
     <string name="enter_new_data">Введите новые данные</string>
     <string name="save">Сохранить</string>

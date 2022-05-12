@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -54,8 +52,12 @@ public class AddNotesFragment extends Fragment {
                 DatabaseClass db = new DatabaseClass(getContext());
                 db.addNotes(title.getText().toString().trim(), descUrl);
                 NavHostFragment.findNavController(this).navigate(R.id.action_addNotesFragment_to_navigation_home);
-            } else {
-                Toast.makeText(getContext(), R.string.both_fields_required, Toast.LENGTH_SHORT).show();
+            }
+            if (title.getText().toString().isEmpty()){
+                binding.titleEditText.setError(getString(R.string.field_must_be_filled));
+            }
+            if (description.getText().toString().isEmpty()){
+                binding.descriptionEditText.setError(getString(R.string.field_must_be_filled));
             }
 
         });

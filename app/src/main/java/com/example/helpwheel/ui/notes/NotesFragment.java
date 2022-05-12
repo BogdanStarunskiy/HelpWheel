@@ -14,19 +14,20 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.helpwheel.ui.notes.models.NotesModel;
 import com.example.helpwheel.R;
-import com.example.helpwheel.ui.notes.adapters.NotesAdapter;
 import com.example.helpwheel.databinding.FragmentNotesBinding;
+import com.example.helpwheel.ui.notes.adapters.NotesAdapter;
 import com.example.helpwheel.ui.notes.databases.DatabaseClass;
 import com.example.helpwheel.ui.notes.interfaces.NotesInterface;
+import com.example.helpwheel.ui.notes.interfaces.RecyclerViewLongClick;
+import com.example.helpwheel.ui.notes.models.NotesModel;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotesFragment extends Fragment implements NotesInterface {
+public class NotesFragment extends Fragment implements NotesInterface, RecyclerViewLongClick {
 
     private FragmentNotesBinding binding;
 
@@ -51,27 +52,18 @@ public class NotesFragment extends Fragment implements NotesInterface {
         databaseClass = new DatabaseClass(getContext());
         fetchAllNotesFromDatabase();
 
-        adapter = new NotesAdapter(getContext(), getActivity(), notesList, this);
+        adapter = new NotesAdapter(getContext(), getActivity(), notesList, this, this);
         binding.recyclerView.setAdapter(adapter);
 
-        //Launch AddNotesFragment
-        binding.fab.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment));
+        showEmptyPlaceHolder();
 
+        binding.fab.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment));
     }
 
     void fetchAllNotesFromDatabase() {
         Cursor cursor = databaseClass.readAllData();
 
-        if (cursor.getCount() == 0) {
-            try {
-                binding.emptyText.setVisibility(View.VISIBLE);
-                binding.emptyImage.setVisibility(View.VISIBLE);
-                binding.emptyImage.playAnimation();
-            } catch (Exception e){
-
-            }
-        }
-        else {
+        if (cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
                 notesList.add(new NotesModel(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(2)));
             }
@@ -84,6 +76,8 @@ public class NotesFragment extends Fragment implements NotesInterface {
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
         }
+
+
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
@@ -101,7 +95,7 @@ public class NotesFragment extends Fragment implements NotesInterface {
                             super.onDismissed(transientBottomBar, event);
                             if (!(event == DISMISS_EVENT_ACTION)){
                                 databaseClass.deleteSingleItem(item.getId());
-                                fetchAllNotesFromDatabase();
+                                showEmptyPlaceHolder();
                             }
                         }
                     });
@@ -127,5 +121,21 @@ public class NotesFragment extends Fragment implements NotesInterface {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onRecyclerViewLongClick(int position) {
+        NotesModel item = adapter.getList().get(position);
+        adapter.removeItem(position);
+        databaseClass.deleteSingleItem(item.getId());
+        showEmptyPlaceHolder();
+    }
+
+    private void showEmptyPlaceHolder(){
+        if (adapter.getItemCount() == 0){
+            binding.emptyText.setVisibility(View.VISIBLE);
+            binding.emptyImage.setVisibility(View.VISIBLE);
+            binding.emptyImage.playAnimation();
+        }
     }
 }

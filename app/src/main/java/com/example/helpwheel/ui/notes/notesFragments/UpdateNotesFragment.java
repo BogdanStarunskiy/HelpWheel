@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,8 +58,13 @@ public class UpdateNotesFragment extends Fragment {
                 DatabaseClass db = new DatabaseClass(getContext());
                 db.updateNotes(binding.title.getText().toString().trim(), descWebUrlCombined, id);
                 NavHostFragment.findNavController(this).navigate(R.id.action_updateNotesFragment_to_navigation_home);
-            } else
-                Toast.makeText(getContext(), R.string.both_fields_required, Toast.LENGTH_SHORT).show();
+            }
+            if (binding.title.getText().toString().isEmpty()){
+                binding.titleEditText.setError(getString(R.string.field_must_be_filled));
+            }
+            if (Objects.requireNonNull(binding.description.getText()).toString().isEmpty()){
+                binding.descriptionEditText.setError(getString(R.string.field_must_be_filled));
+            }
         });
 
         binding.descriptionEditText.setEndIconOnClickListener(v1 -> materialDatePicker.show(getChildFragmentManager(), "MATERIAL_DATE_PICKER"));
