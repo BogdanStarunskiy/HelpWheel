@@ -21,6 +21,7 @@ import com.example.helpwheel.ui.notes.databases.DatabaseClass;
 import com.example.helpwheel.ui.notes.interfaces.NotesInterface;
 import com.example.helpwheel.ui.notes.interfaces.RecyclerViewLongClick;
 import com.example.helpwheel.ui.notes.models.NotesModel;
+import com.example.helpwheel.utils.Constants;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public class NotesFragment extends Fragment implements NotesInterface, RecyclerV
     NotesAdapter adapter;
     List<NotesModel> notesList;
     DatabaseClass databaseClass;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentNotesBinding.inflate(inflater, container, false);

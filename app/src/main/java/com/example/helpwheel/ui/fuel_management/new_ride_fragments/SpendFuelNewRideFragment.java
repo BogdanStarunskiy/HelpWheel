@@ -12,11 +12,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentSpendFuelNewRideBinding;
+import com.example.helpwheel.utils.Constants;
 
 public class SpendFuelNewRideFragment extends Fragment {
     FragmentSpendFuelNewRideBinding binding;
-    public static final String APP_PREFERENCES = "fuelStats";
-    public static final String APP_NEW_RIDE_WILL_BE_USED_FUEL = "will_be_used_fuel";
+    Constants constants;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class SpendFuelNewRideFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
-        binding.spendFuelNewRide.setText(String.format("%s %s", fuelStats.getFloat(APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f), getString(R.string.litres_symbol)));
+        SharedPreferences fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, requireContext().MODE_PRIVATE);
+        binding.spendFuelNewRide.setText(String.format("%s %s", fuelStats.getFloat(constants.APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f), getString(R.string.litres_symbol)));
     }
 }

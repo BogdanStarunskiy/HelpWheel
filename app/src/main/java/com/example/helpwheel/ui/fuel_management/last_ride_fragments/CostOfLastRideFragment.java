@@ -12,18 +12,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.databinding.FragmentCostOfLastRideBinding;
+import com.example.helpwheel.utils.Constants;
 
 public class CostOfLastRideFragment extends Fragment {
     FragmentCostOfLastRideBinding binding;
-    public static final String APP_PREFERENCES = "fuelStats";
-    public static final String APP_PREFERENCES_PRE_PRICE = "pre_price";
-    public static final String APP_PREFERENCES_PRICE = "price";
+    Constants constants;
     SharedPreferences fuelStats;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCostOfLastRideBinding.inflate(inflater, container, false);
-        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
+        fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, getContext().MODE_PRIVATE);
         return binding.getRoot();
     }
 
@@ -31,9 +30,9 @@ public class CostOfLastRideFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (fuelStats.getFloat(APP_PREFERENCES_PRE_PRICE, 0.0f) == 0.0f)
+        if (fuelStats.getFloat(constants.APP_PREFERENCES_PRE_PRICE, 0.0f) == 0.0f)
             binding.price.setText("0.0");
         else
-            binding.price.setText(Float.toString(fuelStats.getFloat(APP_PREFERENCES_PRICE, 0.0f)));
+            binding.price.setText(Float.toString(fuelStats.getFloat(constants.APP_PREFERENCES_PRICE, 0.0f)));
     }
 }

@@ -13,18 +13,17 @@ import androidx.fragment.app.Fragment;
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentNewRideBottomSheetBinding;
 import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
+import com.example.helpwheel.utils.Constants;
 import com.example.helpwheel.utils.SharedPreferencesHolder;
 
 import java.util.Objects;
 
 public class NewRideBottomSheetFragment extends Fragment {
-    public static final String APP_PREFERENCES = "fuelStats";
-    public static final String APP_NEW_RIDE_DISTANCE = "new_ride_distance";
-    public static final String APP_NEW_RIDE_PRE_PRICE = "new_ride_pre_price";
     private FragmentNewRideBottomSheetBinding binding;
     private SharedPreferences.Editor editor;
     BottomSheetCallBack callBack;
     SharedPreferencesHolder sharedPreferencesHolder;
+    Constants constants;
 
     public NewRideBottomSheetFragment(BottomSheetCallBack callBack) {
         this.callBack = callBack;
@@ -41,7 +40,7 @@ public class NewRideBottomSheetFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
+        SharedPreferences fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, requireContext().MODE_PRIVATE);
         editor = fuelStats.edit();
         sharedPreferencesHolder.setFuelStats(fuelStats);
         sharedPreferencesHolder.setEditor(editor);
@@ -49,15 +48,15 @@ public class NewRideBottomSheetFragment extends Fragment {
             String distance = Objects.requireNonNull(binding.distanceNewRideText.getText()).toString();
             String price = Objects.requireNonNull(binding.priceNewRideText.getText()).toString();
             if (!distance.isEmpty() && !price.isEmpty()) {
-                editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
-                editor.putFloat(APP_NEW_RIDE_PRE_PRICE, Float.parseFloat(price));
+                editor.putFloat(constants.APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
+                editor.putFloat(constants.APP_NEW_RIDE_PRE_PRICE, Float.parseFloat(price));
                 editor.apply();
                 sharedPreferencesHolder.countPrice("new");
                 callMethods();
                 callBack.dismissBottomSheet();
             } else if (!distance.isEmpty()) {
-                editor.putFloat(APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
-                editor.putFloat(APP_NEW_RIDE_PRE_PRICE, 0.0f);
+                editor.putFloat(constants.APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
+                editor.putFloat(constants.APP_NEW_RIDE_PRE_PRICE, 0.0f);
                 editor.apply();
                 callMethods();
                 callBack.dismissBottomSheet();

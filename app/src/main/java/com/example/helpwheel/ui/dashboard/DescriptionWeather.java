@@ -4,19 +4,16 @@ package com.example.helpwheel.ui.dashboard;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDescriptionWeatherBinding;
+import com.example.helpwheel.utils.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,11 +21,7 @@ import org.json.JSONObject;
 
 public class DescriptionWeather extends Fragment {
 
-    public static final String WEATHER_TEMPERATURE = "weatherTemp";
-    public static final String WEATHER_DESCRIPTION = "weatherDesc";
-    public static final String PREF = "user";
-    public static final String WEATHER_TEMP_AUTO = "weatherTempAuto";
-    public final static String WEATHER_DESC_AUTO = "weatherDescAuto";
+    Constants constants;
     public double longitude;
     public double latitude;
     SharedPreferences pref;
@@ -41,7 +34,6 @@ public class DescriptionWeather extends Fragment {
     public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
     String description = null;
     String wind = null;
-    String degree_cels;
     String key = "a98ca7720a8fd711bb8548bf2373e263";
 
     @Override
@@ -67,24 +59,24 @@ public class DescriptionWeather extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentDescriptionWeatherBinding.inflate(inflater, container, false);
-        pref = requireContext().getSharedPreferences(PREF, getContext().MODE_PRIVATE);
+        pref = requireContext().getSharedPreferences(constants.APP_PREFERENCES, getContext().MODE_PRIVATE);
         getWeather();
         editor = pref.edit();
         @SuppressLint("SetTextI18n") SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
 
 
 
-                if (key.equals(WEATHER_TEMPERATURE)) {
+                if (key.equals(constants.WEATHER_TEMPERATURE)) {
                     setTemp();
-                } else if (key.equals(WEATHER_DESCRIPTION)) {
+                } else if (key.equals(constants.WEATHER_DESCRIPTION)) {
                     setDesc();
 
                 }
-                else if (key.equals(WEATHER_DESC_AUTO)) {
-                    autoDesc = pref.getString(WEATHER_DESC_AUTO, " no data");
+                else if (key.equals(constants.WEATHER_DESC_AUTO)) {
+                    autoDesc = pref.getString(constants.WEATHER_DESC_AUTO, " no data");
                     binding.weatherDescription.setText(autoDesc);
-                } else if (key.equals(WEATHER_TEMP_AUTO)) {
-                    autoTemp = pref.getString(WEATHER_TEMP_AUTO, "no data");
+                } else if (key.equals(constants.WEATHER_TEMP_AUTO)) {
+                    autoTemp = pref.getString(constants.WEATHER_TEMP_AUTO, "no data");
                     binding.weatherTemperature.setText(autoTemp+requireContext().getResources().getString(R.string.degree_cels));
                 }
 
@@ -93,11 +85,11 @@ public class DescriptionWeather extends Fragment {
         pref.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         if(!isChecked){
-        if (pref.getString(WEATHER_DESCRIPTION, "error") != null) {
-            binding.weatherDescription.setText(pref.getString(WEATHER_DESCRIPTION, "error"));
+        if (pref.getString(constants.WEATHER_DESCRIPTION, "error") != null) {
+            binding.weatherDescription.setText(pref.getString(constants.WEATHER_DESCRIPTION, "error"));
         }
-        if (pref.getString(WEATHER_DESCRIPTION, "error") != null) {
-            binding.weatherTemperature.setText(pref.getString(WEATHER_TEMPERATURE, "error"));
+        if (pref.getString(constants.WEATHER_DESCRIPTION, "error") != null) {
+            binding.weatherTemperature.setText(pref.getString(constants.WEATHER_TEMPERATURE, "error"));
         }}
 
 
@@ -109,12 +101,12 @@ public class DescriptionWeather extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void setTemp() {
-        String temperature = pref.getString(WEATHER_TEMPERATURE, "error");
+        String temperature = pref.getString(constants.WEATHER_TEMPERATURE, "error");
         binding.weatherTemperature.setText(temperature+requireContext().getResources().getString(R.string.degree_cels));
     }
 
     private void setDesc() {
-        String description = pref.getString(WEATHER_DESCRIPTION, "error");
+        String description = pref.getString(constants.WEATHER_DESCRIPTION, "error");
         binding.weatherDescription.setText(description);
     }
 
@@ -140,14 +132,14 @@ public class DescriptionWeather extends Fragment {
                 }
 
                 editor.putString(WEATHER_WIND_AUTO,wind);
-                editor.putString(WEATHER_TEMP_AUTO, temperature);
-                editor.putString(WEATHER_DESC_AUTO, description);
+                editor.putString(constants.WEATHER_TEMP_AUTO, temperature);
+                editor.putString(constants.WEATHER_DESC_AUTO, description);
                 editor.apply();
 
 
             } else {
 
-                binding.weatherTemperature.setText(getActivity().getResources().getString(R.string.error_weather));
+                binding.weatherTemperature.setText(requireActivity().getResources().getString(R.string.error_weather));
             }
 
         });

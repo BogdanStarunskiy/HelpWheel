@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentLastRideBottomSheetBinding;
 import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
+import com.example.helpwheel.utils.Constants;
 import com.example.helpwheel.utils.SharedPreferencesHolder;
 
 import java.util.Objects;
@@ -21,12 +22,9 @@ import java.util.Objects;
 public class LastRideBottomSheetFragment extends Fragment {
     FragmentLastRideBottomSheetBinding binding;
     BottomSheetCallBack callBack;
-    public static final String APP_PREFERENCES = "fuelStats";
-    public static final String APP_PREFERENCES_ODOMETER = "odometer";
-    public static final String APP_PREFERENCES_PRE_PRICE = "pre_price";
-    public static final String APP_PREFERENCES_PRICE = "price";
+    Constants constants;
     SharedPreferences fuelStats;
-    private SharedPreferences.Editor editor;
+    SharedPreferences.Editor editor;
     SharedPreferencesHolder sharedPreferencesHolder;
 
     public  LastRideBottomSheetFragment(BottomSheetCallBack callBack) {
@@ -45,17 +43,17 @@ public class LastRideBottomSheetFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
+        fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
         sharedPreferencesHolder.setFuelStats(fuelStats);
         sharedPreferencesHolder.setEditor(editor);
-        binding.lastOdometerText.setText(String.valueOf(fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0.0f)));
+        binding.lastOdometerText.setText(String.valueOf(fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f)));
         binding.submitBtnFuel.setOnClickListener(v -> {
             String odometerValue = Objects.requireNonNull(binding.odometerText.getText()).toString();
             String priceValue = Objects.requireNonNull(binding.priceText.getText()).toString();
             if (!odometerValue.isEmpty() && !priceValue.isEmpty()) {
-                editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
-                editor.putFloat(APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
+                editor.putFloat(constants.APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
+                editor.putFloat(constants.APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
                 sharedPreferencesHolder.calculatingDistance(sharedPreferencesHolder.oldOdometerValue(), Float.parseFloat(odometerValue));
                 sharedPreferencesHolder.countPrice("last");
                 editor.apply();
@@ -63,8 +61,8 @@ public class LastRideBottomSheetFragment extends Fragment {
                 callBack.dismissBottomSheet();
             } else if (!odometerValue.isEmpty()) {
                 sharedPreferencesHolder.calculatingDistance(sharedPreferencesHolder.oldOdometerValue(), Float.parseFloat(odometerValue));
-                editor.putFloat(APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
-                editor.putFloat(APP_PREFERENCES_PRICE, 0.0f);
+                editor.putFloat(constants.APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
+                editor.putFloat(constants.APP_PREFERENCES_PRICE, 0.0f);
                 editor.apply();
                 callMethods();
                 callBack.dismissBottomSheet();

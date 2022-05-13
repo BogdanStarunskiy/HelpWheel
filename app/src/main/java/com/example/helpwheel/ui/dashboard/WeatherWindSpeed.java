@@ -3,29 +3,25 @@ package com.example.helpwheel.ui.dashboard;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
-import com.example.helpwheel.databinding.FragmentDescriptionWeatherBinding;
 import com.example.helpwheel.databinding.FragmentWeatherWindSpeedBinding;
+import com.example.helpwheel.utils.Constants;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class WeatherWindSpeed extends Fragment {
-    public static final String WEATHER_WIND = "weatherWind";
-    public static final String PREF = "user";
     FragmentWeatherWindSpeedBinding binding;
     SharedPreferences pref;
-    public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
+    Constants constants;
     private boolean isChecked;
     public double longitude;
     public double latitude;
@@ -47,24 +43,24 @@ public class WeatherWindSpeed extends Fragment {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentWeatherWindSpeedBinding.inflate(inflater, container, false);
-        pref = requireContext().getSharedPreferences(PREF, getContext().MODE_PRIVATE);
+        pref = requireContext().getSharedPreferences(constants.APP_PREFERENCES, getContext().MODE_PRIVATE);
         getWeather();
         editor =pref.edit();
         SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
-            if (key.equals(WEATHER_WIND)) {
+            if (key.equals(constants.WEATHER_WIND)) {
                 setWind();
-            }else if(key.equals(WEATHER_WIND_AUTO)){
-                binding.weatherWind.setText(pref.getString(WEATHER_WIND_AUTO, "no data")+requireContext().getResources().getString(R.string.speed));
+            }else if(key.equals(constants.WEATHER_WIND_AUTO)){
+                binding.weatherWind.setText(pref.getString(constants.WEATHER_WIND_AUTO, "no data")+requireContext().getResources().getString(R.string.speed));
             }
         };
 
         pref.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         if (!isChecked) {
-            if (pref.getString(WEATHER_WIND, "error") != null) {
-                binding.weatherWind.setText(pref.getString(WEATHER_WIND, "error")+ requireContext().getResources().getString(R.string.speed));
+            if (pref.getString(constants.WEATHER_WIND, "error") != null) {
+                binding.weatherWind.setText(pref.getString(constants.WEATHER_WIND, "error")+ requireContext().getResources().getString(R.string.speed));
             }
         }
         return binding.getRoot();
@@ -72,7 +68,7 @@ public class WeatherWindSpeed extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void setWind() {
-        String wind = pref.getString(WEATHER_WIND, "error");
+        String wind = pref.getString(constants.WEATHER_WIND, "error");
         binding.weatherWind.setText(wind+ requireContext().getResources().getString(R.string.speed));
     }
     private void getWeather() {
@@ -93,13 +89,13 @@ public class WeatherWindSpeed extends Fragment {
                     e.printStackTrace();
                 }
 
-                editor.putString(WEATHER_WIND_AUTO,wind);
+                editor.putString(constants.WEATHER_WIND_AUTO,wind);
                 editor.apply();
 
 
             } else {
 
-                binding.weatherWind.setText(getActivity().getResources().getString(R.string.error_weather));
+                binding.weatherWind.setText(requireActivity().getResources().getString(R.string.error_weather));
             }
 
         });

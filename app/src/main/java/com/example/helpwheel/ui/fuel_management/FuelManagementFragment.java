@@ -22,6 +22,7 @@ import com.example.helpwheel.ui.fuel_management.adapter.BottomSheetVPAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.LastRideAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.NewRideAdapter;
 import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
+import com.example.helpwheel.utils.Constants;
 import com.example.helpwheel.utils.SharedPreferencesHolder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -31,14 +32,10 @@ import java.util.Objects;
 public class FuelManagementFragment extends Fragment implements BottomSheetCallBack {
 
     private FragmentFuelManagementBinding binding;
-    public static final String APP_PREFERENCES = "fuelStats";
-    public static final String FUEL_LEVEL = "fuel_level";
-    public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
-    public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
-    public static final String APP_PREFERENCES_ODOMETER = "odometer";
     private BottomSheetDialog bottomSheetDialogFuelStats, bottomSheetDialogFuelInTank;
     private View currentView;
     private Bundle currentBundle;
+    Constants constants;
     SharedPreferences fuelStats;
     SharedPreferences.Editor editor;
     SharedPreferencesHolder sharedPreferencesHolder;
@@ -53,7 +50,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, getContext().MODE_PRIVATE);
+        fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
         sharedPreferencesHolder.setEditor(editor);
         sharedPreferencesHolder.setFuelStats(fuelStats);
@@ -62,7 +59,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         initializeBottomSheetDialogs();
         getViewAndBundle(view, savedInstanceState);
 
-        if (fuelStats.getFloat(APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f) {
+        if (fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f) {
             NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment);
         }
 
@@ -86,11 +83,11 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
             submit.setOnClickListener(v1 -> {
                 assert tankFuelLevel != null;
                 if (!tankFuelLevel.getText().toString().isEmpty()) {
-                    if (Float.parseFloat(tankFuelLevel.getText().toString()) > fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f))
+                    if (Float.parseFloat(tankFuelLevel.getText().toString()) > fuelStats.getFloat(constants.FUEL_TANK_CAPACITY, 0.0f))
                         showDialog();
                     else {
-                        editor.putFloat(FUEL_LEVEL_OLD, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
-                        editor.putFloat(FUEL_LEVEL, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
+                        editor.putFloat(constants.FUEL_LEVEL_OLD, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
+                        editor.putFloat(constants.FUEL_LEVEL, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
                         editor.apply();
                         bottomSheetDialogFuelInTank.dismiss();
                         sharedPreferencesHolder.calculateRemainsFuel();
@@ -103,7 +100,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
             assert container != null;
             container.setOnClickListener(v2 -> {
                 assert tankFuelLevel != null;
-                tankFuelLevel.setText(String.valueOf(fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f)));
+                tankFuelLevel.setText(String.valueOf(fuelStats.getFloat(constants.FUEL_TANK_CAPACITY, 0.0f)));
             });
         });
     }
@@ -151,16 +148,16 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     }
 
     private void displayFuelInTank(){
-        float fuelLevel = fuelStats.getFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f));
+        float fuelLevel = fuelStats.getFloat(constants.FUEL_LEVEL, fuelStats.getFloat(constants.FUEL_TANK_CAPACITY, 0.0f));
         if (fuelLevel <= 0.0f){
-            editor.putFloat(FUEL_LEVEL, 0.0f);
+            editor.putFloat(constants.FUEL_LEVEL, 0.0f);
             editor.apply();
             binding.fuelLevel.setText(String.format("%s %s", 0.0f , getString(R.string.litres_have_left)));
             binding.fuelLevel.setTextColor(requireContext().getColor(R.color.red));
         } else {
             binding.fuelLevel.setTextColor(requireContext().getColor(R.color.white));
             binding.fuelLevel.setText(String.format("%s %s", fuelLevel, getString(R.string.litres_have_left)));
-            editor.putFloat(FUEL_LEVEL, fuelLevel);
+            editor.putFloat(constants.FUEL_LEVEL, fuelLevel);
             editor.apply();
         }
     }

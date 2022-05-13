@@ -26,6 +26,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDashboardBinding;
+import com.example.helpwheel.utils.Constants;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -46,39 +47,16 @@ import java.util.Locale;
 public class DashboardFragment extends Fragment {
     private DashboardViewModel dashboardViewModel;
     private FragmentDashboardBinding binding;
-    private String currentTemperature = "";
-    private String feels_like = "";
-    private String wind_speed = "";
-    private String weather_desc = "";
-    private String degree_cels = "";
-    private String speed = "";
-    public static final String PREF = "user";
-    public static final String APP_PREFERENCES = "fuelStats";
-    public static final String USERNAME_PREF = "usernamePref";
-    public static final String WEATHER_TEMPERATURE = "weatherTemp";
-    public static final String WEATHER_DESCRIPTION = "weatherDesc";
-    public static final String WEATHER_WIND = "weatherWind";
-    public static final String WEATHER_TEMP_AUTO = "weatherTempAuto";
-    public final static String WEATHER_DESC_AUTO = "weatherDescAuto";
-    public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
-    SharedPreferences preferences, fuelStats;
+    SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private FusedLocationProviderClient mFusedLocationClient;
     String temperature = null;
-    String main_description = null;
     String description = null;
     String wind = null;
-    String feel_temperature = null;
     String key = "a98ca7720a8fd711bb8548bf2373e263";
-    private FragmentStateAdapter pagerAdapter;
-    private ViewPager2 viewPager2;
+    Constants constants;
     private static final int NUM_PAGES = 2;
 
-
-    private void showErrorMessage() {
-        binding.currentWeather.setVisibility(View.VISIBLE);
-        binding.currentWeather.setText(R.string.error_weather);
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -91,16 +69,15 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        preferences = requireContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
+        preferences = requireContext().getSharedPreferences(constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = preferences.edit();
-        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
-        if (fuelStats.getString(USERNAME_PREF, "user").equals("user") || fuelStats.getString(USERNAME_PREF, "user").equals(""))
+        if (preferences.getString(constants.USERNAME_PREF, "user").equals("user") || preferences.getString(constants.USERNAME_PREF, "user").equals(""))
             showWelcomeScreen();
         changeUi();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
-        viewPager2 = binding.weatherViewPager;
-        pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
+        ViewPager2 viewPager2 = binding.weatherViewPager;
+        FragmentStateAdapter pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
         viewPager2.setAdapter(pagerAdapter);
         viewPager2.setPageTransformer(new ZoomPageTransformer());
         new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {
@@ -159,20 +136,18 @@ public class DashboardFragment extends Fragment {
                 }
 
 
-                editor.putString(WEATHER_TEMP_AUTO, temperature);
-                editor.putString(WEATHER_DESC_AUTO, description);
-                editor.putString(WEATHER_WIND_AUTO, wind);
+                editor.putString(constants.WEATHER_TEMP_AUTO, temperature);
+                editor.putString(constants.WEATHER_DESC_AUTO, description);
+                editor.putString(constants.WEATHER_WIND_AUTO, wind);
                 editor.apply();
 
-              binding.weatherLoading.setVisibility(View.INVISIBLE);
-            } else {
-                binding.weatherLoading.setVisibility(View.INVISIBLE);
             }
+            binding.weatherLoading.setVisibility(View.INVISIBLE);
         });
 
     }
 
-    private class ZoomPageTransformer implements ViewPager2.PageTransformer {
+    private static class ZoomPageTransformer implements ViewPager2.PageTransformer {
         private static final float MIN_SCALE = 0.85f;
 
         @Override
@@ -199,7 +174,7 @@ public class DashboardFragment extends Fragment {
         }
     }
 
-    private class ScreenSlidePageAdapterWeather extends FragmentStateAdapter {
+    private static class ScreenSlidePageAdapterWeather extends FragmentStateAdapter {
         public ScreenSlidePageAdapterWeather(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);
         }
@@ -247,16 +222,6 @@ public class DashboardFragment extends Fragment {
     }
 
 
-//    private void initStrings() {
-//        currentTemperature = requireContext().getResources().getString(R.string.temperature_is);
-//        feels_like = requireContext().getResources().getString(R.string.feels_like);
-//        wind_speed = requireContext().getResources().getString(R.string.wind_speed);
-//        weather_desc = requireContext().getResources().getString(R.string.weather_desc);
-//        degree_cels = requireContext().getResources().getString(R.string.degree_cels);
-//        speed = requireContext().getResources().getString(R.string.speed);
-//
-//    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -273,7 +238,7 @@ public class DashboardFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void changeUi() {
-        binding.greetingText.setText(getString(R.string.hello_user_text) + " " + fuelStats.getString(USERNAME_PREF, "user") + "!");
+        binding.greetingText.setText(getString(R.string.hello_user_text) + " " + preferences.getString(constants.USERNAME_PREF, "user") + "!");
     }
 
     @Override
@@ -322,25 +287,10 @@ public class DashboardFragment extends Fragment {
                             e.printStackTrace();
                         }
                         if (addresses != null && !addresses.isEmpty()) {
-                            Log.wtf("ADDRESSES", (addresses.get(0).getLocality()) + (addresses.get(0).getAdminArea()));
-
-                            String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                             String city = addresses.get(0).getLocality();
-                            String state = addresses.get(0).getAdminArea();
-                            String country = addresses.get(0).getCountryName();
-                            String postalCode = addresses.get(0).getPostalCode();
-                            String knownName = addresses.get(0).getFeatureName(); // Only if available else return NULL
                             DescriptionWeather descriptionWeather = new DescriptionWeather();
                             descriptionWeather.setLongitude(location.getLongitude());
                             descriptionWeather.setLatitude(location.getLatitude());
-
-
-                            Log.d("TAG", "getAddress:  address" + address);
-                            Log.d("TAG", "" + city);
-                            Log.d("TAG", "getAddress:  state" + state);
-                            Log.d("TAG", "getAddress:  postalCode" + postalCode);
-                            Log.d("TAG", "getAddress:  knownName" + knownName);
-
                         }
 
                     }

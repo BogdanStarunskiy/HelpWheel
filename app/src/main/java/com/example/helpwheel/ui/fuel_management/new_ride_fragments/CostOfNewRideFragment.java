@@ -11,12 +11,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.databinding.FragmentCostOfNewRideBinding;
+import com.example.helpwheel.utils.Constants;
 
 
 public class CostOfNewRideFragment extends Fragment {
     FragmentCostOfNewRideBinding binding;
-    public static final String APP_PREFERENCES = "fuelStats";
-    public static final String APP_NEW_RIDE_PRICE = "new_ride_price";
+    Constants constants;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -28,7 +28,7 @@ public class CostOfNewRideFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SharedPreferences fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, requireContext().MODE_PRIVATE);
-        binding.price.setText(String.valueOf(fuelStats.getFloat(APP_NEW_RIDE_PRICE, 0.0f)));
+        SharedPreferences fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, requireContext().MODE_PRIVATE);
+        binding.price.setText(String.valueOf(fuelStats.getFloat(constants.APP_NEW_RIDE_PRICE, 0.0f)));
     }
 }
