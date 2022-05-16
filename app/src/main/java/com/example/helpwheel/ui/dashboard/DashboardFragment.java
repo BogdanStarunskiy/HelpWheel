@@ -61,7 +61,7 @@ public class DashboardFragment extends Fragment {
     String key = "a98ca7720a8fd711bb8548bf2373e263";
     Constants constants;
     private static final int NUM_PAGES = 2;
-    boolean isGranted=true;
+    boolean isGranted = true;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -83,17 +83,17 @@ public class DashboardFragment extends Fragment {
         changeUi();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         setupSwitcher();
-        isGranted = preferences.getBoolean("Test",false);
+        isGranted = preferences.getBoolean("Test", false);
         binding.enterCity.requestFocus();
         SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
-            if (key.equals("Test")){
+            if (key.equals("Test")) {
 
-                isGranted = preferences.getBoolean("Test",false);
-                if(!isGranted){
+                isGranted = preferences.getBoolean("Test", false);
+                if (!isGranted) {
                     binding.manualInput.setVisibility(View.GONE);
                     binding.enterCity.setVisibility(View.VISIBLE);
                     binding.weatherBtn.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     binding.manualInput.setVisibility(View.VISIBLE);
                     binding.enterCity.setVisibility(View.GONE);
                     binding.weatherBtn.setVisibility(View.GONE);
@@ -113,7 +113,7 @@ public class DashboardFragment extends Fragment {
         initObservers();
 
         initListeners();
-        if(!isGranted){
+        if (!isGranted) {
             binding.manualInput.setVisibility(View.INVISIBLE);
             DescriptionWeather descriptionWeather = new DescriptionWeather();
             descriptionWeather.setIsChecked(false);
@@ -121,7 +121,7 @@ public class DashboardFragment extends Fragment {
             weatherWindSpeed.setChecked(false);
             binding.weatherBtn.setVisibility(View.VISIBLE);
             binding.enterCity.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             binding.manualInput.setVisibility(View.VISIBLE);
             binding.enterCity.setVisibility(View.GONE);
             binding.weatherBtn.setVisibility(View.GONE);
@@ -156,7 +156,7 @@ public class DashboardFragment extends Fragment {
             if (isChecked) {
                 checkPermissions();
 
-            }else {
+            } else {
                 String user_city = binding.enterCity.getText().toString().trim();
                 String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
                 dashboardViewModel.getTemperature(url);
@@ -252,28 +252,27 @@ public class DashboardFragment extends Fragment {
                     .withPermission(
                             Manifest.permission.ACCESS_FINE_LOCATION
                     ).withListener(new PermissionListener() {
-                        @Override
-                        public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                            getMyLocation();
-                            editor.putBoolean("Test", true);
-                            editor.apply();
-                        }
+                @Override
+                public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                    getMyLocation();
+                    editor.putBoolean("Test", true);
+                    editor.apply();
+                }
 
-                        @Override
-                        public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                            editor.putBoolean("Test", false);
-                            editor.apply();
-                        }
+                @Override
+                public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                    editor.putBoolean("Test", false);
+                    editor.apply();
+                }
 
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                                permissionToken.continuePermissionRequest();
-                        }
+                @Override
+                public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                    permissionToken.continuePermissionRequest();
+                }
 
 
             }).check();
-//ffadasfsfsdfasdasdtyuiyuhi
-            //sdfgdfgdfgdfgdfg
+
         } else {
             getMyLocation();
         }
@@ -356,8 +355,6 @@ public class DashboardFragment extends Fragment {
                 });
 
     }
-
-
 
 
 }
