@@ -56,7 +56,7 @@ public class NewRideBottomSheetFragment extends Fragment {
                 callBack.dismissBottomSheet();
             } else if (!distance.isEmpty()) {
                 editor.putFloat(constants.APP_NEW_RIDE_DISTANCE, Float.parseFloat(distance));
-                editor.putFloat(constants.APP_NEW_RIDE_PRE_PRICE, 0.0f);
+                editor.putFloat(constants.APP_NEW_RIDE_PRICE, 0.0f);
                 editor.apply();
                 callMethods();
                 callBack.dismissBottomSheet();

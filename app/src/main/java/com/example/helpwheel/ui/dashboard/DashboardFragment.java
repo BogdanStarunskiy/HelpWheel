@@ -211,6 +211,7 @@ public class DashboardFragment extends Fragment {
                     getMyLocation();
                 }
 
+
                 @Override
                 public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
             }).check();
