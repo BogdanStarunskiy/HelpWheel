@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,8 +35,11 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +61,7 @@ public class DashboardFragment extends Fragment {
     String key = "a98ca7720a8fd711bb8548bf2373e263";
     Constants constants;
     private static final int NUM_PAGES = 2;
+    boolean isGranted = true;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -71,10 +77,32 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         preferences = requireContext().getSharedPreferences(constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = preferences.edit();
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         if (preferences.getString(constants.USERNAME_PREF, "user").equals("user") || preferences.getString(constants.USERNAME_PREF, "user").equals(""))
             showWelcomeScreen();
         changeUi();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        setupSwitcher();
+        isGranted = preferences.getBoolean("Test", false);
+        binding.enterCity.requestFocus();
+        SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+            if (key.equals("Test")) {
+
+                isGranted = preferences.getBoolean("Test", false);
+                if (!isGranted) {
+                    binding.manualInput.setVisibility(View.GONE);
+                    binding.enterCity.setVisibility(View.VISIBLE);
+                    binding.weatherBtn.setVisibility(View.VISIBLE);
+                } else {
+                    binding.manualInput.setVisibility(View.VISIBLE);
+                    binding.enterCity.setVisibility(View.GONE);
+                    binding.weatherBtn.setVisibility(View.GONE);
+                }
+            }
+
+
+        };
+        preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         ViewPager2 viewPager2 = binding.weatherViewPager;
         FragmentStateAdapter pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
@@ -83,8 +111,21 @@ public class DashboardFragment extends Fragment {
         new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {
         }).attach();
         initObservers();
-        setupSwitcher();
+
         initListeners();
+        if (!isGranted) {
+            binding.manualInput.setVisibility(View.INVISIBLE);
+            DescriptionWeather descriptionWeather = new DescriptionWeather();
+            descriptionWeather.setIsChecked(false);
+            WeatherWindSpeed weatherWindSpeed = new WeatherWindSpeed();
+            weatherWindSpeed.setChecked(false);
+            binding.weatherBtn.setVisibility(View.VISIBLE);
+            binding.enterCity.setVisibility(View.VISIBLE);
+        } else {
+            binding.manualInput.setVisibility(View.VISIBLE);
+            binding.enterCity.setVisibility(View.GONE);
+            binding.weatherBtn.setVisibility(View.GONE);
+        }
     }
 
     private void initListeners() {
@@ -94,6 +135,13 @@ public class DashboardFragment extends Fragment {
                 Toast toast = Toast.makeText(binding.getRoot().getContext(), R.string.enter_city_message, Toast.LENGTH_LONG);
                 toast.show();
             } else {
+                View view = requireActivity().getCurrentFocus();
+                if (view != null) {
+
+                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+                }
                 String user_city = binding.enterCity.getText().toString().trim();
 
                 String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
@@ -108,7 +156,7 @@ public class DashboardFragment extends Fragment {
             if (isChecked) {
                 checkPermissions();
 
-            }else {
+            } else {
                 String user_city = binding.enterCity.getText().toString().trim();
                 String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
                 dashboardViewModel.getTemperature(url);
@@ -199,21 +247,31 @@ public class DashboardFragment extends Fragment {
     }
 
     private void checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Dexter.withContext(requireContext())
-                    .withPermissions(
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                    ).withListener(new MultiplePermissionsListener() {
+                    .withPermission(
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                    ).withListener(new PermissionListener() {
                 @Override
-                public void onPermissionsChecked(MultiplePermissionsReport report) {
+                public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
                     getMyLocation();
+                    editor.putBoolean("Test", true);
+                    editor.apply();
                 }
 
 
                 @Override
-                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
+                public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                    editor.putBoolean("Test", false);
+                    editor.apply();
+                }
+
+                @Override
+                public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                    permissionToken.continuePermissionRequest();
+                }
+
+
             }).check();
 
         } else {
@@ -298,9 +356,6 @@ public class DashboardFragment extends Fragment {
                 });
 
     }
-
-
-
 
 
 }
