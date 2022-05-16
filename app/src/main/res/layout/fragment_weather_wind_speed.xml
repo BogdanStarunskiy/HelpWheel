@@ -19,7 +19,6 @@
                 android:id="@+id/ImageViewWind"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@mipmap/ic_weather_wind_foreground"
                 app:layout_constraintBottom_toTopOf="@+id/weather_wind"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"

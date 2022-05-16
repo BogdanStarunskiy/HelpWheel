@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDescriptionWeatherBinding;
 import com.example.helpwheel.utils.Constants;
@@ -108,6 +109,27 @@ public class DescriptionWeather extends Fragment {
     private void setDesc() {
         String description = pref.getString(constants.WEATHER_DESCRIPTION, "error");
         binding.weatherDescription.setText(description);
+        LottieAnimationView animationView = binding.ImageViewDescription;
+        if (description.equals("clear sky")){
+            animationView.setAnimation(R.raw.ic_clear_sky);
+            animationView.playAnimation();
+        } else if (description.equals("few clouds")){
+            animationView.setAnimation(R.raw.ic_few_clouds);
+            animationView.playAnimation();
+        } else if (description.equals("scattered clouds") || description.equals("broken clouds") || description.equals("overcast clouds")){
+            animationView.setAnimation(R.raw.ic_clouds);
+            animationView.playAnimation();
+        } else if (description.equals("shower rain")){
+            animationView.setAnimation(R.raw.ic_few_clouds);
+        } else if (description.equals("rain")) {
+            animationView.setAnimation(R.raw.ic_few_clouds);
+        } else if (description.equals("thunderstorm")){
+            animationView.setAnimation(R.raw.ic_few_clouds);
+        } else if (description.equals("snow")){
+            animationView.setAnimation(R.raw.ic_few_clouds);
+        } else if (description.equals("mist")){
+            animationView.setAnimation(R.raw.ic_few_clouds);
+        }
     }
 
     private void getWeather() {
