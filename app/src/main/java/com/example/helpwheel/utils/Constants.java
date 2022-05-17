@@ -2,11 +2,9 @@ package com.example.helpwheel.utils;
 
 public class Constants {
     public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
-    public static final String WEATHER_TEMP_AUTO = "weatherTempAuto";
-    public static final String WEATHER_TEMPERATURE = "weatherTemp";
-    public static final String WEATHER_DESCRIPTION = "weatherDesc";
+    public static final String WEATHER_TEMP = "weatherTempAuto";
     public static final String WEATHER_WIND = "weatherWind";
-    public final static String WEATHER_DESC_AUTO = "weatherDescAuto";
+    public final static String WEATHER_DESC = "weatherDescAuto";
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String USERNAME_PREF = "usernamePref";
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";

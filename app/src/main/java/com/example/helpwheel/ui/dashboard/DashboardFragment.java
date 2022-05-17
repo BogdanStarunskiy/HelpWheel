@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,12 +32,10 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import org.json.JSONArray;
@@ -63,12 +60,10 @@ public class DashboardFragment extends Fragment {
     private static final int NUM_PAGES = 2;
     boolean isGranted = true;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
@@ -78,17 +73,17 @@ public class DashboardFragment extends Fragment {
         preferences = requireContext().getSharedPreferences(constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = preferences.edit();
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
         if (preferences.getString(constants.USERNAME_PREF, "user").equals("user") || preferences.getString(constants.USERNAME_PREF, "user").equals(""))
             showWelcomeScreen();
+
         changeUi();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         setupSwitcher();
         isGranted = preferences.getBoolean("Test", false);
-        binding.enterCity.requestFocus();
+
         SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
             if (key.equals("Test")) {
-
-                isGranted = preferences.getBoolean("Test", false);
                 if (!isGranted) {
                     binding.manualInput.setVisibility(View.GONE);
                     binding.enterCity.setVisibility(View.VISIBLE);
@@ -99,20 +94,14 @@ public class DashboardFragment extends Fragment {
                     binding.weatherBtn.setVisibility(View.GONE);
                 }
             }
-
-
         };
+
         preferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
-        ViewPager2 viewPager2 = binding.weatherViewPager;
-        FragmentStateAdapter pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
-        viewPager2.setAdapter(pagerAdapter);
-        viewPager2.setPageTransformer(new ZoomPageTransformer());
-        new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {
-        }).attach();
+        initViewPager();
         initObservers();
-
         initListeners();
+
         if (!isGranted) {
             binding.manualInput.setVisibility(View.INVISIBLE);
             DescriptionWeather descriptionWeather = new DescriptionWeather();
@@ -128,6 +117,28 @@ public class DashboardFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
+        checkPermissions();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    private void initViewPager(){
+        ViewPager2 viewPager2 = binding.weatherViewPager;
+        FragmentStateAdapter pagerAdapter = new ScreenSlidePageAdapterWeather(requireActivity());
+        viewPager2.setAdapter(pagerAdapter);
+        viewPager2.setPageTransformer(new ZoomPageTransformer());
+        new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {
+        }).attach();
+    }
+
     private void initListeners() {
         binding.userGreetingEditButton.setOnClickListener(view -> showEditDataFragment());
         binding.weatherBtn.setOnClickListener(v -> {
@@ -135,18 +146,7 @@ public class DashboardFragment extends Fragment {
                 Toast toast = Toast.makeText(binding.getRoot().getContext(), R.string.enter_city_message, Toast.LENGTH_LONG);
                 toast.show();
             } else {
-                View view = requireActivity().getCurrentFocus();
-                if (view != null) {
-
-                    InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-                }
-                String user_city = binding.enterCity.getText().toString().trim();
-
-                String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
-                dashboardViewModel.getTemperature(url);
-                binding.weatherLoading.setVisibility(View.VISIBLE);
+               getWeatherFromManualInput();
             }
         });
     }
@@ -155,40 +155,38 @@ public class DashboardFragment extends Fragment {
         binding.manualInput.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             if (isChecked) {
                 checkPermissions();
-
             } else {
-                String user_city = binding.enterCity.getText().toString().trim();
-                String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
-                dashboardViewModel.getTemperature(url);
+                getWeatherFromManualInput();
             }
             changeInputTypeWeather();
         });
     }
-
+    private void getWeatherFromManualInput(){
+        String user_city = binding.enterCity.getText().toString().trim();
+        String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
+        binding.weatherLoading.setVisibility(View.VISIBLE);
+        dashboardViewModel.getTemperature(url);
+        editor.putString(constants.WEATHER_TEMP, temperature);
+        editor.putString(constants.WEATHER_DESC, description);
+        editor.apply();
+    }
     private void initObservers() {
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
             if (s != null && !s.equals("")) {
-
-
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    temperature = jsonObject.getJSONObject("main").getDouble("temp") + " ";
-                    wind = jsonObject.getJSONObject("wind").getDouble("speed") + " ";
                     JSONArray jsonArray = jsonObject.getJSONArray("weather");
                     JSONObject Json_description = jsonArray.getJSONObject(0);
+                    temperature = jsonObject.getJSONObject("main").getDouble("temp") + " ";
+                    wind = jsonObject.getJSONObject("wind").getDouble("speed") + " ";
                     description = Json_description.getString("description");
-
-
+                    editor.putString(constants.WEATHER_TEMP, temperature);
+                    editor.putString(constants.WEATHER_DESC, description);
+                    editor.putString(constants.WEATHER_WIND_AUTO, wind);
+                    editor.apply();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-                editor.putString(constants.WEATHER_TEMP_AUTO, temperature);
-                editor.putString(constants.WEATHER_DESC_AUTO, description);
-                editor.putString(constants.WEATHER_WIND_AUTO, wind);
-                editor.apply();
-
             }
             binding.weatherLoading.setVisibility(View.INVISIBLE);
         });
@@ -280,13 +278,6 @@ public class DashboardFragment extends Fragment {
 
     }
 
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
     private void showWelcomeScreen() {
         NavHostFragment.findNavController(this).navigate(R.id.action_navigation_dashboard_to_welcomeFragment);
     }
@@ -298,13 +289,6 @@ public class DashboardFragment extends Fragment {
     @SuppressLint("SetTextI18n")
     public void changeUi() {
         binding.greetingText.setText(getString(R.string.hello_user_text) + " " + preferences.getString(constants.USERNAME_PREF, "user") + "!");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
-        checkPermissions();
     }
 
     @SuppressLint("MissingPermission")
@@ -332,24 +316,28 @@ public class DashboardFragment extends Fragment {
 
         mFusedLocationClient.getLastLocation()
                 .addOnSuccessListener(requireActivity(), location -> {
-
                     if (location != null) {
-                        Log.wtf("LOCATION", location.toString());
-                        String url2 = "https://api.openweathermap.org/data/2.5/weather?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + key + "&units=metric&lang=en";
-                        dashboardViewModel.getTemperature(url2);
-
-                        Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
-                        List<Address> addresses = null;
-                        try {
-                            addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        if(location.getLatitude() == 0 && location.getLongitude() == 0) {
+                            binding.weatherLoading.setVisibility(View.VISIBLE);
                         }
-                        if (addresses != null && !addresses.isEmpty()) {
-                            String city = addresses.get(0).getLocality();
-                            DescriptionWeather descriptionWeather = new DescriptionWeather();
-                            descriptionWeather.setLongitude(location.getLongitude());
-                            descriptionWeather.setLatitude(location.getLatitude());
+                        else {
+                            Log.wtf("LOCATION", location.toString());
+                            String url2 = "https://api.openweathermap.org/data/2.5/weather?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + key + "&units=metric&lang=en";
+                            binding.weatherLoading.setVisibility(View.VISIBLE);
+                            dashboardViewModel.getTemperature(url2);
+                            editor.putString(constants.WEATHER_TEMP, temperature);
+                            editor.putString(constants.WEATHER_DESC, description);
+                            editor.apply();
+                            Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
+                            List<Address> addresses = null;
+                            try {
+                                addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (addresses != null && !addresses.isEmpty()) {
+                                String city = addresses.get(0).getLocality();
+                            }
                         }
 
                     }
