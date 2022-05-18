@@ -55,146 +55,126 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-    <!--Обёртка погоды в card view-->
-    <androidx.cardview.widget.CardView
 
-        android:id="@+id/weather_card_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/dark"
-        app:cardCornerRadius="20dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_greeting">
+        app:layout_constraintTop_toBottomOf="@+id/user_greeting"
+        app:layout_constraintVertical_bias="0.389">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/manual_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:checked="true"
+            android:text="@string/type_input"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weather_btn" />
+
+        <ProgressBar
+            android:id="@+id/weather_loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="81dp"
+            android:layout_height="46dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/weatherViewPager"
+            app:layout_constraintEnd_toEndOf="@id/weatherViewPager"
+            app:layout_constraintStart_toStartOf="@id/weatherViewPager"
+            app:layout_constraintTop_toTopOf="@id/weatherViewPager" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/enter_city_edit_text"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/text_dashboard"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="15dp"
+            android:hint="@string/enter_city"
+            android:visibility="gone"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.515"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.389">
+            app:layout_constraintTop_toTopOf="parent">
 
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/manual_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:checked="true"
-                android:text="@string/type_input"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toTopOf="@id/weatherViewPager"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/weather_loading"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="81dp"
-                android:layout_height="46dp"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.579" />
-
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/enter_city"
-                style="@android:style/Widget.Material.Light.EditText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:alpha="0.3"
                 android:autofillHints="username"
-                android:ems="10"
                 android:fontFamily="@font/source_sans_pro"
-                android:hint="@string/enter_city"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:textAlignment="viewStart"
-                android:textColor="@color/white"
-                android:textColorHighlight="@color/white"
-                android:textColorHint="@color/white"
-                android:textColorLink="#FFFFFF"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="LabelFor" />
+                app:layout_constraintTop_toTopOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/weather_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/dark"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:text="@string/weather_btn"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/enter_city"
-                app:layout_constraintVertical_bias="0.052" />
-
-            <TextView
-                android:id="@+id/current_weather"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/source_sans_pro"
-                android:text="@string/current_weather"
-                android:textColor="@color/white"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.503"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weather_btn"
-                app:layout_constraintVertical_bias="0.435" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/weather_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="10dp"
+            android:backgroundTint="@color/yellow"
+            android:text="@string/weather_btn"
+            android:textColor="@color/dark"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:cornerRadius="15dp"
+            app:layout_constraintBottom_toTopOf="@id/manual_input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_city_edit_text" />
 
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/weatherViewPager"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="152dp"
-                android:elevation="768907547dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/enter_city">
+        <TextView
+            android:id="@+id/current_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/source_sans_pro"
+            android:text="@string/current_weather"
+            android:textColor="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weather_btn"
+            app:layout_constraintVertical_bias="0.435" />
 
-            </androidx.viewpager2.widget.ViewPager2>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/transparent"
-                app:layout_constraintTop_toBottomOf="@id/weatherViewPager"
-                app:tabBackground="@drawable/tab_weather_selector"
-                app:tabGravity="center"
-                app:tabIndicator="@color/transparent" />
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/weatherViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:elevation="768907547dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/manual_input">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        </androidx.viewpager2.widget.ViewPager2>
 
-    <!--    <ImageView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_margin="10dp"-->
-    <!--        android:src="@drawable/ic_dashboard_car_icon"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/weather_card_view" />-->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/weatherViewPager"
+            app:tabBackground="@drawable/tab_weather_selector"
+            app:tabGravity="center"
+            app:tabIndicator="@color/transparent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

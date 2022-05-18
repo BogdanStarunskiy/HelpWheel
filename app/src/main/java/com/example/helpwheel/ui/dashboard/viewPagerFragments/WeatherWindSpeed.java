@@ -1,4 +1,4 @@
-package com.example.helpwheel.ui.dashboard;
+package com.example.helpwheel.ui.dashboard.viewPagerFragments;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentWeatherWindSpeedBinding;
+import com.example.helpwheel.ui.dashboard.DashboardViewModel;
 import com.example.helpwheel.utils.Constants;
 
 import org.json.JSONException;
@@ -47,20 +48,19 @@ public class WeatherWindSpeed extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentWeatherWindSpeedBinding.inflate(inflater, container, false);
         pref = requireContext().getSharedPreferences(constants.APP_PREFERENCES, getContext().MODE_PRIVATE);
-        getWeather();
-        editor =pref.edit();
+        editor = pref.edit();
         SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
             if (key.equals(constants.WEATHER_WIND)) {
                 setWind();
-            }else if(key.equals(constants.WEATHER_WIND_AUTO)){
-                binding.weatherWind.setText(pref.getString(constants.WEATHER_WIND_AUTO, "no data")+requireContext().getResources().getString(R.string.speed));
+            } else if (key.equals(constants.WEATHER_WIND_AUTO)) {
+                binding.weatherWind.setText(pref.getString(constants.WEATHER_WIND_AUTO, "no data") + requireContext().getResources().getString(R.string.speed));
             }
         };
 
         pref.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         if (!isChecked) {
             if (pref.getString(constants.WEATHER_WIND, "error") != null) {
-                binding.weatherWind.setText(pref.getString(constants.WEATHER_WIND, "error")+ requireContext().getResources().getString(R.string.speed));
+                binding.weatherWind.setText(pref.getString(constants.WEATHER_WIND, "error") + requireContext().getResources().getString(R.string.speed));
             }
         }
         return binding.getRoot();
@@ -69,37 +69,7 @@ public class WeatherWindSpeed extends Fragment {
     @SuppressLint("SetTextI18n")
     private void setWind() {
         String wind = pref.getString(constants.WEATHER_WIND, "error");
-        binding.weatherWind.setText(wind+ requireContext().getResources().getString(R.string.speed));
+        binding.weatherWind.setText(wind + requireContext().getResources().getString(R.string.speed));
     }
-    private void getWeather() {
-        String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + key + "&units=metric&lang=en";
-        DashboardViewModel dashboardViewModel = new DashboardViewModel();
-        dashboardViewModel.getTemperature(url);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-            if (s != null && !s.equals("")) {
 
-
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    wind = jsonObject.getJSONObject("wind").getDouble("speed") + " ";
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                editor.putString(constants.WEATHER_WIND_AUTO,wind);
-                editor.apply();
-
-
-            } else {
-
-                binding.weatherWind.setText(requireActivity().getResources().getString(R.string.error_weather));
-            }
-
-        });
-
-
-    }
 }

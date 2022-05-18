@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'androidx.navigation.safeargs'
 }
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdk 32
@@ -32,6 +34,9 @@ android {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
     implementation "com.airbnb.android:lottie:3.4.0"
     implementation 'androidx.fragment:fragment:1.4.1'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'

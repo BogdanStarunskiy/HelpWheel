@@ -27,6 +27,8 @@ public class Constants {
     public static final String APP_PREFERENCES_GASOLINE_EMISSIONS = "gasoline_emissions";
     public static final String APP_PREFERENCES_DIESEL_EMISSIONS = "diesel_emissions";
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
+    public static final String USER_CITY = "user_city";
+    public static final String IS_PERMISSION_GRANTED = "is_permission_granted";
     public static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     public static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
 }

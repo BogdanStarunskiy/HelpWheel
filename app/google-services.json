@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1071725727170",
+    "project_id": "help-wheel",
+    "storage_bucket": "help-wheel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071725727170:android:8bd2f7c17b27ad34869a5b",
+        "android_client_info": {
+          "package_name": "com.example.helpwheel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1071725727170-mhumht7k3lslkh9ofctcr64gl5hn3pag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDeU3eZ-hdbCtZRTqwJfmXnDqlUZ1Yp8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1071725727170-mhumht7k3lslkh9ofctcr64gl5hn3pag.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

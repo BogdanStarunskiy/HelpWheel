@@ -6,7 +6,7 @@
     <string name="title_notifications">Trip</string>
     <!-- weather -->
     <string name="enter_city">Please, enter a city</string>
-    <string name="weather_btn">Check</string>
+    <string name="weather_btn">Submit</string>
     <string name="current_weather">Here will be displayed current weather</string>
     <string name="error_weather">Something went wrong, try again</string>
     <string name="api_key" translatable="false">a98ca7720a8fd711bb8548bf2373e263</string>
@@ -83,6 +83,19 @@
     <string name="yes">YES</string>
     <string name="fuel_level_is_bigger_than_capacity">You can`t have more fuel than your tank can contain!</string>
     <string name="full_tank">Full tank</string>
+    <string name="thunderstorm">Thunderstorm</string>
+    <string name="drizzle">Drizzle</string>
+    <string name="rain">Rain</string>
+    <string name="snow">Snow</string>
+    <string name="cloudy">Cloudy</string>
+    <string name="few_clouds">A little cloudy</string>
+    <string name="sunny">Sunny</string>
+    <string name="squalls">Squalls</string>
+    <string name="tornado">Tornado!</string>
+    <string name="fog">Foggy</string>
+    <string name="no_data">no data</string>
+    <string name="description_weather">Description</string>
+    <string name="temperature">temperature</string>
 
 
 </resources>
