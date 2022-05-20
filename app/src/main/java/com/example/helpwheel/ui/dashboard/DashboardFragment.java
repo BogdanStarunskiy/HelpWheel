@@ -39,10 +39,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -54,15 +50,12 @@ public class DashboardFragment extends Fragment {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private FusedLocationProviderClient mFusedLocationClient;
-    String temperature = null;
-    String description = null;
-    String wind = null;
     String key = "a98ca7720a8fd711bb8548bf2373e263";
     Constants constants;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+        dashboardViewModel = new ViewModelProvider(requireActivity()).get(DashboardViewModel.class);
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -76,9 +69,9 @@ public class DashboardFragment extends Fragment {
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         if (preferences.getString(constants.USERNAME_PREF, "user").equals("user") || preferences.getString(constants.USERNAME_PREF, "user").equals(""))
             showWelcomeScreen();
+
         changeUi();
         initViewPager();
-        initObservers();
         initListeners();
         setupSwitcher();
         updateUiWhenPermissionChanged();
@@ -96,6 +89,7 @@ public class DashboardFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
     private void updateUiWhenPermissionChanged(){
         if (!preferences.getBoolean(constants.IS_PERMISSION_GRANTED, true)) {
             binding.manualInput.setVisibility(View.GONE);
@@ -127,6 +121,8 @@ public class DashboardFragment extends Fragment {
                 toast.show();
             } else {
                 getWeatherFromManualInput();
+                editor.putString(constants.USER_CITY, binding.enterCity.getText().toString());
+                dashboardViewModel.setCity(binding.enterCity.getText().toString());
             }
         });
     }
@@ -147,38 +143,7 @@ public class DashboardFragment extends Fragment {
         binding.enterCityEditText.setVisibility(View.VISIBLE);
         binding.enterCity.setVisibility(View.VISIBLE);
         binding.weatherBtn.setVisibility(View.VISIBLE);
-        if (!user_city.equals("")) {
-            binding.weatherLoading.setVisibility(View.VISIBLE);
-            String url = "https://api.openweathermap.org/data/2.5/weather?q=" + user_city + "&appid=" + key + "&units=metric&lang=en";
-            dashboardViewModel.getTemperature(url);
-            editor.putString(constants.USER_CITY, user_city);
-            editor.putString(constants.WEATHER_TEMP, temperature);
-            editor.putString(constants.WEATHER_DESC, description);
-            editor.apply();
-        }
-    }
-
-    private void initObservers() {
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-            if (s != null && !s.equals("")) {
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    JSONArray jsonArray = jsonObject.getJSONArray("weather");
-                    JSONObject Json_description = jsonArray.getJSONObject(0);
-                    temperature = (int) jsonObject.getJSONObject("main").getDouble("temp") + " ";
-                    wind = jsonObject.getJSONObject("wind").getDouble("speed") + " ";
-                    description = Json_description.getString("description");
-                    editor.putString(constants.WEATHER_TEMP, temperature);
-                    editor.putString(constants.WEATHER_DESC, description);
-                    editor.putString(constants.WEATHER_WIND_AUTO, wind);
-                    editor.apply();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            binding.weatherLoading.setVisibility(View.GONE);
-        });
-
+        dashboardViewModel.getWeatherDataManualInput(user_city, key);
     }
 
     private void checkPermissions() {
@@ -259,12 +224,7 @@ public class DashboardFragment extends Fragment {
                         if (location.getLatitude() == 0 && location.getLongitude() == 0) {
                             binding.weatherLoading.setVisibility(View.VISIBLE);
                         } else {
-                            String url2 = "https://api.openweathermap.org/data/2.5/weather?lat=" + location.getLatitude() + "&lon=" + location.getLongitude() + "&appid=" + key + "&units=metric&lang=en";
-                            binding.weatherLoading.setVisibility(View.VISIBLE);
-                            dashboardViewModel.getTemperature(url2);
-                            editor.putString(constants.WEATHER_TEMP, temperature);
-                            editor.putString(constants.WEATHER_DESC, description);
-                            editor.apply();
+                            dashboardViewModel.getWeatherDataAutomatically(location.getLatitude(), location.getLongitude(), key);
                             Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
                             List<Address> addresses = null;
                             try {
@@ -274,11 +234,7 @@ public class DashboardFragment extends Fragment {
                             }
                             if (addresses != null && !addresses.isEmpty()) {
                                 String city = addresses.get(0).getLocality();
-                                editor.putString(constants.USER_CITY, city);
-                                editor.apply();
-                                if (Objects.requireNonNull(binding.enterCity.getText()).toString().trim().equals("")) {
-                                    binding.enterCity.setText(preferences.getString(constants.USER_CITY, ""));
-                                }
+                                dashboardViewModel.setCity(city);
                             }
                         }
 
@@ -286,6 +242,4 @@ public class DashboardFragment extends Fragment {
                 });
 
     }
-
-
 }

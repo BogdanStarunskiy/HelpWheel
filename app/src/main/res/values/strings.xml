@@ -89,13 +89,14 @@
     <string name="snow">Snow</string>
     <string name="cloudy">Cloudy</string>
     <string name="few_clouds">A little cloudy</string>
-    <string name="sunny">Sunny</string>
+    <string name="sunny">Clear sky</string>
     <string name="squalls">Squalls</string>
     <string name="tornado">Tornado!</string>
     <string name="fog">Foggy</string>
     <string name="no_data">no data</string>
     <string name="description_weather">Description</string>
     <string name="temperature">temperature</string>
+    <string name="no_gps_text">Turn on GPS</string>
 
 
 </resources>

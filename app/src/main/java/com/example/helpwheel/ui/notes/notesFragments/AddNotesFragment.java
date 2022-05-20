@@ -46,6 +46,23 @@ public class AddNotesFragment extends Fragment {
         description = binding.description;
         addNote = binding.addNote;
         webURL = binding.webUlr;
+        initListeners();
+    }
+    private void getDate(Long selection){
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(selection);
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate  = format.format(calendar.getTime());
+        binding.description.setText(formattedDate);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
+    }
+
+    private void initListeners(){
         addNote.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(title.getText().toString()) && !TextUtils.isEmpty(description.getText().toString())) {
                 String descUrl = description.getText().toString().trim() + " " + webURL.getText().toString().trim();
@@ -62,20 +79,7 @@ public class AddNotesFragment extends Fragment {
 
         });
         binding.descriptionEditText.setEndIconOnClickListener(v1 -> materialDatePicker.show(getChildFragmentManager(), "MATERIAL_DATE_PICKER"));
-
+        binding.description.setOnClickListener(v -> binding.descriptionEditText.setError(null));
         materialDatePicker.addOnPositiveButtonClickListener(this::getDate);
-    }
-    private void getDate(Long selection){
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        calendar.setTimeInMillis(selection);
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        String formattedDate  = format.format(calendar.getTime());
-        binding.description.setText(formattedDate);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
     }
 }

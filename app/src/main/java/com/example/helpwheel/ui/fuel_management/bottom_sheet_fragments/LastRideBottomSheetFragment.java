@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.helpwheel.R;
@@ -48,6 +50,10 @@ public class LastRideBottomSheetFragment extends Fragment {
         sharedPreferencesHolder.setFuelStats(fuelStats);
         sharedPreferencesHolder.setEditor(editor);
         binding.lastOdometerText.setText(String.valueOf(fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f)));
+        initListeners();
+    }
+
+    private void initListeners() {
         binding.submitBtnFuel.setOnClickListener(v -> {
             String odometerValue = Objects.requireNonNull(binding.odometerText.getText()).toString();
             String priceValue = Objects.requireNonNull(binding.priceText.getText()).toString();
@@ -69,7 +75,7 @@ public class LastRideBottomSheetFragment extends Fragment {
             } else if (!priceValue.isEmpty()) {
                 binding.odometerEditText.setError(getString(R.string.edit_text_odometer_error));
             } else
-             callBack.dismissBottomSheet();
+                callBack.dismissBottomSheet();
         });
     }
 
@@ -85,6 +91,5 @@ public class LastRideBottomSheetFragment extends Fragment {
         sharedPreferencesHolder.countFuelInTank();
         sharedPreferencesHolder.calculateRemainsFuel();
     }
-
 
 }

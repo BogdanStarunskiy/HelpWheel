@@ -1,10 +1,6 @@
 package com.example.helpwheel.utils;
 
 public class Constants {
-    public static final String WEATHER_WIND_AUTO = "weatherWindAuto";
-    public static final String WEATHER_TEMP = "weatherTempAuto";
-    public static final String WEATHER_WIND = "weatherWind";
-    public final static String WEATHER_DESC = "weatherDescAuto";
     public static final String APP_PREFERENCES = "fuelStats";
     public static final String USERNAME_PREF = "usernamePref";
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
@@ -29,6 +25,7 @@ public class Constants {
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
     public static final String USER_CITY = "user_city";
     public static final String IS_PERMISSION_GRANTED = "is_permission_granted";
+    public static final String IS_GPS_TURNED_ON = "is_gps_turned_on";
     public static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     public static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
 }

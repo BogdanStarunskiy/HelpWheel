@@ -57,6 +57,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
 
         initializeViewPagersAndTabs();
         initializeBottomSheetDialogs();
+        initListeners();
         getViewAndBundle(view, savedInstanceState);
 
         if (fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f) {
@@ -64,6 +65,9 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         }
 
         displayFuelInTank();
+    }
+
+    private void initListeners() {
 
         binding.fuelInputButton.setOnClickListener(v -> {
             bottomSheetDialogFuelStats.show();
@@ -84,7 +88,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
                 assert tankFuelLevel != null;
                 if (!tankFuelLevel.getText().toString().isEmpty()) {
                     if (Float.parseFloat(tankFuelLevel.getText().toString()) > fuelStats.getFloat(constants.FUEL_TANK_CAPACITY, 0.0f))
-                        showDialog();
+                        showDialogOverFuel();
                     else {
                         editor.putFloat(constants.FUEL_LEVEL_OLD, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
                         editor.putFloat(constants.FUEL_LEVEL, sharedPreferencesHolder.formattedNumber(Float.parseFloat(tankFuelLevel.getText().toString())));
@@ -104,6 +108,8 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
             });
         });
     }
+
+
 
     @Override
     public void onStart() {
@@ -162,7 +168,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         }
     }
 
-    private void showDialog(){
+    private void showDialogOverFuel(){
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         final View customLayout = getLayoutInflater().inflate(R.layout.edit_fuel_level_error_diallog, null);
         builder.setView(customLayout);
@@ -178,6 +184,18 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public void dismissBottomSheet() {
         bottomSheetDialogFuelStats.dismiss();
         updateUI();
+    }
+
+    private void showDialogOdometerError(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        final View customLayout = getLayoutInflater().inflate(R.layout.edit_fuel_level_error_diallog, null);
+        builder.setView(customLayout);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        Button okBtn = dialog.findViewById(R.id.ok_button);
+        assert okBtn != null;
+        okBtn.setOnClickListener(v -> dialog.dismiss());
     }
 
 }

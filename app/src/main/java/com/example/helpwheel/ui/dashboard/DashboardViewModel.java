@@ -4,10 +4,13 @@ package com.example.helpwheel.ui.dashboard;
 import android.os.Handler;
 import android.os.Looper;
 
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,27 +24,48 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class DashboardViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<String> temperature;
+    private final MutableLiveData<String> wind;
+    private final MutableLiveData<String> description;
+    private final MutableLiveData<String> city;
+    String currentTemperature;
+    String currentWind;
+    String currentDescription;
+    Handler handler;
 
     public DashboardViewModel() {
-        mText = new MutableLiveData<>();
+        temperature = new MutableLiveData<>();
+        wind = new MutableLiveData<>();
+        description = new MutableLiveData<>();
+        city = new MutableLiveData<>();
+        handler = new Handler(Looper.getMainLooper());
     }
 
-    void getTemperature(String city) {
+    void setCity(String userCity){
+        handler.post(() -> city.setValue(userCity));
+    }
 
+    void getWeatherDataAutomatically(Double latitude, Double longitude, String key) {
+        String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + key + "&units=metric&lang=en";
+        getWeatherData(url);
+    }
 
+    void getWeatherDataManualInput(String userCity, String key) {
+        String url = "https://api.openweathermap.org/data/2.5/weather?q=" + userCity + "&appid=" + key + "&units=metric&lang=en";
+        getWeatherData(url);
+        handler.post(() -> city.setValue(userCity));
+    }
+
+    void getWeatherData(String urlRequest) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
+
 
         executor.execute(() -> {
-
-            //Background work here
-
             HttpsURLConnection connection = null;
             BufferedReader reader = null;
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             try {
-                URL url = new URL(city);
+                URL url = new URL(urlRequest);
                 connection = (HttpsURLConnection) url.openConnection();
                 connection.connect();
                 InputStream stream = connection.getInputStream();
@@ -65,12 +89,32 @@ public class DashboardViewModel extends ViewModel {
                     }
                 }
             }
-
-            handler.post(() -> mText.setValue(buffer.toString()));
+            try {
+                JSONObject jsonObject = new JSONObject(buffer.toString());
+                JSONArray jsonArray = jsonObject.getJSONArray("weather");
+                JSONObject Json_description = jsonArray.getJSONObject(0);
+                currentTemperature = (int) jsonObject.getJSONObject("main").getDouble("temp") + " ";
+                currentWind = jsonObject.getJSONObject("wind").getDouble("speed") + " ";
+                currentDescription = Json_description.getString("description");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            handler.post(() -> temperature.setValue(currentTemperature));
+            handler.post(() -> wind.setValue(currentWind));
+            handler.post(() -> description.setValue(currentDescription));
         });
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String> getTemperature() {
+        return temperature;
+    }
+
+    public LiveData<String> getWind() {
+        return wind;
+    }
+    public LiveData<String> getCity() {return city;}
+
+    public LiveData<String> getDescription() {
+        return description;
     }
 }
