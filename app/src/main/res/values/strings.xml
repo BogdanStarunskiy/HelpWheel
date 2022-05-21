@@ -97,6 +97,7 @@
     <string name="description_weather">Description</string>
     <string name="temperature">temperature</string>
     <string name="no_gps_text">Turn on GPS</string>
+    <string name="you_ve_entered_wrong_odometer_readings">You\'ve entered wrong odometer readings</string>
 
 
 </resources>

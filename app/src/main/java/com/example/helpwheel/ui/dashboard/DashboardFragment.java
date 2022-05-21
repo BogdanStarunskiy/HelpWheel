@@ -90,7 +90,7 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-    private void updateUiWhenPermissionChanged(){
+    private void updateUiWhenPermissionChanged() {
         if (!preferences.getBoolean(constants.IS_PERMISSION_GRANTED, true)) {
             binding.manualInput.setVisibility(View.GONE);
             binding.enterCityEditText.setVisibility(View.VISIBLE);
@@ -132,7 +132,8 @@ public class DashboardFragment extends Fragment {
             if (isChecked) {
                 checkPermissions();
             } else {
-                getWeatherFromManualInput();
+                binding.enterCity.setText((preferences.getString(constants.USER_CITY, null)));
+                dashboardViewModel.getWeatherDataManualInput(preferences.getString(constants.USER_CITY, null), key);
             }
             changeInputTypeWeather();
         });
@@ -144,6 +145,8 @@ public class DashboardFragment extends Fragment {
         binding.enterCity.setVisibility(View.VISIBLE);
         binding.weatherBtn.setVisibility(View.VISIBLE);
         dashboardViewModel.getWeatherDataManualInput(user_city, key);
+        editor.putString(constants.USER_CITY, user_city);
+        editor.apply();
     }
 
     private void checkPermissions() {
@@ -152,29 +155,26 @@ public class DashboardFragment extends Fragment {
                     .withPermission(
                             Manifest.permission.ACCESS_FINE_LOCATION
                     ).withListener(new PermissionListener() {
-                @Override
-                public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                    getMyLocation();
-                    editor.putBoolean(constants.IS_PERMISSION_GRANTED, true);
-                    editor.apply();
-                    updateUiWhenPermissionChanged();
-                }
+                        @Override
+                        public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                            getMyLocation();
+                            editor.putBoolean(constants.IS_PERMISSION_GRANTED, true);
+                            editor.apply();
+                            updateUiWhenPermissionChanged();
+                        }
 
+                        @Override
+                        public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                            editor.putBoolean(constants.IS_PERMISSION_GRANTED, false);
+                            editor.apply();
+                            updateUiWhenPermissionChanged();
+                        }
 
-                @Override
-                public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                    editor.putBoolean(constants.IS_PERMISSION_GRANTED, false);
-                    editor.apply();
-                    updateUiWhenPermissionChanged();
-                }
-
-                @Override
-                public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                    permissionToken.continuePermissionRequest();
-                }
-
-
-            }).check();
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                            permissionToken.continuePermissionRequest();
+                        }
+                    }).check();
 
         } else {
             getMyLocation();
@@ -215,6 +215,7 @@ public class DashboardFragment extends Fragment {
             binding.enterCity.setVisibility(View.VISIBLE);
         }
     }
+
     @SuppressLint("MissingPermission")
     private void getMyLocation() {
 

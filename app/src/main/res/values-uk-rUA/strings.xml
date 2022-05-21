@@ -72,4 +72,19 @@
     <string name="yes">Так</string>
     <string name="fuel_level_is_bigger_than_capacity">Рівень палива в баці не може бути більшим, ніж місткість баку</string>
     <string name="full_tank">Повний бак</string>
+    <string name="thunderstorm">Гроза</string>
+    <string name="drizzle">Мряка</string>
+    <string name="rain">Дощ</string>
+    <string name="snow">Сніг</string>
+    <string name="cloudy">Хмарно</string>
+    <string name="few_clouds">Трошки хмарно</string>
+    <string name="sunny">Ясно</string>
+    <string name="squalls">Шквали</string>
+    <string name="tornado">Смерч!</string>
+    <string name="fog">Туманно</string>
+    <string name="no_data">Нема даних</string>
+    <string name="description_weather">Опис</string>
+    <string name="temperature">Температура</string>
+    <string name="no_gps_text">Ввімкніть GPS</string>
+    <string name="you_ve_entered_wrong_odometer_readings">Ви ввели невірні показники одометра</string>
 </resources>

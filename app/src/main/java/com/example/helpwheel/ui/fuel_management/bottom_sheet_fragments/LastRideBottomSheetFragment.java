@@ -28,6 +28,8 @@ public class LastRideBottomSheetFragment extends Fragment {
     SharedPreferences fuelStats;
     SharedPreferences.Editor editor;
     SharedPreferencesHolder sharedPreferencesHolder;
+    String odometerValue;
+    String priceValue;
 
     public  LastRideBottomSheetFragment(BottomSheetCallBack callBack) {
         this.callBack = callBack;
@@ -55,23 +57,12 @@ public class LastRideBottomSheetFragment extends Fragment {
 
     private void initListeners() {
         binding.submitBtnFuel.setOnClickListener(v -> {
-            String odometerValue = Objects.requireNonNull(binding.odometerText.getText()).toString();
-            String priceValue = Objects.requireNonNull(binding.priceText.getText()).toString();
+            odometerValue = Objects.requireNonNull(binding.odometerText.getText()).toString();
+            priceValue = Objects.requireNonNull(binding.priceText.getText()).toString();
             if (!odometerValue.isEmpty() && !priceValue.isEmpty()) {
-                editor.putFloat(constants.APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
-                editor.putFloat(constants.APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
-                sharedPreferencesHolder.calculatingDistance(sharedPreferencesHolder.oldOdometerValue(), Float.parseFloat(odometerValue));
-                sharedPreferencesHolder.countPrice("last");
-                editor.apply();
-                callMethods();
-                callBack.dismissBottomSheet();
+                checkOdometerReadingsTwoFields(Float.parseFloat(odometerValue));
             } else if (!odometerValue.isEmpty()) {
-                sharedPreferencesHolder.calculatingDistance(sharedPreferencesHolder.oldOdometerValue(), Float.parseFloat(odometerValue));
-                editor.putFloat(constants.APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
-                editor.putFloat(constants.APP_PREFERENCES_PRICE, 0.0f);
-                editor.apply();
-                callMethods();
-                callBack.dismissBottomSheet();
+                checkOdometerReadingsOneField(Float.parseFloat(odometerValue));
             } else if (!priceValue.isEmpty()) {
                 binding.odometerEditText.setError(getString(R.string.edit_text_odometer_error));
             } else
@@ -90,6 +81,45 @@ public class LastRideBottomSheetFragment extends Fragment {
         sharedPreferencesHolder.countImpactOnEcology("last");
         sharedPreferencesHolder.countFuelInTank();
         sharedPreferencesHolder.calculateRemainsFuel();
+    }
+
+    private void checkOdometerReadingsTwoFields(Float odometer){
+        if (fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f) > odometer){
+            showDialogOdometerError();
+        } else {
+            editor.putFloat(constants.APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
+            editor.putFloat(constants.APP_PREFERENCES_PRE_PRICE, Float.parseFloat(priceValue));
+            sharedPreferencesHolder.calculatingDistance(sharedPreferencesHolder.oldOdometerValue(), Float.parseFloat(odometerValue));
+            sharedPreferencesHolder.countPrice("last");
+            editor.apply();
+            callMethods();
+            callBack.dismissBottomSheet();
+        }
+    }
+
+    private void checkOdometerReadingsOneField(Float odometer){
+        if (fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f) > odometer){
+            showDialogOdometerError();
+        } else {
+            sharedPreferencesHolder.calculatingDistance(sharedPreferencesHolder.oldOdometerValue(), Float.parseFloat(odometerValue));
+            editor.putFloat(constants.APP_PREFERENCES_ODOMETER, Float.parseFloat(odometerValue));
+            editor.putFloat(constants.APP_PREFERENCES_PRICE, 0.0f);
+            editor.apply();
+            callMethods();
+            callBack.dismissBottomSheet();
+        }
+    }
+
+    private void showDialogOdometerError(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        final View customLayout = getLayoutInflater().inflate(R.layout.dialog_odometer_error, null);
+        builder.setView(customLayout);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        Button okBtn = dialog.findViewById(R.id.ok_button);
+        assert okBtn != null;
+        okBtn.setOnClickListener(v -> dialog.dismiss());
     }
 
 }
