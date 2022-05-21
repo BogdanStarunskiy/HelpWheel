@@ -47,11 +47,12 @@ public class UpdateNotesFragment extends Fragment {
             String webUrlParser = splitDesc[1];
             binding.webUlr.setText(webUrlParser);
         }
-
         binding.description.setText(descParser);
-
-
         id = args.getId();
+        initListeners();
+    }
+
+    private void initListeners() {
         binding.updateNote.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(Objects.requireNonNull(binding.title.getText()).toString()) && !TextUtils.isEmpty(Objects.requireNonNull(binding.description.getText()).toString())) {
                 String descWebUrlCombined = binding.description.getText().toString().trim() + " " + Objects.requireNonNull(binding.webUlr.getText()).toString().trim();
@@ -59,23 +60,23 @@ public class UpdateNotesFragment extends Fragment {
                 db.updateNotes(binding.title.getText().toString().trim(), descWebUrlCombined, id);
                 NavHostFragment.findNavController(this).navigate(R.id.action_updateNotesFragment_to_navigation_home);
             }
-            if (binding.title.getText().toString().isEmpty()){
+            if (binding.title.getText().toString().isEmpty()) {
                 binding.titleEditText.setError(getString(R.string.field_must_be_filled));
             }
-            if (Objects.requireNonNull(binding.description.getText()).toString().isEmpty()){
+            if (Objects.requireNonNull(binding.description.getText()).toString().isEmpty()) {
                 binding.descriptionEditText.setError(getString(R.string.field_must_be_filled));
             }
         });
-
+        binding.descriptionEditText.setError(null);
         binding.descriptionEditText.setEndIconOnClickListener(v1 -> materialDatePicker.show(getChildFragmentManager(), "MATERIAL_DATE_PICKER"));
         materialDatePicker.addOnPositiveButtonClickListener(this::getDate);
     }
 
-    private void getDate(Long selection){
+    private void getDate(Long selection) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTimeInMillis(selection);
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        String formattedDate  = format.format(calendar.getTime());
+        String formattedDate = format.format(calendar.getTime());
         binding.description.setText(formattedDate);
     }
 

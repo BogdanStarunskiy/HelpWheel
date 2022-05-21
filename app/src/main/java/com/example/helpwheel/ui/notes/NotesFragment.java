@@ -21,7 +21,6 @@ import com.example.helpwheel.ui.notes.databases.DatabaseClass;
 import com.example.helpwheel.ui.notes.interfaces.NotesInterface;
 import com.example.helpwheel.ui.notes.interfaces.RecyclerViewLongClick;
 import com.example.helpwheel.ui.notes.models.NotesModel;
-import com.example.helpwheel.utils.Constants;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public class NotesFragment extends Fragment implements NotesInterface, RecyclerV
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(binding.recyclerView);
 
@@ -57,6 +55,12 @@ public class NotesFragment extends Fragment implements NotesInterface, RecyclerV
         showEmptyPlaceHolder();
 
         binding.fab.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.action_navigation_home_to_addNotesFragment));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
     }
 
     void fetchAllNotesFromDatabase() {

@@ -87,4 +87,7 @@
     <string name="temperature">Температура</string>
     <string name="no_gps_text">Включите GPS</string>
     <string name="you_ve_entered_wrong_odometer_readings">Вы ввели неправильные показания одометра</string>
+    <string name="wind">Ветер</string>
+    <string name="kyiv">Киев</string>
+    <string name="select_datet_text">Выберите дату</string>
 </resources>

@@ -32,6 +32,12 @@ public class WeatherWindSpeed extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dashboardViewModel.getWind().observe(getViewLifecycleOwner(), this::setWind);
+        dashboardViewModel.getIsGPSTurnedOn().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (!aBoolean)
+                setDataIfGPSIsTurnedOff();
+            else
+                setDataIfGPSIsTurnedOn();
+        });
     }
 
     private void setWind(String wind) {
@@ -42,4 +48,16 @@ public class WeatherWindSpeed extends Fragment {
         isChecked = checked;
     }
 
+    private void setDataIfGPSIsTurnedOff() {
+        binding.imageViewWind.setAnimation(R.raw.ic_no_gps);
+        binding.imageViewWind.playAnimation();
+        binding.imageViewWind.setScaleX(1);
+        binding.imageViewWind.setScaleY(1);
+        binding.weatherWind.setText(getString(R.string.no_gps_text));
+    }
+
+    private void setDataIfGPSIsTurnedOn() {
+        binding.imageViewWind.setAnimation(R.raw.ic_wind);
+        binding.imageViewWind.playAnimation();
+    }
 }

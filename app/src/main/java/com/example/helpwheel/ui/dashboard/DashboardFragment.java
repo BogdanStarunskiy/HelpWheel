@@ -66,7 +66,6 @@ public class DashboardFragment extends Fragment {
         preferences = requireContext().getSharedPreferences(constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = preferences.edit();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         if (preferences.getString(constants.USERNAME_PREF, "user").equals("user") || preferences.getString(constants.USERNAME_PREF, "user").equals(""))
             showWelcomeScreen();
 
@@ -132,8 +131,9 @@ public class DashboardFragment extends Fragment {
             if (isChecked) {
                 checkPermissions();
             } else {
-                binding.enterCity.setText((preferences.getString(constants.USER_CITY, null)));
-                dashboardViewModel.getWeatherDataManualInput(preferences.getString(constants.USER_CITY, null), key);
+                binding.enterCity.setText((preferences.getString(constants.USER_CITY, getString(R.string.kyiv))));
+                dashboardViewModel.getWeatherDataManualInput(preferences.getString(constants.USER_CITY, getString(R.string.kyiv)), key);
+                dashboardViewModel.setIsGpsTurnedOn(true);
             }
             changeInputTypeWeather();
         });
@@ -239,7 +239,8 @@ public class DashboardFragment extends Fragment {
                             }
                         }
 
-                    }
+                    } else
+                        dashboardViewModel.setIsGpsTurnedOn(false);
                 });
 
     }

@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
 
             <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottieAnimationView"
+                android:id="@+id/userCityAnimation"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginHorizontal="10dp"
@@ -34,11 +34,11 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/no_data"
                 android:textColor="@color/white"
-                app:layout_constraintStart_toEndOf="@+id/lottieAnimationView"
-                app:layout_constraintTop_toTopOf="@+id/ImageViewDescription" />
+                app:layout_constraintStart_toEndOf="@+id/userCityAnimation"
+                app:layout_constraintTop_toTopOf="@+id/imageViewDescription" />
 
             <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/ImageViewDescription"
+                android:id="@+id/imageViewDescription"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ImageViewDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/imageViewDescription" />
 
             <TextView
                 android:id="@+id/weather_description"

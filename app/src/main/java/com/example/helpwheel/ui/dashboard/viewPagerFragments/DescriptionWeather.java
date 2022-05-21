@@ -1,7 +1,6 @@
 package com.example.helpwheel.ui.dashboard.viewPagerFragments;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +15,15 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDescriptionWeatherBinding;
 import com.example.helpwheel.ui.dashboard.DashboardViewModel;
-import com.example.helpwheel.utils.Constants;
 
 public class DescriptionWeather extends Fragment {
     public boolean isChecked = true;
     FragmentDescriptionWeatherBinding binding;
     DashboardViewModel dashboardViewModel;
+
+    public DescriptionWeather() {
+
+    }
 
     public void setIsChecked(boolean isChecked) {
         this.isChecked = isChecked;
@@ -45,6 +47,12 @@ public class DescriptionWeather extends Fragment {
         dashboardViewModel.getTemperature().observe(getViewLifecycleOwner(), this::setTemp);
         dashboardViewModel.getDescription().observe(getViewLifecycleOwner(), this::setDesc);
         dashboardViewModel.getCity().observe(getViewLifecycleOwner(), this::setCity);
+        dashboardViewModel.getIsGPSTurnedOn().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (!aBoolean)
+                setDataIfGPSIsTurnedOff();
+            else
+                setDataIfGPSIsTurnedOn();
+        });
     }
 
     private void setCity(String userCity) {
@@ -57,36 +65,36 @@ public class DescriptionWeather extends Fragment {
 
     private void setDesc(String description) {
         String currentWeatherState;
-        LottieAnimationView animationView = binding.ImageViewDescription;
-        if(description.contains("thunderstorm")) {
+        LottieAnimationView animationView = binding.imageViewDescription;
+        if (description.contains("thunderstorm")) {
             currentWeatherState = getString(R.string.thunderstorm);
             animationView.setAnimation(R.raw.ic_thunderstorm);
             animationView.playAnimation();
-        } else if (description.contains("drizzle")){
+        } else if (description.contains("drizzle")) {
             currentWeatherState = getString(R.string.drizzle);
             animationView.setAnimation(R.raw.ic_drizzle);
             animationView.playAnimation();
-        } else if (description.contains("rain")){
+        } else if (description.contains("rain")) {
             currentWeatherState = getString(R.string.rain);
             animationView.setAnimation(R.raw.ic_rain);
             animationView.playAnimation();
-        } else if (description.contains("snow")){
+        } else if (description.contains("snow")) {
             currentWeatherState = getString(R.string.snow);
             animationView.setAnimation(R.raw.ic_snow);
             animationView.playAnimation();
-        } else if (description.contains("clouds")){
+        } else if (description.contains("clouds")) {
             currentWeatherState = getString(R.string.cloudy);
             animationView.setAnimation(R.raw.ic_clouds);
             animationView.playAnimation();
-        } else if (description.contains("clear")){
+        } else if (description.contains("clear")) {
             currentWeatherState = getString(R.string.sunny);
             animationView.setAnimation(R.raw.ic_clear_sky);
             animationView.playAnimation();
-        } else if (description.equals("squalls")){
+        } else if (description.equals("squalls")) {
             currentWeatherState = getString(R.string.squalls);
             animationView.setAnimation(R.raw.ic_wind);
             animationView.playAnimation();
-        } else if (description.equals("tornado")){
+        } else if (description.equals("tornado")) {
             currentWeatherState = getString(R.string.tornado);
             animationView.setAnimation(R.raw.ic_tornado);
             animationView.playAnimation();
@@ -96,12 +104,27 @@ public class DescriptionWeather extends Fragment {
             animationView.playAnimation();
         }
 
-        if (description.equals("few clouds")){
+        if (description.equals("few clouds")) {
             currentWeatherState = getString(R.string.few_clouds);
             animationView.setAnimation(R.raw.ic_few_clouds);
             animationView.playAnimation();
         }
 
         binding.weatherDescription.setText(currentWeatherState);
+    }
+
+    private void setDataIfGPSIsTurnedOff() {
+        binding.imageViewDescription.setAnimation(R.raw.ic_no_gps);
+        binding.imageViewDescription.playAnimation();
+        binding.weatherDescription.setVisibility(View.GONE);
+        binding.weatherTemperature.setText(getString(R.string.no_gps_text));
+        binding.userCity.setVisibility(View.GONE);
+        binding.userCityAnimation.setVisibility(View.GONE);
+    }
+
+    private void setDataIfGPSIsTurnedOn() {
+        binding.weatherDescription.setVisibility(View.VISIBLE);
+        binding.userCity.setVisibility(View.VISIBLE);
+        binding.userCityAnimation.setVisibility(View.VISIBLE);
     }
 }

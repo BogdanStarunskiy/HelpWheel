@@ -98,6 +98,9 @@
     <string name="temperature">temperature</string>
     <string name="no_gps_text">Turn on GPS</string>
     <string name="you_ve_entered_wrong_odometer_readings">You\'ve entered wrong odometer readings</string>
+    <string name="wind">wind</string>
+    <string name="kyiv">Kyiv</string>
+    <string name="select_datet_text">Select a date</string>
 
 
 </resources>

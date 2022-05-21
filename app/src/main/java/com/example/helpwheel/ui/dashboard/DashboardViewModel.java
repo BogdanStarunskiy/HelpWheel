@@ -28,9 +28,10 @@ public class DashboardViewModel extends ViewModel {
     private final MutableLiveData<String> wind;
     private final MutableLiveData<String> description;
     private final MutableLiveData<String> city;
-    String currentTemperature;
-    String currentWind;
-    String currentDescription;
+    private final MutableLiveData<Boolean> isGpsTurnedOn;
+    String currentTemperature = "0";
+    String currentWind = "0";
+    String currentDescription = "Clear sky";
     Handler handler;
 
     public DashboardViewModel() {
@@ -38,7 +39,11 @@ public class DashboardViewModel extends ViewModel {
         wind = new MutableLiveData<>();
         description = new MutableLiveData<>();
         city = new MutableLiveData<>();
+        isGpsTurnedOn = new MutableLiveData<>();
         handler = new Handler(Looper.getMainLooper());
+    }
+    void setIsGpsTurnedOn(Boolean isTurnedOn){
+        handler.post(() -> isGpsTurnedOn.setValue(isTurnedOn));
     }
 
     void setCity(String userCity){
@@ -108,12 +113,11 @@ public class DashboardViewModel extends ViewModel {
     public LiveData<String> getTemperature() {
         return temperature;
     }
-
+    public LiveData<Boolean> getIsGPSTurnedOn(){return isGpsTurnedOn;}
     public LiveData<String> getWind() {
         return wind;
     }
     public LiveData<String> getCity() {return city;}
-
     public LiveData<String> getDescription() {
         return description;
     }
