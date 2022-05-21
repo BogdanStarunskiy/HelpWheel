@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -225,6 +224,7 @@ public class DashboardFragment extends Fragment {
                         if (location.getLatitude() == 0 && location.getLongitude() == 0) {
                             binding.weatherLoading.setVisibility(View.VISIBLE);
                         } else {
+                            dashboardViewModel.setIsGpsTurnedOn(true);
                             dashboardViewModel.getWeatherDataAutomatically(location.getLatitude(), location.getLongitude(), key);
                             Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());
                             List<Address> addresses = null;

@@ -31,6 +31,10 @@ public class WeatherWindSpeed extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initObservers();
+    }
+
+    private void initObservers(){
         dashboardViewModel.getWind().observe(getViewLifecycleOwner(), this::setWind);
         dashboardViewModel.getIsGPSTurnedOn().observe(getViewLifecycleOwner(), aBoolean -> {
             if (!aBoolean)
