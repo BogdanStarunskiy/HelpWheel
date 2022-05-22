@@ -71,8 +71,12 @@ public class DashboardFragment extends Fragment {
         changeUi();
         initViewPager();
         initListeners();
+        initObservers();
         setupSwitcher();
-        updateUiWhenPermissionChanged();
+    }
+
+    private void initObservers() {
+        dashboardViewModel.getIsPermissionGranted().observe(getViewLifecycleOwner(), this::updateUiWhenPermissionChanged);
     }
 
     @Override
@@ -88,17 +92,19 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-    private void updateUiWhenPermissionChanged() {
-        if (!preferences.getBoolean(constants.IS_PERMISSION_GRANTED, true)) {
-            binding.manualInput.setVisibility(View.GONE);
-            binding.enterCityEditText.setVisibility(View.VISIBLE);
-            binding.enterCity.setVisibility(View.VISIBLE);
-            binding.weatherBtn.setVisibility(View.VISIBLE);
-        } else {
+    private void updateUiWhenPermissionChanged(Boolean isPermissionGranted) {
+        if (isPermissionGranted) {
             binding.enterCityEditText.setVisibility(View.GONE);
             binding.manualInput.setVisibility(View.VISIBLE);
             binding.enterCity.setVisibility(View.GONE);
             binding.weatherBtn.setVisibility(View.GONE);
+        } else {
+            binding.manualInput.setVisibility(View.GONE);
+            binding.enterCityEditText.setVisibility(View.VISIBLE);
+            binding.enterCity.setVisibility(View.VISIBLE);
+            binding.weatherBtn.setVisibility(View.VISIBLE);
+            binding.enterCity.setText((preferences.getString(constants.USER_CITY, getString(R.string.kyiv))));
+            dashboardViewModel.getWeatherDataManualInput(preferences.getString(constants.USER_CITY, getString(R.string.kyiv)), key);
         }
     }
 
@@ -157,16 +163,11 @@ public class DashboardFragment extends Fragment {
                         @Override
                         public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
                             getMyLocation();
-                            editor.putBoolean(constants.IS_PERMISSION_GRANTED, true);
-                            editor.apply();
-                            updateUiWhenPermissionChanged();
                         }
 
                         @Override
                         public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                            editor.putBoolean(constants.IS_PERMISSION_GRANTED, false);
-                            editor.apply();
-                            updateUiWhenPermissionChanged();
+                            dashboardViewModel.setIsPermissionGranted(false);
                         }
 
                         @Override
@@ -175,10 +176,8 @@ public class DashboardFragment extends Fragment {
                         }
                     }).check();
 
-        } else {
+        } else
             getMyLocation();
-            updateUiWhenPermissionChanged();
-        }
     }
 
     private void showWelcomeScreen() {
@@ -224,6 +223,7 @@ public class DashboardFragment extends Fragment {
                         if (location.getLatitude() == 0 && location.getLongitude() == 0) {
                             binding.weatherLoading.setVisibility(View.VISIBLE);
                         } else {
+                            dashboardViewModel.setIsPermissionGranted(true);
                             dashboardViewModel.setIsGpsTurnedOn(true);
                             dashboardViewModel.getWeatherDataAutomatically(location.getLatitude(), location.getLongitude(), key);
                             Geocoder gcd = new Geocoder(requireContext(), Locale.getDefault());

@@ -29,6 +29,7 @@ public class DashboardViewModel extends ViewModel {
     private final MutableLiveData<String> description;
     private final MutableLiveData<String> city;
     private final MutableLiveData<Boolean> isGpsTurnedOn;
+    private final MutableLiveData<Boolean> isPermissionGranted;
     String currentTemperature = "0";
     String currentWind = "0";
     String currentDescription = "Clear sky";
@@ -40,8 +41,13 @@ public class DashboardViewModel extends ViewModel {
         description = new MutableLiveData<>();
         city = new MutableLiveData<>();
         isGpsTurnedOn = new MutableLiveData<>();
+        isPermissionGranted = new MutableLiveData<>();
         handler = new Handler(Looper.getMainLooper());
     }
+    void setIsPermissionGranted(Boolean isGranted){
+        handler.post(() -> isPermissionGranted.setValue(isGranted));
+    }
+
     void setIsGpsTurnedOn(Boolean isTurnedOn){
         handler.post(() -> isGpsTurnedOn.setValue(isTurnedOn));
     }
@@ -109,16 +115,10 @@ public class DashboardViewModel extends ViewModel {
             handler.post(() -> description.setValue(currentDescription));
         });
     }
-
-    public LiveData<String> getTemperature() {
-        return temperature;
-    }
+    public LiveData<Boolean> getIsPermissionGranted(){return isPermissionGranted;}
+    public LiveData<String> getTemperature() {return temperature;}
     public LiveData<Boolean> getIsGPSTurnedOn(){return isGpsTurnedOn;}
-    public LiveData<String> getWind() {
-        return wind;
-    }
+    public LiveData<String> getWind() {return wind;}
     public LiveData<String> getCity() {return city;}
-    public LiveData<String> getDescription() {
-        return description;
-    }
+    public LiveData<String> getDescription() {return description;}
 }
