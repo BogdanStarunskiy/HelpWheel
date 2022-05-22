@@ -18,6 +18,10 @@ import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentChangeDataBinding;
 import com.example.helpwheel.utils.Constants;
 import com.example.helpwheel.utils.SharedPreferencesHolder;
+import com.skydoves.balloon.ArrowPositionRules;
+import com.skydoves.balloon.Balloon;
+import com.skydoves.balloon.BalloonAnimation;
+import com.skydoves.balloon.BalloonSizeSpec;
 
 import java.util.Objects;
 
@@ -42,6 +46,12 @@ public class ChangeDataFragment extends Fragment {
         sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
         sharedPreferencesHolder.setEditor(editor);
         sharedPreferencesHolder.setFuelStats(fuelStats);
+        showBalloon();
+        editor.putBoolean(Constants.IS_FIRST_LAUNCHED_CHANGE_DATA, false).apply();
+        initListeners();
+    }
+
+    private void initListeners() {
         binding.buttonOK.setOnClickListener(v -> {
             if (!Objects.requireNonNull(binding.enterName.getText()).toString().trim().isEmpty()) {
                 editor.putString(constants.USERNAME_PREF, binding.enterName.getText().toString().trim());
@@ -70,6 +80,30 @@ public class ChangeDataFragment extends Fragment {
         });
         binding.removeOdometerReadings.setOnClickListener(v -> showDialog());
     }
+
+    private void showBalloon() {
+        if (fuelStats.getBoolean(Constants.IS_FIRST_LAUNCHED_CHANGE_DATA, true)) {
+            Balloon balloon = new Balloon.Builder(requireContext())
+                    .setWidth(BalloonSizeSpec.WRAP)
+                    .setHeight(BalloonSizeSpec.WRAP)
+                    .setText(getString(R.string.balloon_odometer_readings))
+                    .setTextColorResource(R.color.white)
+                    .setTextSize(15f)
+                    .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+                    .setArrowSize(10)
+                    .setArrowPosition(0.5f)
+                    .setPadding(12)
+                    .setCornerRadius(8f)
+                    .setBackgroundColorResource(R.color.gray)
+                    .setBalloonAnimation(BalloonAnimation.ELASTIC)
+                    .setLifecycleOwner(getViewLifecycleOwner())
+                    .setAutoDismissDuration(5000L)
+                    .setMarginRight(15)
+                    .build();
+            balloon.showAlignBottom(binding.removeOdometerReadings);
+        }
+    }
+
     private void showDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         final View customLayout = getLayoutInflater().inflate(R.layout.remove_odometer_readings_dialog, null);

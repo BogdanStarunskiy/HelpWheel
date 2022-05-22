@@ -26,6 +26,10 @@ import com.example.helpwheel.utils.Constants;
 import com.example.helpwheel.utils.SharedPreferencesHolder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.skydoves.balloon.ArrowPositionRules;
+import com.skydoves.balloon.Balloon;
+import com.skydoves.balloon.BalloonAnimation;
+import com.skydoves.balloon.BalloonSizeSpec;
 
 import java.util.Objects;
 
@@ -54,7 +58,6 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         editor = fuelStats.edit();
         sharedPreferencesHolder.setEditor(editor);
         sharedPreferencesHolder.setFuelStats(fuelStats);
-
         initializeViewPagersAndTabs();
         initializeBottomSheetDialogs();
         initListeners();
@@ -65,6 +68,29 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         }
 
         displayFuelInTank();
+    }
+
+    private void showBalloon() {
+        if (fuelStats.getBoolean(Constants.IS_FIRST_LAUNCHED_FUEL_MANAGEMENT, true)) {
+            Balloon balloon = new Balloon.Builder(requireContext())
+                    .setWidth(BalloonSizeSpec.WRAP)
+                    .setHeight(BalloonSizeSpec.WRAP)
+                    .setText(getString(R.string.balloon_refueling))
+                    .setTextColorResource(R.color.white)
+                    .setTextSize(15f)
+                    .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+                    .setArrowSize(10)
+                    .setArrowPosition(0.5f)
+                    .setPadding(12)
+                    .setCornerRadius(8f)
+                    .setBackgroundColorResource(R.color.gray)
+                    .setBalloonAnimation(BalloonAnimation.ELASTIC)
+                    .setLifecycleOwner(getViewLifecycleOwner())
+                    .setAutoDismissDuration(5000L)
+                    .setMarginRight(15)
+                    .build();
+            balloon.showAlignBottom(binding.editButton);
+        }
     }
 
     private void initListeners() {
@@ -115,6 +141,8 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public void onStart() {
         super.onStart();
         requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
+        showBalloon();
+        editor.putBoolean(Constants.IS_FIRST_LAUNCHED_FUEL_MANAGEMENT, false).apply();
     }
 
     @Override
@@ -124,14 +152,12 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         binding = null;
     }
 
-
     private void initializeBottomSheetDialogs(){
         bottomSheetDialogFuelStats = new BottomSheetDialog(requireContext());
         bottomSheetDialogFuelStats.setContentView(R.layout.bottom_sheet_dialog_fuel_stats);
         bottomSheetDialogFuelInTank = new BottomSheetDialog(requireContext());
         bottomSheetDialogFuelInTank.setContentView(R.layout.bottom_sheet_fuel_in_tank);
     }
-
 
     private void initializeViewPagersAndTabs(){
         ViewPager2 newRideVP = binding.viewPagerNewRide;
@@ -184,18 +210,6 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public void dismissBottomSheet() {
         bottomSheetDialogFuelStats.dismiss();
         updateUI();
-    }
-
-    private void showDialogOdometerError(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        final View customLayout = getLayoutInflater().inflate(R.layout.edit_fuel_level_error_diallog, null);
-        builder.setView(customLayout);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
-        Button okBtn = dialog.findViewById(R.id.ok_button);
-        assert okBtn != null;
-        okBtn.setOnClickListener(v -> dialog.dismiss());
     }
 
 }

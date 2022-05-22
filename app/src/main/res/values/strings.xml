@@ -100,7 +100,9 @@
     <string name="you_ve_entered_wrong_odometer_readings">You\'ve entered wrong odometer readings</string>
     <string name="wind">wind</string>
     <string name="kyiv">Kyiv</string>
-    <string name="select_datet_text">Select a date</string>
-
+    <string name="select_date_text">Select a date</string>
+    <string name="balloon_refueling">After refueling you can enter your fuel level</string>
+    <string name="balloon_edit_profile_here">Edit your profile here</string>
+    <string name="balloon_odometer_readings">You can remove your odometer readings here</string>
 
 </resources>

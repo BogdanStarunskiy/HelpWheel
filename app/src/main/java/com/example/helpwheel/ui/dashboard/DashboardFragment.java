@@ -37,6 +37,10 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.skydoves.balloon.ArrowPositionRules;
+import com.skydoves.balloon.Balloon;
+import com.skydoves.balloon.BalloonAnimation;
+import com.skydoves.balloon.BalloonSizeSpec;
 
 import java.io.IOException;
 import java.util.List;
@@ -65,6 +69,7 @@ public class DashboardFragment extends Fragment {
         preferences = requireContext().getSharedPreferences(constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = preferences.edit();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+
         if (preferences.getString(constants.USERNAME_PREF, "user").equals("user") || preferences.getString(constants.USERNAME_PREF, "user").equals(""))
             showWelcomeScreen();
 
@@ -92,6 +97,29 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
+    private void showBalloon(){
+        if (preferences.getBoolean(Constants.IS_FIRST_LAUNCHED_DASHBOARD, true)) {
+            Balloon balloon = new Balloon.Builder(requireContext())
+                    .setWidth(BalloonSizeSpec.WRAP)
+                    .setHeight(BalloonSizeSpec.WRAP)
+                    .setText(getString(R.string.balloon_edit_profile_here))
+                    .setTextColorResource(R.color.white)
+                    .setTextSize(15f)
+                    .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+                    .setArrowSize(10)
+                    .setArrowPosition(0.5f)
+                    .setPadding(12)
+                    .setCornerRadius(8f)
+                    .setBackgroundColorResource(R.color.gray)
+                    .setBalloonAnimation(BalloonAnimation.ELASTIC)
+                    .setLifecycleOwner(getViewLifecycleOwner())
+                    .setAutoDismissDuration(5000L)
+                    .setMarginRight(15)
+                    .build();
+            balloon.showAlignBottom(binding.userGreetingEditButton);
+        }
+    }
+
     private void updateUiWhenPermissionChanged(Boolean isPermissionGranted) {
         if (isPermissionGranted) {
             binding.enterCityEditText.setVisibility(View.GONE);
@@ -113,17 +141,15 @@ public class DashboardFragment extends Fragment {
         FragmentStateAdapter pagerAdapter = new ViewPagerAdapter(requireActivity());
         viewPager2.setAdapter(pagerAdapter);
         viewPager2.setPageTransformer(new ZoomPageTransformer());
-        new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {
-        }).attach();
+        new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {}).attach();
     }
 
     private void initListeners() {
         binding.userGreetingEditButton.setOnClickListener(view -> showEditDataFragment());
         binding.weatherBtn.setOnClickListener(v -> {
-            if (Objects.requireNonNull(binding.enterCity.getText()).toString().trim().equals("")) {
-                Toast toast = Toast.makeText(binding.getRoot().getContext(), R.string.enter_city_message, Toast.LENGTH_LONG);
-                toast.show();
-            } else {
+            if (Objects.requireNonNull(binding.enterCity.getText()).toString().trim().equals(""))
+                Toast.makeText(binding.getRoot().getContext(), R.string.enter_city_message, Toast.LENGTH_LONG).show();
+            else {
                 getWeatherFromManualInput();
                 editor.putString(constants.USER_CITY, binding.enterCity.getText().toString());
                 dashboardViewModel.setCity(binding.enterCity.getText().toString());
@@ -150,8 +176,7 @@ public class DashboardFragment extends Fragment {
         binding.enterCity.setVisibility(View.VISIBLE);
         binding.weatherBtn.setVisibility(View.VISIBLE);
         dashboardViewModel.getWeatherDataManualInput(user_city, key);
-        editor.putString(constants.USER_CITY, user_city);
-        editor.apply();
+        editor.putString(constants.USER_CITY, user_city).apply();
     }
 
     private void checkPermissions() {
@@ -163,11 +188,15 @@ public class DashboardFragment extends Fragment {
                         @Override
                         public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
                             getMyLocation();
+                            showBalloon();
+                            editor.putBoolean(Constants.IS_FIRST_LAUNCHED_DASHBOARD, false).apply();
                         }
 
                         @Override
                         public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
                             dashboardViewModel.setIsPermissionGranted(false);
+                            showBalloon();
+                            editor.putBoolean(Constants.IS_FIRST_LAUNCHED_DASHBOARD, false).apply();
                         }
 
                         @Override

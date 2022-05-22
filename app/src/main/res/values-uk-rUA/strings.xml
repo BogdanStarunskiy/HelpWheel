@@ -89,5 +89,8 @@
     <string name="you_ve_entered_wrong_odometer_readings">Ви ввели неправильні показники одометра</string>
     <string name="wind">Вітер</string>
     <string name="kyiv">Київ</string>
-    <string name="select_datet_text">Оберіть дату</string>
+    <string name="select_date_text">Оберіть дату</string>
+    <string name="balloon_refueling">Після заправки ви можете ввести кількість палива в баці</string>
+    <string name="balloon_edit_profile_here">Тут ви можете змінити свої дані</string>
+    <string name="balloon_odometer_readings">Тут можна видалити всі показання одометра</string>
 </resources>

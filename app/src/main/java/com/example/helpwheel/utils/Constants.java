@@ -24,8 +24,9 @@ public class Constants {
     public static final String APP_PREFERENCES_DIESEL_EMISSIONS = "diesel_emissions";
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
     public static final String USER_CITY = "user_city";
-    public static final String IS_PERMISSION_GRANTED = "is_permission_granted";
-    public static final String IS_GPS_TURNED_ON = "is_gps_turned_on";
+    public static final String IS_FIRST_LAUNCHED_DASHBOARD = "is_first_launched_dashboard";
+    public static final String IS_FIRST_LAUNCHED_CHANGE_DATA = "is_first_launched_change_data";
+    public static final String IS_FIRST_LAUNCHED_FUEL_MANAGEMENT = "is_first_launched_fuel_management";
     public static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
     public static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
 }

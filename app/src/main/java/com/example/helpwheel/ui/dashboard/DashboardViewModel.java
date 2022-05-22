@@ -69,8 +69,6 @@ public class DashboardViewModel extends ViewModel {
 
     void getWeatherData(String urlRequest) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
-
-
         executor.execute(() -> {
             HttpsURLConnection connection = null;
             BufferedReader reader = null;

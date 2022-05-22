@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Locale;
 
 public class SharedPreferencesHolder {
@@ -39,8 +40,7 @@ public class SharedPreferencesHolder {
         float spendFuel = fuelStats.getFloat(constant.APP_NEW_RIDE_WILL_BE_USED_FUEL, 0.0f);
         float fuelLevel = fuelStats.getFloat(constant.FUEL_LEVEL, 0.0f);
         float remainsFuel = fuelLevel - spendFuel;
-        editor.putFloat(constant.APP_NEW_RIDE_REMAINS_FUEL, formattedNumber(remainsFuel));
-        editor.apply();
+        editor.putFloat(constant.APP_NEW_RIDE_REMAINS_FUEL, formattedNumber(remainsFuel)).apply();
     }
 
     public void countImpactOnEcology(String currentFragment) {
@@ -90,14 +90,12 @@ public class SharedPreferencesHolder {
 
 
     public Float oldOdometerValue() {
-        editor.putFloat(constant.APP_PREFERENCES_ODOMETER_OLD, formattedNumber(fuelStats.getFloat(constant.APP_PREFERENCES_ODOMETER, 0)));
-        editor.apply();
+        editor.putFloat(constant.APP_PREFERENCES_ODOMETER_OLD, formattedNumber(fuelStats.getFloat(constant.APP_PREFERENCES_ODOMETER, 0))).apply();
         return fuelStats.getFloat(constant.APP_PREFERENCES_ODOMETER_OLD, 0.0f);
     }
 
     public void calculatingDistance(Float oldOdometerValue, Float odometerValue) {
-            editor.putFloat(constant.APP_PREFERENCES_DISTANCE, formattedNumber(odometerValue - oldOdometerValue));
-            editor.apply();
+            editor.putFloat(constant.APP_PREFERENCES_DISTANCE, formattedNumber(odometerValue - oldOdometerValue)).apply();
     }
 
 
@@ -116,13 +114,12 @@ public class SharedPreferencesHolder {
         float fuelTankCapacityOld = fuelStats.getFloat(constant.FUEL_TANK_CAPACITY_OLD, 0.0f);
         float differenceBetweenFuelTanks = fuelTankCapacity - fuelTankCapacityOld;
         float currentFuelLevel = fuelStats.getFloat(constant.FUEL_LEVEL, 0.0f) + differenceBetweenFuelTanks;
-        editor.putFloat(constant.FUEL_LEVEL, formattedNumber(currentFuelLevel));
-        editor.apply();
+        editor.putFloat(constant.FUEL_LEVEL, formattedNumber(currentFuelLevel)).apply();
     }
 
     public Float formattedNumber(Float number) {
         return BigDecimal.valueOf(number)
-                .setScale(2, BigDecimal.ROUND_HALF_DOWN)
+                .setScale(2, RoundingMode.HALF_DOWN)
                 .floatValue();
     }
 

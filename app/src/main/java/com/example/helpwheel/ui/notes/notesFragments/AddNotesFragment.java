@@ -40,7 +40,7 @@ public class AddNotesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         MaterialDatePicker.Builder<Long> materialDateBuilder = MaterialDatePicker.Builder.datePicker();
-        materialDateBuilder.setTitleText(R.string.select_datet_text);
+        materialDateBuilder.setTitleText(R.string.select_date_text);
         materialDatePicker = materialDateBuilder.build();
         title = binding.title;
         description = binding.description;
