@@ -64,7 +64,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_greeting">
 
-
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/manual_input"
             android:layout_width="wrap_content"
@@ -174,7 +173,7 @@
             app:layout_constraintTop_toBottomOf="@id/weatherViewPager"
             app:tabBackground="@drawable/tab_weather_selector"
             app:tabGravity="center"
-            app:tabIndicator="@color/transparent" />
+            app:tabIndicator="@color/transparent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

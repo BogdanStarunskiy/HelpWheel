@@ -63,4 +63,10 @@
     <style name="UpdateNotesAnimationStyle" parent="Theme.HelpWheel">
         <item name="lottie_rawRes">@raw/ic_update_notes_night</item>
     </style>
+    <style name="SplashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen_night</item>
+        <item name="statusBarBackground">@color/background</item>
+        <item name="colorControlActivated">@color/yellow</item>
+        <item name="colorSwitchThumbNormal">@color/dark</item>
+    </style>
 </resources>
