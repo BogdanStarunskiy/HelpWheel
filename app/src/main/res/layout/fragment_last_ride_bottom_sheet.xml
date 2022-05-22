@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/last_ride_title"
@@ -30,6 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+
             android:id="@+id/speedometer_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -37,9 +39,8 @@
             android:layout_marginStart="15dp"
             android:src="@drawable/ic_speedometer"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/last_odometer_text"
-            app:layout_constraintStart_toEndOf="@id/last_ride_title"
-            app:layout_constraintTop_toTopOf="@+id/last_ride_title" />
+            app:layout_constraintEnd_toStartOf="@id/last_odometer_text"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/last_odometer_text"
@@ -49,7 +50,6 @@
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@+id/speedometer_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/speedometer_icon"
             app:layout_constraintTop_toTopOf="@+id/speedometer_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
