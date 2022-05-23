@@ -12,7 +12,14 @@
         <!-- Status bar color. -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="android:statusBarColor">@color/dark</item>
-        <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="SplashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen_day</item>
+        <item name="android:statusBarColor">@color/dark</item>
+        <item name="colorControlActivated">@color/yellow</item>
+        <item name="colorSwitchThumbNormal">@color/dark</item>
     </style>
 
     <style name="WelcomeAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -63,10 +70,4 @@
         <item name="lottie_rawRes">@raw/ic_update_notes_day</item>
     </style>
 
-    <style name="SplashScreenTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_screen_day</item>
-        <item name="android:statusBarColor">@color/dark</item>
-        <item name="colorControlActivated">@color/yellow</item>
-        <item name="colorSwitchThumbNormal">@color/dark</item>
-    </style>
 </resources>
