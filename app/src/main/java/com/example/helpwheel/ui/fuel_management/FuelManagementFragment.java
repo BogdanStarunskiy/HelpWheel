@@ -190,7 +190,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         ViewPager2 newRideVP = binding.viewPagerNewRide;
         ViewPager2 lastRideVP = binding.viewPagerLastRide;
         lastRideVP.setAdapter(new LastRideAdapter(this, lastRideFragments));
-        newRideVP.setAdapter(new NewRideAdapter(this));
+        newRideVP.setAdapter(new NewRideAdapter(this, newRideFragments));
         new TabLayoutMediator(binding.tabLastRide, binding.viewPagerLastRide, (tab, position) -> {
         }).attach();
         new TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide, (tab, position) -> {
