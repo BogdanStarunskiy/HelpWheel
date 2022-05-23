@@ -54,7 +54,7 @@ public class ChangeDataFragment extends Fragment {
     private void initListeners() {
         binding.buttonOK.setOnClickListener(v -> {
             if (!Objects.requireNonNull(binding.enterName.getText()).toString().trim().isEmpty()) {
-                editor.putString(constants.USERNAME_PREF, binding.enterName.getText().toString().trim());
+                editor.putString(constants.USERNAME, binding.enterName.getText().toString().trim());
                 editor.apply();
             }
             if (!Objects.requireNonNull(binding.consumptionPer100km.getText()).toString().trim().isEmpty()) {

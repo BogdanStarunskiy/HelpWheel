@@ -2,7 +2,7 @@ package com.example.helpwheel.utils;
 
 public class Constants {
     public static final String APP_PREFERENCES = "fuelStats";
-    public static final String USERNAME_PREF = "usernamePref";
+    public static final String USERNAME = "username";
     public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
     public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
     public static final String FUEL_TANK_CAPACITY_OLD = "fuel_tank_capacity_old";

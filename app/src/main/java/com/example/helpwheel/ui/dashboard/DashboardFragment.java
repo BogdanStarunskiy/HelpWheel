@@ -70,7 +70,7 @@ public class DashboardFragment extends Fragment {
         editor = preferences.edit();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
-        if (preferences.getString(constants.USERNAME_PREF, "user").equals("user") || preferences.getString(constants.USERNAME_PREF, "user").equals(""))
+        if (preferences.getString(constants.USERNAME, "user").equals("user") || preferences.getString(constants.USERNAME, "user").equals(""))
             showWelcomeScreen();
 
         changeUi();
@@ -219,7 +219,7 @@ public class DashboardFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public void changeUi() {
-        binding.greetingText.setText(getString(R.string.hello_user_text) + " " + preferences.getString(constants.USERNAME_PREF, "user") + "!");
+        binding.greetingText.setText(getString(R.string.hello_user_text) + " " + preferences.getString(constants.USERNAME, "user") + "!");
     }
 
     @SuppressLint("MissingPermission")
