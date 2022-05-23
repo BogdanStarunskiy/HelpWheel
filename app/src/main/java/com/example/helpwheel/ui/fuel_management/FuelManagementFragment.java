@@ -55,7 +55,11 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, getContext().MODE_PRIVATE);
+        if (fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f)
+            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment);
         editor = fuelStats.edit();
+        showBalloon();
+        editor.putBoolean(Constants.IS_FIRST_LAUNCHED_FUEL_MANAGEMENT, false).apply();
         sharedPreferencesHolder.setEditor(editor);
         sharedPreferencesHolder.setFuelStats(fuelStats);
         initializeViewPagersAndTabs();
@@ -63,11 +67,13 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         initListeners();
         getViewAndBundle(view, savedInstanceState);
 
-        if (fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f) {
-            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment);
-        }
-
         displayFuelInTank();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
     }
 
     private void showBalloon() {
@@ -137,13 +143,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
 
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
-        showBalloon();
-        editor.putBoolean(Constants.IS_FIRST_LAUNCHED_FUEL_MANAGEMENT, false).apply();
-    }
+
 
     @Override
     public void onDestroyView() {
