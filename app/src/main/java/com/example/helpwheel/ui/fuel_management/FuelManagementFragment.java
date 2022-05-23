@@ -18,10 +18,19 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentFuelManagementBinding;
-import com.example.helpwheel.ui.fuel_management.adapter.BottomSheetVPAdapter;
+import com.example.helpwheel.ui.fuel_management.adapter.BottomSheetViewPagerAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.LastRideAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.NewRideAdapter;
 import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.CostOfLastRideFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.DistanceOfLastRideFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.EcologyImpactFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.SpentFuelFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.CostOfNewRideFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.DistanceOfNewRideFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.EcologyImpactNewRideFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.FuelInTankNewRideFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.SpendFuelNewRideFragment;
 import com.example.helpwheel.utils.Constants;
 import com.example.helpwheel.utils.SharedPreferencesHolder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -31,6 +40,7 @@ import com.skydoves.balloon.Balloon;
 import com.skydoves.balloon.BalloonAnimation;
 import com.skydoves.balloon.BalloonSizeSpec;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class FuelManagementFragment extends Fragment implements BottomSheetCallBack {
@@ -43,6 +53,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     SharedPreferences fuelStats;
     SharedPreferences.Editor editor;
     SharedPreferencesHolder sharedPreferencesHolder;
+    ArrayList<Fragment> lastRideFragments, newRideFragments;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -58,22 +69,42 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         if (fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f)
             NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment);
         editor = fuelStats.edit();
-        showBalloon();
-        editor.putBoolean(Constants.IS_FIRST_LAUNCHED_FUEL_MANAGEMENT, false).apply();
         sharedPreferencesHolder.setEditor(editor);
         sharedPreferencesHolder.setFuelStats(fuelStats);
+        initializeFragmentArrayLists();
         initializeViewPagersAndTabs();
         initializeBottomSheetDialogs();
         initListeners();
         getViewAndBundle(view, savedInstanceState);
-
         displayFuelInTank();
+    }
+
+    private void initializeFragmentArrayLists() {
+        lastRideFragments = new ArrayList<>();
+        lastRideFragments.add(new DistanceOfLastRideFragment());
+        lastRideFragments.add(new CostOfLastRideFragment());
+        lastRideFragments.add(new SpentFuelFragment());
+        lastRideFragments.add(new EcologyImpactFragment());
+
+        newRideFragments = new ArrayList<>();
+        newRideFragments.add(new DistanceOfNewRideFragment());
+        newRideFragments.add(new FuelInTankNewRideFragment());
+        newRideFragments.add(new CostOfNewRideFragment());
+        newRideFragments.add(new SpendFuelNewRideFragment());
+        newRideFragments.add(new EcologyImpactNewRideFragment());
     }
 
     @Override
     public void onStart() {
         super.onStart();
         requireActivity().findViewById(R.id.customBnb).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showBalloon();
+        editor.putBoolean(Constants.IS_FIRST_LAUNCHED_FUEL_MANAGEMENT, false).apply();
     }
 
     private void showBalloon() {
@@ -105,7 +136,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
             bottomSheetDialogFuelStats.show();
             ViewPager2 viewPager2BottomSheet = bottomSheetDialogFuelStats.findViewById(R.id.view_pager_bottom_sheet);
             assert viewPager2BottomSheet != null;
-            viewPager2BottomSheet.setAdapter(new BottomSheetVPAdapter(this));
+            viewPager2BottomSheet.setAdapter(new BottomSheetViewPagerAdapter(this));
             new TabLayoutMediator(Objects.requireNonNull(bottomSheetDialogFuelStats.findViewById(R.id.tab)), viewPager2BottomSheet, (tab, position) -> {
             }).attach();
         });
@@ -141,10 +172,6 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         });
     }
 
-
-
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -162,7 +189,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     private void initializeViewPagersAndTabs(){
         ViewPager2 newRideVP = binding.viewPagerNewRide;
         ViewPager2 lastRideVP = binding.viewPagerLastRide;
-        lastRideVP.setAdapter(new LastRideAdapter(this));
+        lastRideVP.setAdapter(new LastRideAdapter(this, lastRideFragments));
         newRideVP.setAdapter(new NewRideAdapter(this));
         new TabLayoutMediator(binding.tabLastRide, binding.viewPagerLastRide, (tab, position) -> {
         }).attach();
@@ -182,15 +209,13 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     private void displayFuelInTank(){
         float fuelLevel = fuelStats.getFloat(constants.FUEL_LEVEL, fuelStats.getFloat(constants.FUEL_TANK_CAPACITY, 0.0f));
         if (fuelLevel <= 0.0f){
-            editor.putFloat(constants.FUEL_LEVEL, 0.0f);
-            editor.apply();
+            editor.putFloat(constants.FUEL_LEVEL, 0.0f).apply();
             binding.fuelLevel.setText(String.format("%s %s", 0.0f , getString(R.string.litres_have_left)));
             binding.fuelLevel.setTextColor(requireContext().getColor(R.color.red));
         } else {
             binding.fuelLevel.setTextColor(requireContext().getColor(R.color.white));
             binding.fuelLevel.setText(String.format("%s %s", fuelLevel, getString(R.string.litres_have_left)));
-            editor.putFloat(constants.FUEL_LEVEL, fuelLevel);
-            editor.apply();
+            editor.putFloat(constants.FUEL_LEVEL, fuelLevel).apply();
         }
     }
 
