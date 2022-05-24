@@ -24,8 +24,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentDashboardBinding;
-import com.example.helpwheel.ui.dashboard.viewPagerFragments.DescriptionWeather;
-import com.example.helpwheel.ui.dashboard.viewPagerFragments.WeatherWindSpeed;
 import com.example.helpwheel.utils.Constants;
 import com.example.helpwheel.utils.ZoomPageTransformer;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -97,7 +95,7 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-    private void showBalloon(){
+    private void showBalloon() {
         if (preferences.getBoolean(Constants.IS_FIRST_LAUNCHED_DASHBOARD, true)) {
             Balloon balloon = new Balloon.Builder(requireContext())
                     .setWidth(BalloonSizeSpec.WRAP)
@@ -141,7 +139,8 @@ public class DashboardFragment extends Fragment {
         FragmentStateAdapter pagerAdapter = new ViewPagerAdapter(requireActivity());
         viewPager2.setAdapter(pagerAdapter);
         viewPager2.setPageTransformer(new ZoomPageTransformer());
-        new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {}).attach();
+        new TabLayoutMediator(binding.tab, binding.weatherViewPager, (tab, position) -> {
+        }).attach();
     }
 
     private void initListeners() {
@@ -225,18 +224,10 @@ public class DashboardFragment extends Fragment {
     @SuppressLint("MissingPermission")
     private void changeInputTypeWeather() {
         if (binding.manualInput.isChecked()) {
-            DescriptionWeather descriptionWeather = new DescriptionWeather();
-            descriptionWeather.setIsChecked(true);
-            WeatherWindSpeed weatherWindSpeed = new WeatherWindSpeed();
-            weatherWindSpeed.setChecked(true);
             binding.weatherBtn.setVisibility(View.GONE);
             binding.enterCityEditText.setVisibility(View.GONE);
             binding.enterCity.setVisibility(View.GONE);
         } else {
-            DescriptionWeather descriptionWeather = new DescriptionWeather();
-            descriptionWeather.setIsChecked(false);
-            WeatherWindSpeed weatherWindSpeed = new WeatherWindSpeed();
-            weatherWindSpeed.setChecked(false);
             binding.weatherBtn.setVisibility(View.VISIBLE);
             binding.enterCityEditText.setVisibility(View.VISIBLE);
             binding.enterCity.setVisibility(View.VISIBLE);
