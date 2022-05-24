@@ -61,16 +61,21 @@ class DashboardViewModel : ViewModel() {
                         handler.post { temperature.value = currentWeather!!.main.temp.toInt().toString() }
                         handler.post { wind.value = currentWeather!!.wind.speed.toInt().toString() }
                         handler.post { description.value = currentWeather!!.weather[0].description }
-                    }
+                    } else
+                        postErrorValues()
                 }
 
                 override fun onFailure(call: Call<WeatherModel>, t: Throwable) {
-                    handler.post { temperature.value = "error" }
-                    handler.post { wind.value = "error" }
-                    handler.post { description.value = "error" }
+                        postErrorValues()
                 }
             })
         }
+    }
+
+    private fun postErrorValues(){
+        handler.post { temperature.value = "error" }
+        handler.post { wind.value = "error" }
+        handler.post { description.value = "error" }
     }
 
     fun getIsPermissionGranted(): LiveData<Boolean> {
