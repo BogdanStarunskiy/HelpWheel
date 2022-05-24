@@ -104,5 +104,6 @@
     <string name="balloon_refueling">After refueling you can enter your fuel level</string>
     <string name="balloon_edit_profile_here">Edit your profile here</string>
     <string name="balloon_odometer_readings">You can remove your odometer readings here</string>
+    <string name="internet_error">No internet connection</string>
 
 </resources>

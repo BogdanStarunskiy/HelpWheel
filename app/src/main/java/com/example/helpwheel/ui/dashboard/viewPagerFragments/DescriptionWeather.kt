@@ -54,6 +54,12 @@ class DescriptionWeather : Fragment() {
     private fun setDesc(description: String) {
         var currentWeatherState: String
         val animationView = binding.imageViewDescription
+        binding.weatherDescription.visibility = View.VISIBLE
+        binding.weatherDescription.visibility = View.VISIBLE
+        binding.userCityAnimation.visibility = View.VISIBLE
+        binding.userCity.visibility = View.VISIBLE
+        animationView.scaleX = 1.0f
+        animationView.scaleY = 1.0f
         if (description.contains("thunderstorm")) {
             currentWeatherState = getString(R.string.thunderstorm)
             animationView.setAnimation(R.raw.ic_thunderstorm)
@@ -86,7 +92,18 @@ class DescriptionWeather : Fragment() {
             currentWeatherState = getString(R.string.tornado)
             animationView.setAnimation(R.raw.ic_tornado)
             animationView.playAnimation()
-        } else {
+        } else if (description == "error") {
+            currentWeatherState = getString(R.string.internet_error)
+            binding.weatherTemperature.text = currentWeatherState
+            binding.weatherDescription.visibility = View.GONE
+            binding.userCityAnimation.visibility = View.GONE
+            binding.userCity.visibility = View.GONE
+            animationView.setAnimation(R.raw.ic_no_internet)
+            animationView.scaleX = 1.5f
+            animationView.scaleY = 1.5f
+            animationView.playAnimation()
+        }
+        else {
             currentWeatherState = getString(R.string.fog)
             animationView.setAnimation(R.raw.ic_mist)
             animationView.playAnimation()

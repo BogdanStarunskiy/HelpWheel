@@ -65,7 +65,9 @@ class DashboardViewModel : ViewModel() {
                 }
 
                 override fun onFailure(call: Call<WeatherModel>, t: Throwable) {
-
+                    handler.post { temperature.value = "error" }
+                    handler.post { wind.value = "error" }
+                    handler.post { description.value = "error" }
                 }
             })
         }

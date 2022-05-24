@@ -30,35 +30,39 @@ class WeatherWindSpeed: Fragment() {
         initObservers()
     }
 
-
     private fun initObservers(){
-        dashboardViewModel.getWind().observe(viewLifecycleOwner, this::setWind)
         dashboardViewModel.getIsGPSTurnedOn().observe(viewLifecycleOwner) {
             if (!it)
                 setDataIfGPSIsTurnedOff()
             else
                 setDataIfGPSIsTurnedOn()
         }
+        dashboardViewModel.getWind().observe(viewLifecycleOwner, this::setWind)
     }
 
     private fun setWind(wind: String) {
-        binding.weatherWind.text = String.format("%s %s", wind, requireContext().resources.getString(R.string.speed))
+        if (wind == "error") {
+            binding.weatherWind.text = getString(R.string.internet_error)
+            binding.windAnimation.setAnimation(R.raw.ic_no_internet)
+        } else {
+            binding.weatherWind.text = String.format("%s %s", wind, requireContext().resources.getString(R.string.speed))
+            binding.windAnimation.setAnimation(R.raw.ic_wind)
+        }
+        binding.windAnimation.playAnimation()
     }
 
-//    fun setChecked(checked: Boolean) {
-//        isChecked = checked;
-//    }
-
     private fun setDataIfGPSIsTurnedOff() {
-        binding.imageViewWind.setAnimation(R.raw.ic_no_gps)
-        binding.imageViewWind.playAnimation()
-        binding.imageViewWind.scaleX = 1.0f
-        binding.imageViewWind.scaleY = 1.0f
+        binding.windAnimation.setAnimation(R.raw.ic_no_gps)
+        binding.windAnimation.playAnimation()
+        binding.windAnimation.scaleX = 1.0f
+        binding.windAnimation.scaleY = 1.0f
         binding.weatherWind.text = getString(R.string.no_gps_text)
     }
 
     private fun setDataIfGPSIsTurnedOn() {
-        binding.imageViewWind.setAnimation(R.raw.ic_wind)
-        binding.imageViewWind.playAnimation()
+        binding.windAnimation.setAnimation(R.raw.ic_wind)
+        binding.windAnimation.playAnimation()
+        binding.windAnimation.scaleX = 1.5f
+        binding.windAnimation.scaleY = 1.5f
     }
 }
