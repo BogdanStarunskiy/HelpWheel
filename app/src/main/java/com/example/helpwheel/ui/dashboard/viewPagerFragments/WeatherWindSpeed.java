@@ -45,7 +45,7 @@ public class WeatherWindSpeed extends Fragment {
     }
 
     private void setWind(String wind) {
-        binding.weatherWind.setText(String.format("%s%s", wind, requireContext().getResources().getString(R.string.speed)));
+        binding.weatherWind.setText(String.format("%s%s", wind , requireContext().getResources().getString(R.string.speed)));
     }
 
     public void setChecked(boolean checked) {

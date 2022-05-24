@@ -27,3 +27,4 @@ const val IS_FIRST_LAUNCHED_CHANGE_DATA = "is_first_launched_change_data"
 const val IS_FIRST_LAUNCHED_FUEL_MANAGEMENT = "is_first_launched_fuel_management"
 const val co2EmissionPer1LiterOfGasoline = 2.347f
 const val co2EmissionPer1LiterOfDiesel = 2.689f
+const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
