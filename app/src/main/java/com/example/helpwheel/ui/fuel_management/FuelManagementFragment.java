@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -109,25 +110,29 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
 
     private void showBalloon() {
         if (fuelStats.getBoolean(Constants.IS_FIRST_LAUNCHED_FUEL_MANAGEMENT, true)) {
-            Balloon balloon = new Balloon.Builder(requireContext())
-                    .setWidth(BalloonSizeSpec.WRAP)
-                    .setHeight(BalloonSizeSpec.WRAP)
-                    .setText(getString(R.string.balloon_refueling))
-                    .setTextColorResource(R.color.white)
-                    .setTextSize(15f)
-                    .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-                    .setArrowSize(10)
-                    .setArrowPosition(0.5f)
-                    .setPadding(12)
-                    .setCornerRadius(8f)
-                    .setBackgroundColorResource(R.color.gray)
-                    .setBalloonAnimation(BalloonAnimation.ELASTIC)
-                    .setLifecycleOwner(getViewLifecycleOwner())
-                    .setAutoDismissDuration(5000L)
-                    .setMarginRight(15)
-                    .build();
-            balloon.showAlignBottom(binding.editButton);
+            balloon(getString(R.string.balloon_refueling), 10000).showAlignBottom(binding.editButton);
+            balloon(getString(R.string.balloon_fuelStats), 5000).showAlignTop(binding.fuelInputButton);
         }
+    }
+
+    private Balloon balloon (String text, int length){
+        return new Balloon.Builder(requireContext())
+                .setWidth(BalloonSizeSpec.WRAP)
+                .setHeight(BalloonSizeSpec.WRAP)
+                .setText(text)
+                .setTextColorResource(R.color.white)
+                .setTextSize(15f)
+                .setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+                .setArrowSize(10)
+                .setArrowPosition(0.5f)
+                .setPadding(12)
+                .setCornerRadius(8f)
+                .setBackgroundColorResource(R.color.gray)
+                .setBalloonAnimation(BalloonAnimation.ELASTIC)
+                .setLifecycleOwner(getViewLifecycleOwner())
+                .setAutoDismissDuration(length)
+                .setMarginRight(15)
+                .build();
     }
 
     private void initListeners() {

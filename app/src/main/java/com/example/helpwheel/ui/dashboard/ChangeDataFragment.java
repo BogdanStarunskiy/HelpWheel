@@ -68,10 +68,10 @@ public class ChangeDataFragment extends Fragment {
                 sharedPreferencesHolder.calculateRemainsFuel();
             }
             if (!Objects.requireNonNull(binding.fuelTankCapacity.getText()).toString().isEmpty()) {
-                float temp2 = fuelStats.getFloat(constants.FUEL_TANK_CAPACITY, 0.0f);
-                editor.putFloat(constants.FUEL_TANK_CAPACITY_OLD, temp2);
-                float temp3 = Float.parseFloat(binding.fuelTankCapacity.getText().toString());
-                editor.putFloat(constants.FUEL_TANK_CAPACITY, temp3);
+                float capacity = fuelStats.getFloat(constants.FUEL_TANK_CAPACITY, 0.0f);
+                editor.putFloat(constants.FUEL_TANK_CAPACITY_OLD, capacity);
+                float fuelInTank = Float.parseFloat(binding.fuelTankCapacity.getText().toString());
+                editor.putFloat(constants.FUEL_TANK_CAPACITY, fuelInTank);
                 editor.apply();
                 sharedPreferencesHolder.updateFuelTankCapacity();
                 sharedPreferencesHolder.calculateRemainsFuel();
