@@ -94,4 +94,5 @@
     <string name="balloon_edit_profile_here">Здесь Вы можете изменить свои данные</string>
     <string name="balloon_odometer_readings">Здесь можно удалить все показания одометра</string>
     <string name="internet_error">Подключение к интернету отсутствует</string>
+    <string name="balloon_fuelStats">Вы можете перекличиться между видо поездок, свайпнув в этом меню</string>
 </resources>
