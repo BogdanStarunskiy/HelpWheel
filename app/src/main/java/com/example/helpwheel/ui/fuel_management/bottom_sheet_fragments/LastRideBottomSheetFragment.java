@@ -39,7 +39,6 @@ public class LastRideBottomSheetFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentLastRideBottomSheetBinding.inflate(inflater, container, false);
-        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
         return binding.getRoot();
     }
 
@@ -49,8 +48,7 @@ public class LastRideBottomSheetFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
-        sharedPreferencesHolder.setFuelStats(fuelStats);
-        sharedPreferencesHolder.setEditor(editor);
+        sharedPreferencesHolder = new SharedPreferencesHolder(fuelStats, editor);
         binding.lastOdometerText.setText(String.valueOf(fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f)));
         initListeners();
     }

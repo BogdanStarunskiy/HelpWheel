@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,7 +58,6 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFuelManagementBinding.inflate(inflater, container, false);
-        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
         return binding.getRoot();
     }
 
@@ -70,8 +68,7 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
         if (fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f) == 0.0f)
             NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment);
         editor = fuelStats.edit();
-        sharedPreferencesHolder.setEditor(editor);
-        sharedPreferencesHolder.setFuelStats(fuelStats);
+        sharedPreferencesHolder = new SharedPreferencesHolder(fuelStats, editor);
         initializeFragmentArrayLists();
         initializeViewPagersAndTabs();
         initializeBottomSheetDialogs();

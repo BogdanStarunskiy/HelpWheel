@@ -37,7 +37,7 @@ public class FirstOdometerReadingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, requireContext().MODE_PRIVATE);
         editor = fuelStats.edit();
-        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
+        sharedPreferencesHolder = new SharedPreferencesHolder(fuelStats, editor);
         binding.submitBtnFuel.setOnClickListener(v -> {
             if (!Objects.requireNonNull(binding.odometerText.getText()).toString().isEmpty()){
                 editor.putFloat(constants.APP_PREFERENCES_ODOMETER, sharedPreferencesHolder.formattedNumber(Float.parseFloat(binding.odometerText.getText().toString())));

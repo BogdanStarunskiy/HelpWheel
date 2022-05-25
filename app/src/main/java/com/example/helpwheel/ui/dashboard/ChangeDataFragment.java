@@ -43,9 +43,7 @@ public class ChangeDataFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, requireContext().MODE_PRIVATE);
         editor = fuelStats.edit();
-        sharedPreferencesHolder = new SharedPreferencesHolder(requireContext());
-        sharedPreferencesHolder.setEditor(editor);
-        sharedPreferencesHolder.setFuelStats(fuelStats);
+        sharedPreferencesHolder = new SharedPreferencesHolder(fuelStats, editor);
         showBalloon();
         editor.putBoolean(Constants.IS_FIRST_LAUNCHED_CHANGE_DATA, false).apply();
         initListeners();
