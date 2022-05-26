@@ -1,5 +1,6 @@
 package com.example.helpwheel.ui.notes.notesFragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -51,7 +52,7 @@ public class AddNotesFragment extends Fragment {
     private void getDate(Long selection){
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTimeInMillis(selection);
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         String formattedDate  = format.format(calendar.getTime());
         binding.description.setText(formattedDate);
     }
@@ -67,7 +68,7 @@ public class AddNotesFragment extends Fragment {
             if (!TextUtils.isEmpty(title.getText().toString()) && !TextUtils.isEmpty(description.getText().toString())) {
                 String descUrl = description.getText().toString().trim() + " " + webURL.getText().toString().trim();
                 DatabaseClass db = new DatabaseClass(getContext());
-                db.addNotes(title.getText().toString().trim(), descUrl);
+                db.addNotes(title.getText().toString().trim(), descUrl, String.valueOf(System.currentTimeMillis()));
                 NavHostFragment.findNavController(this).navigate(R.id.action_addNotesFragment_to_navigation_home);
             }
             if (title.getText().toString().isEmpty()){

@@ -91,7 +91,7 @@ public class NotesFragment extends Fragment implements NotesInterface, RecyclerV
             Snackbar snackbar = Snackbar.make(binding.notesLayout, R.string.on_item_deleted, Snackbar.LENGTH_LONG)
                     .setAction(R.string.undo, view -> {
                         adapter.restoreItem(item, position);
-                        databaseClass.addNotes(item.getTitle(), item.getDescription());
+                        databaseClass.addNotes(item.getTitle(), item.getDescription(), item.getId());
                         binding.recyclerView.scrollToPosition(position);
                         showEmptyPlaceHolder();
                     });

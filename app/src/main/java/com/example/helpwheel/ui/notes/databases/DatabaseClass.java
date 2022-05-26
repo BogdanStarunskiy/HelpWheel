@@ -44,15 +44,13 @@ public class DatabaseClass extends SQLiteOpenHelper {
     }
 
 
-    public void addNotes(String title, String description) {
+    public void addNotes(String title, String description, String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(ColumnTitle, title);
         cv.put(ColumnDescription, description);
-
-
-        long resultValue = db.insert(TableName, null, cv);
-
+        cv.put(ColumnId, id);
+        db.insert(TableName, null, cv);
     }
 
     public Cursor readAllData() {
