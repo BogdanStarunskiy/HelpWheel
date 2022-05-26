@@ -1,7 +1,5 @@
 package com.example.helpwheel.ui.dashboard
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,18 +20,17 @@ class DashboardViewModel : ViewModel() {
     private val city = MutableLiveData<String>()
     private val isGpsTurnedOn = MutableLiveData<Boolean>()
     private val isPermissionGranted = MutableLiveData<Boolean>()
-    val handler = Handler(Looper.getMainLooper())
 
     fun setIsPermissionGranted(isGranted: Boolean) {
-        handler.post { isPermissionGranted.value = isGranted }
+        isPermissionGranted.value = isGranted
     }
 
     fun setIsGpsTurnedOn(isTurnedOn: Boolean) {
-        handler.post { isGpsTurnedOn.value = isTurnedOn }
+        isGpsTurnedOn.value = isTurnedOn
     }
 
     fun setCity(userCity: String) {
-        handler.post { city.value = userCity }
+        city.value = userCity
     }
 
     fun getWeatherDataAutomatically(latitude: Double, longitude: Double, key: String) {
@@ -46,7 +43,7 @@ class DashboardViewModel : ViewModel() {
         val weatherService =
             WeatherService.create().getCurrentWeatherByCity(userCity, key, "metric", "en")
         getWeatherFromServer(weatherService)
-        handler.post { city.value = userCity }
+        city.value = userCity
     }
 
     private fun getWeatherFromServer(weatherService: Call<WeatherModel>) {
@@ -58,9 +55,9 @@ class DashboardViewModel : ViewModel() {
                 ) {
                     val currentWeather = response.body()
                     if (response.code() == 200) {
-                        handler.post { temperature.value = currentWeather!!.main.temp.toInt().toString() }
-                        handler.post { wind.value = currentWeather!!.wind.speed.toInt().toString() }
-                        handler.post { description.value = currentWeather!!.weather[0].description }
+                        temperature.value = currentWeather!!.main.temp.toInt().toString()
+                        wind.value = currentWeather.wind.speed.toInt().toString()
+                        description.value = currentWeather.weather[0].description
                     } else
                         postErrorValues()
                 }
@@ -73,9 +70,9 @@ class DashboardViewModel : ViewModel() {
     }
 
     private fun postErrorValues(){
-        handler.post { temperature.value = "error" }
-        handler.post { wind.value = "error" }
-        handler.post { description.value = "error" }
+        temperature.value = "error"
+        wind.value = "error"
+        description.value = "error"
     }
 
     fun getIsPermissionGranted(): LiveData<Boolean> {
