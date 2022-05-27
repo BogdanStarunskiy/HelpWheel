@@ -2,10 +2,7 @@ package com.example.helpwheel.utils;
 
 public class Constants {
     public static final String APP_PREFERENCES = "fuelStats";
-    public static final String USERNAME = "username";
-    public static final String CONSUMPTION_PER_100KM = "consumptionPer100km";
     public static final String FUEL_TANK_CAPACITY = "fuel_tank_capacity";
-    public static final String FUEL_TANK_CAPACITY_OLD = "fuel_tank_capacity_old";
     public static final String APP_NEW_RIDE_DISTANCE = "new_ride_distance";
     public static final String APP_NEW_RIDE_PRICE = "new_ride_price";
     public static final String APP_NEW_RIDE_PRE_PRICE = "new_ride_pre_price";
@@ -23,10 +20,7 @@ public class Constants {
     public static final String APP_PREFERENCES_GASOLINE_EMISSIONS = "gasoline_emissions";
     public static final String APP_PREFERENCES_DIESEL_EMISSIONS = "diesel_emissions";
     public static final String FUEL_LEVEL_OLD = "fuelLevelOld";
-    public static final String USER_CITY = "user_city";
     public static final String IS_FIRST_LAUNCHED_DASHBOARD = "is_first_launched_dashboard";
     public static final String IS_FIRST_LAUNCHED_CHANGE_DATA = "is_first_launched_change_data";
     public static final String IS_FIRST_LAUNCHED_FUEL_MANAGEMENT = "is_first_launched_fuel_management";
-    public static final Float co2EmissionPer1LiterOfGasoline = 2.347f;
-    public static final Float co2EmissionPer1LiterOfDiesel = 2.689f;
 }
