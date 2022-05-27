@@ -37,7 +37,7 @@ class ChangeDataFragment : Fragment() {
         editor = fuelStats.edit()
         sharedPreferencesHolder = SharedPreferencesHolder(fuelStats, editor)
         showBalloon()
-        editor.putBoolean(Constants.IS_FIRST_LAUNCHED_CHANGE_DATA, false).apply()
+        editor.putBoolean(IS_FIRST_LAUNCHED_CHANGE_DATA, false).apply()
         initListeners()
     }
 
@@ -82,7 +82,7 @@ class ChangeDataFragment : Fragment() {
     }
 
     private fun showBalloon() {
-        if (fuelStats.getBoolean(Constants.IS_FIRST_LAUNCHED_CHANGE_DATA, true))
+        if (fuelStats.getBoolean(IS_FIRST_LAUNCHED_CHANGE_DATA, true))
             BuildBalloon(requireContext(), getString(R.string.balloon_odometer_readings), viewLifecycleOwner).balloon.showAlignBottom(binding.removeOdometerReadings)
     }
 

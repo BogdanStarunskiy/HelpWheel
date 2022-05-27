@@ -168,7 +168,7 @@ class DashboardFragment : Fragment() {
                     override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
                         dashboardViewModel.setIsPermissionGranted(false)
                         showBalloon()
-                        editor.putBoolean(Constants.IS_FIRST_LAUNCHED_DASHBOARD, false).apply()
+                        editor.putBoolean(IS_FIRST_LAUNCHED_DASHBOARD, false).apply()
                     }
 
                     override fun onPermissionRationaleShouldBeShown(
