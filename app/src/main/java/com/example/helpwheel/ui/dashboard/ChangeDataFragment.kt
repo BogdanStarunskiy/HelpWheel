@@ -18,10 +18,9 @@ import java.util.*
 
 class ChangeDataFragment : Fragment() {
     lateinit var binding: FragmentChangeDataBinding
-    val fuelStats: SharedPreferences =
-        requireContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
-    private val editor: SharedPreferences.Editor = fuelStats.edit()
-    private val sharedPreferencesHolder = SharedPreferencesHolder(fuelStats, editor)
+    lateinit var fuelStats: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+    private lateinit var sharedPreferencesHolder: SharedPreferencesHolder
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +33,9 @@ class ChangeDataFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
+        editor = fuelStats.edit()
+        sharedPreferencesHolder = SharedPreferencesHolder(fuelStats, editor)
         showBalloon()
         editor.putBoolean(Constants.IS_FIRST_LAUNCHED_CHANGE_DATA, false).apply()
         initListeners()
