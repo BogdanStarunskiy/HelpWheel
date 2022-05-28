@@ -209,7 +209,6 @@ class DashboardFragment : Fragment() {
         }
     }
 
-
     @SuppressLint("MissingPermission")
     private fun getMyLocation() {
 
@@ -247,6 +246,5 @@ class DashboardFragment : Fragment() {
                 } else
                     dashboardViewModel.setIsGpsTurnedOn(false)
             }
-
     }
 }

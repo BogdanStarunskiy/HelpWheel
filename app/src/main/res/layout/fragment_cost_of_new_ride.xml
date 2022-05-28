@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fuel_management.last_ride_fragments.CostOfLastRideFragment">
+    tools:context=".ui.fuel_management.last_ride_fragments.cost.CostLastRideFragment">
     <androidx.cardview.widget.CardView
         android:layout_margin="10dp"
         app:cardCornerRadius="15dp"

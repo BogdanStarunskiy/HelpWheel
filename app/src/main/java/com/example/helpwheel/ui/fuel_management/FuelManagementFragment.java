@@ -22,15 +22,15 @@ import com.example.helpwheel.ui.fuel_management.adapter.BottomSheetViewPagerAdap
 import com.example.helpwheel.ui.fuel_management.adapter.LastRideAdapter;
 import com.example.helpwheel.ui.fuel_management.adapter.NewRideAdapter;
 import com.example.helpwheel.ui.fuel_management.inerface.BottomSheetCallBack;
-import com.example.helpwheel.ui.fuel_management.last_ride_fragments.CostOfLastRideFragment;
-import com.example.helpwheel.ui.fuel_management.last_ride_fragments.DistanceOfLastRideFragment;
-import com.example.helpwheel.ui.fuel_management.last_ride_fragments.EcologyImpactFragment;
-import com.example.helpwheel.ui.fuel_management.last_ride_fragments.SpentFuelFragment;
-import com.example.helpwheel.ui.fuel_management.new_ride_fragments.CostOfNewRideFragment;
-import com.example.helpwheel.ui.fuel_management.new_ride_fragments.DistanceOfNewRideFragment;
-import com.example.helpwheel.ui.fuel_management.new_ride_fragments.EcologyImpactNewRideFragment;
-import com.example.helpwheel.ui.fuel_management.new_ride_fragments.FuelInTankNewRideFragment;
-import com.example.helpwheel.ui.fuel_management.new_ride_fragments.SpendFuelNewRideFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.cost.CostLastRideFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.distance.DistanceLastRideFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.ecology.EcologyLastRideFragment;
+import com.example.helpwheel.ui.fuel_management.last_ride_fragments.spent_fuel.SpentFuelLastRideFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.cost.CostNewRideFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.distance.DistanceNewRideFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.ecology.EcologyNewRideFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.remains_fuel.RemainsFuelNewRideFragment;
+import com.example.helpwheel.ui.fuel_management.new_ride_fragments.spendFuel.SpendFuelNewRideFragment;
 import com.example.helpwheel.utils.Constants;
 import com.example.helpwheel.utils.SharedPreferencesHolder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -79,17 +79,17 @@ public class FuelManagementFragment extends Fragment implements BottomSheetCallB
 
     private void initializeFragmentArrayLists() {
         lastRideFragments = new ArrayList<>();
-        lastRideFragments.add(new DistanceOfLastRideFragment());
-        lastRideFragments.add(new CostOfLastRideFragment());
-        lastRideFragments.add(new SpentFuelFragment());
-        lastRideFragments.add(new EcologyImpactFragment());
+        lastRideFragments.add(new DistanceLastRideFragment());
+        lastRideFragments.add(new CostLastRideFragment());
+        lastRideFragments.add(new SpentFuelLastRideFragment());
+        lastRideFragments.add(new EcologyLastRideFragment());
 
         newRideFragments = new ArrayList<>();
-        newRideFragments.add(new DistanceOfNewRideFragment());
-        newRideFragments.add(new FuelInTankNewRideFragment());
-        newRideFragments.add(new CostOfNewRideFragment());
+        newRideFragments.add(new DistanceNewRideFragment());
+        newRideFragments.add(new RemainsFuelNewRideFragment());
+        newRideFragments.add(new CostNewRideFragment());
         newRideFragments.add(new SpendFuelNewRideFragment());
-        newRideFragments.add(new EcologyImpactNewRideFragment());
+        newRideFragments.add(new EcologyNewRideFragment());
     }
 
     @Override

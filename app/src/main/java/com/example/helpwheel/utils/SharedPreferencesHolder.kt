@@ -1,13 +1,14 @@
 package com.example.helpwheel.utils
 
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.example.helpwheel.App
 import java.util.*
 import kotlin.math.roundToInt
 
 class SharedPreferencesHolder(val fuelStats: SharedPreferences,
                               private val editor: SharedPreferences.Editor
 ) {
-
 
     fun countFuelInTank() {
         val fuelLevelOld = fuelStats.getFloat(FUEL_LEVEL_OLD, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f))
@@ -16,6 +17,17 @@ class SharedPreferencesHolder(val fuelStats: SharedPreferences,
             editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(fuelLevel))
             editor.putFloat(FUEL_LEVEL, formattedNumber(fuelLevel))
             editor.apply()
+    }
+
+    fun countFuelInTank2() {
+        val preferences = App.instance.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
+        val editor = preferences.edit()
+        val fuelLevelOld = fuelStats.getFloat(FUEL_LEVEL_OLD, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f))
+        val spentFuel = fuelStats.getFloat(APP_PREFERENCES_SPENT_FUEL, 0.0f)
+        val fuelLevel = fuelLevelOld - spentFuel
+        editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(fuelLevel))
+        editor.putFloat(FUEL_LEVEL, formattedNumber(fuelLevel))
+        editor.apply()
     }
 
 

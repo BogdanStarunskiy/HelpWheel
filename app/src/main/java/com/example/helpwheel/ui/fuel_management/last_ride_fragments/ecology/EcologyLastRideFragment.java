@@ -1,4 +1,4 @@
-package com.example.helpwheel.ui.fuel_management.last_ride_fragments;
+package com.example.helpwheel.ui.fuel_management.last_ride_fragments.ecology;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import com.example.helpwheel.R;
 import com.example.helpwheel.databinding.FragmentEcologyImpactBinding;
 import com.example.helpwheel.utils.Constants;
 
-public class EcologyImpactFragment extends Fragment {
+public class EcologyLastRideFragment extends Fragment {
     FragmentEcologyImpactBinding binding;
     Constants constants;
     SharedPreferences fuelStats;
