@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.helpwheel.databinding.FragmentCostOfNewRideBinding
-import com.example.helpwheel.ui.fuel_management.TripViewModel
 
 
 class CostNewRideFragment: Fragment() {
     lateinit var binding: FragmentCostOfNewRideBinding
-    private lateinit var tripViewModel: TripViewModel
+    private lateinit var costNewRideViewModel: CostNewRideViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,12 +19,12 @@ class CostNewRideFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCostOfNewRideBinding.inflate(inflater, container, false)
-        tripViewModel = ViewModelProvider(requireActivity())[TripViewModel::class.java]
+        costNewRideViewModel = ViewModelProvider(requireActivity())[CostNewRideViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tripViewModel.getCostNewRide().observe(viewLifecycleOwner) { binding.price.text = it }
+        costNewRideViewModel.getCostNewRide().observe(viewLifecycleOwner) { binding.price.text = it }
     }
 }

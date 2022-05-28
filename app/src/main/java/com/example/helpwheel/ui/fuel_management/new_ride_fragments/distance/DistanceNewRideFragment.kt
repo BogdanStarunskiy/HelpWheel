@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.helpwheel.databinding.FragmentDistanceOfNewRideBinding
-import com.example.helpwheel.ui.fuel_management.TripViewModel
 
 
 class DistanceNewRideFragment: Fragment() {
     lateinit var binding: FragmentDistanceOfNewRideBinding
-    private lateinit var tripViewModel: TripViewModel
+    private lateinit var distanceNewRideViewModel: DistanceNewRideViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,12 +19,13 @@ class DistanceNewRideFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDistanceOfNewRideBinding.inflate(inflater, container, false)
+        distanceNewRideViewModel = ViewModelProvider(requireActivity())[DistanceNewRideViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tripViewModel.getDistanceNewRide().observe(viewLifecycleOwner) {
+        distanceNewRideViewModel.getDistanceNewRide().observe(viewLifecycleOwner) {
             binding.distanceCounter.text = it
         }
     }

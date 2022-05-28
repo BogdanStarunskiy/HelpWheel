@@ -22,7 +22,7 @@ public class NewRideBottomSheetFragment extends Fragment {
     private FragmentNewRideBottomSheetBinding binding;
     private SharedPreferences.Editor editor;
     BottomSheetCallBack callBack;
-    SharedPreferencesHolder sharedPreferencesHolder;
+    SharedPreferencesHolder sharedPreferencesHolder = new SharedPreferencesHolder();
     Constants constants;
 
     public NewRideBottomSheetFragment(BottomSheetCallBack callBack) {
@@ -41,7 +41,6 @@ public class NewRideBottomSheetFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, requireContext().MODE_PRIVATE);
         editor = fuelStats.edit();
-        sharedPreferencesHolder = new SharedPreferencesHolder(fuelStats, editor);
         binding.submitBtnFuel.setOnClickListener(v -> {
             String distance = Objects.requireNonNull(binding.distanceNewRideText.getText()).toString();
             String price = Objects.requireNonNull(binding.priceNewRideText.getText()).toString();

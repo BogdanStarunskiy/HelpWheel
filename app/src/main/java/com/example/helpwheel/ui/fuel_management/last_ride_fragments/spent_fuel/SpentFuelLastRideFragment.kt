@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.helpwheel.databinding.FragmentSpentFuelBinding
-import com.example.helpwheel.ui.fuel_management.TripViewModel
 
 class SpentFuelLastRideFragment: Fragment() {
     lateinit var binding: FragmentSpentFuelBinding
-    private lateinit var tripViewModel: TripViewModel
+    private lateinit var spentFuelLastRideViewModel: SpentFuelLastRideViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,13 +18,13 @@ class SpentFuelLastRideFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSpentFuelBinding.inflate(inflater, container, false)
-        tripViewModel = ViewModelProvider(requireActivity())[TripViewModel::class.java]
+        spentFuelLastRideViewModel = ViewModelProvider(requireActivity())[SpentFuelLastRideViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tripViewModel.getSpentFuelLastRide().observe(viewLifecycleOwner) {
+        spentFuelLastRideViewModel.getSpentFuelLastRide().observe(viewLifecycleOwner) {
             binding.spentFuel.text = it
         }
     }

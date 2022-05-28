@@ -27,7 +27,7 @@ public class LastRideBottomSheetFragment extends Fragment {
     Constants constants;
     SharedPreferences fuelStats;
     SharedPreferences.Editor editor;
-    SharedPreferencesHolder sharedPreferencesHolder;
+    SharedPreferencesHolder sharedPreferencesHolder = new SharedPreferencesHolder();
     String odometerValue;
     String priceValue;
 
@@ -48,7 +48,6 @@ public class LastRideBottomSheetFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fuelStats = requireContext().getSharedPreferences(constants.APP_PREFERENCES, getContext().MODE_PRIVATE);
         editor = fuelStats.edit();
-        sharedPreferencesHolder = new SharedPreferencesHolder(fuelStats, editor);
         binding.lastOdometerText.setText(String.valueOf(fuelStats.getFloat(constants.APP_PREFERENCES_ODOMETER, 0.0f)));
         initListeners();
     }
@@ -68,11 +67,6 @@ public class LastRideBottomSheetFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        editor.apply();
-    }
 
     private void callMethods() {
         sharedPreferencesHolder.countSpendFuel("last");

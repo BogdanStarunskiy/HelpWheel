@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.helpwheel.databinding.FragmentFuelInTankNewRideBinding
-import com.example.helpwheel.ui.fuel_management.TripViewModel
 
 class RemainsFuelNewRideFragment: Fragment() {
     lateinit var binding: FragmentFuelInTankNewRideBinding
-    private lateinit var tripViewModel: TripViewModel
+    private lateinit var remainsFuelNewRideViewModel: RemainsFuelNewRideViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,13 +18,13 @@ class RemainsFuelNewRideFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFuelInTankNewRideBinding.inflate(inflater, container, false)
-        tripViewModel = ViewModelProvider(requireActivity())[TripViewModel::class.java]
+        remainsFuelNewRideViewModel = ViewModelProvider(requireActivity())[RemainsFuelNewRideViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tripViewModel.getRemainsFuelNewRide().observe(viewLifecycleOwner) {
+        remainsFuelNewRideViewModel.getRemainsFuelNewRide().observe(viewLifecycleOwner) {
             binding.remainsInTheTank.text = it
         }
     }
