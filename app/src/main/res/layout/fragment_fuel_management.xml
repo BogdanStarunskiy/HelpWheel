@@ -31,7 +31,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.fuel_management.FuelManagementFragment">
+            tools:context=".ui.trip.TripFragment">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_fuel_in_tank"

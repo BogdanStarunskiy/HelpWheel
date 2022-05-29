@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">HelpWheel</string>
-    <!-- bnb -->
     <string name="title_notes">Notes</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Trip</string>
-    <!-- weather -->
     <string name="enter_city">Please, enter a city</string>
     <string name="weather_btn">Submit</string>
     <string name="current_weather">Here will be displayed current weather</string>
@@ -17,12 +15,9 @@
     <string name="degree_cels" translatable="false">℃</string>
     <string name="speed">KM/H</string>
     <string name="type_input">Auto</string>
-    <!-- auth -->
     <string name="greeting_auth">Hello!</string>
     <string name="enter_name_auth">Please, enter your name</string>
     <string name="btn_auth">Go</string>
-
-    <!-- notes -->
     <string name="add_a_note">Add a note</string>
     <string name="hello_user">Hello, User!</string>
     <string name="description">When?</string>
@@ -32,7 +27,6 @@
     <string name="wow_such_empty">wow, such empty!</string>
     <string name="web_site">Web site (optional)</string>
     <string name="both_fields_required">Both Fields Required</string>
-    <!-- fuel manager -->
     <string name="kms_placeholder">Your last ride:</string>
     <string name="enter_data">Enter data</string>
     <string name="enter_odometer">Odometer (KM)</string>
@@ -106,5 +100,4 @@
     <string name="balloon_odometer_readings">You can remove your odometer readings here</string>
     <string name="internet_error">No internet connection</string>
     <string name="balloon_fuelStats">You can change type of ride by swiping there</string>
-
 </resources>

@@ -1,6 +1,7 @@
 package com.example.helpwheel
 
 import android.app.Application
+import androidx.lifecycle.LifecycleOwner
 
 class App: Application() {
     companion object{

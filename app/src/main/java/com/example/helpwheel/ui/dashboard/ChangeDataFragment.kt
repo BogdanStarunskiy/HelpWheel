@@ -20,7 +20,6 @@ class ChangeDataFragment : Fragment() {
     lateinit var binding: FragmentChangeDataBinding
     lateinit var fuelStats: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
-    private val sharedPreferencesHolder = SharedPreferencesHolder()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,12 +57,12 @@ class ChangeDataFragment : Fragment() {
                     CONSUMPTION_PER_100KM,
                     binding.consumptionPer100km.text.toString().toFloat()
                 ).apply()
-                sharedPreferencesHolder.countSpendFuel("new")
-                sharedPreferencesHolder.countSpendFuel("last")
-                sharedPreferencesHolder.countPrice("new")
-                sharedPreferencesHolder.countPrice("last")
-                sharedPreferencesHolder.countFuelInTank()
-                sharedPreferencesHolder.calculateRemainsFuel()
+//                SharedPreferencesHolder.countSpendFuel("new")
+//                SharedPreferencesHolder.countSpendFuel("last")
+//                SharedPreferencesHolder.countPrice("new")
+//                SharedPreferencesHolder.countPrice("last")
+                SharedPreferencesHolder.countFuelInTank()
+//                SharedPreferencesHolder.calculateRemainsFuel()
             }
             if (Objects.requireNonNull(binding.fuelTankCapacity.text).toString().isNotEmpty()) {
                 val capacity = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f)
@@ -71,8 +70,8 @@ class ChangeDataFragment : Fragment() {
                 val fuelInTank = binding.fuelTankCapacity.text.toString().toFloat()
                 editor.putFloat(FUEL_TANK_CAPACITY, fuelInTank)
                 editor.apply()
-                sharedPreferencesHolder.updateFuelTankCapacity()
-                sharedPreferencesHolder.calculateRemainsFuel()
+                SharedPreferencesHolder.updateFuelTankCapacity()
+//                SharedPreferencesHolder.calculateRemainsFuel()
             }
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_changeDataFragment_to_navigation_dashboard)
@@ -95,7 +94,7 @@ class ChangeDataFragment : Fragment() {
         val yesBtn = dialog.findViewById<Button>(R.id.yes_btn)
         val noBtn = dialog.findViewById<Button>(R.id.no_btn)
         yesBtn!!.setOnClickListener {
-            sharedPreferencesHolder.removeLastRideData()
+            SharedPreferencesHolder.removeLastRideData()
             dialog.dismiss()
         }
         noBtn!!.setOnClickListener { dialog.dismiss() }

@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.helpwheel.ui.fuel_management.FuelManagementFragment"
+        android:name="com.example.helpwheel.ui.trip.TripFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_fuel_management" >
         <action
@@ -103,7 +103,7 @@
     </fragment>
     <fragment
         android:id="@+id/firstOdometerReadingFragment"
-        android:name="com.example.helpwheel.ui.fuel_management.FirstOdometerReadingFragment"
+        android:name="com.example.helpwheel.ui.trip.FirstOdometerReadingFragment"
         android:label="fragment_first_odometer_reading"
         tools:layout="@layout/fragment_first_odometer_reading" >
         <action

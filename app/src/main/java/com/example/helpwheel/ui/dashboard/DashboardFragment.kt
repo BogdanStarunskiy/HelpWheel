@@ -5,8 +5,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +29,6 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
-import java.io.IOException
 import java.util.*
 
 class DashboardFragment : Fragment() {
@@ -160,7 +157,7 @@ class DashboardFragment : Fragment() {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ).withListener(object : PermissionListener {
                     override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
-                        getMyLocation()
+                        Location.getMyLocation(mFusedLocationClient, requireActivity())
                         showBalloon()
                         editor.putBoolean(IS_FIRST_LAUNCHED_DASHBOARD, false).apply()
                     }
@@ -180,7 +177,7 @@ class DashboardFragment : Fragment() {
                 }).check()
 
         } else
-            getMyLocation()
+            Location.getMyLocation(mFusedLocationClient, requireActivity())
     }
 
     private fun showWelcomeScreen() {
@@ -207,44 +204,5 @@ class DashboardFragment : Fragment() {
             binding.enterCityEditText.visibility = View.VISIBLE
             binding.enterCity.visibility = View.VISIBLE
         }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun getMyLocation() {
-
-        mFusedLocationClient.lastLocation
-            .addOnSuccessListener(requireActivity()) { location ->
-                if (location != null) {
-                    if (location.latitude == 0.0 && location.longitude == 0.0) {
-                        binding.weatherLoading.visibility = View.VISIBLE
-                    } else {
-                        dashboardViewModel.setIsPermissionGranted(true)
-                        dashboardViewModel.setIsGpsTurnedOn(true)
-                        dashboardViewModel.getWeatherDataAutomatically(
-                            location.latitude,
-                            location.longitude,
-                            KEY
-                        )
-                        val gcd = Geocoder(requireContext(), Locale.getDefault())
-                        var addresses: List<Address>? = null
-                        try {
-                            addresses =
-                                gcd.getFromLocation(
-                                    location.latitude,
-                                    location.longitude,
-                                    1
-                                )
-                        } catch (e: IOException) {
-                            e.stackTrace
-                        }
-                        if (addresses != null && addresses.isNotEmpty()) {
-                            val city = addresses[0].locality
-                            dashboardViewModel.setCity(city)
-                        }
-                    }
-
-                } else
-                    dashboardViewModel.setIsGpsTurnedOn(false)
-            }
     }
 }

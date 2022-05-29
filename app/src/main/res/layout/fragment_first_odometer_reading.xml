@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".ui.fuel_management.FirstOdometerReadingFragment">
+    tools:context=".ui.trip.FirstOdometerReadingFragment">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/greeting_animation"
