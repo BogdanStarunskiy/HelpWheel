@@ -61,7 +61,7 @@ class ChangeDataFragment : Fragment() {
 //                SharedPreferencesHolder.countSpendFuel("last")
 //                SharedPreferencesHolder.countPrice("new")
 //                SharedPreferencesHolder.countPrice("last")
-                SharedPreferencesHolder.countFuelInTank()
+//                SharedPreferencesHolder.countFuelInTank()
 //                SharedPreferencesHolder.calculateRemainsFuel()
             }
             if (Objects.requireNonNull(binding.fuelTankCapacity.text).toString().isNotEmpty()) {

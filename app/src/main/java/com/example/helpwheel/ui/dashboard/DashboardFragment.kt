@@ -62,17 +62,15 @@ class DashboardFragment : Fragment() {
         setupSwitcher()
     }
 
-
-    private fun initObservers() {
-        dashboardViewModel.getIsPermissionGranted().observe(viewLifecycleOwner) { updateUiWhenPermissionChanged(it) }
-    }
-
     override fun onStart() {
         super.onStart()
         requireActivity().findViewById<CardView>(R.id.customBnb).visibility = View.VISIBLE
         checkPermissions()
     }
 
+    private fun initObservers() {
+        dashboardViewModel.getIsPermissionGranted().observe(viewLifecycleOwner) { updateUiWhenPermissionChanged(it) }
+    }
 
     private fun showBalloon() {
         if (preferences.getBoolean(IS_FIRST_LAUNCHED_DASHBOARD, true))

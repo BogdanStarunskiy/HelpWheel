@@ -84,7 +84,7 @@ class TripFragment: Fragment(), BottomSheetCallBack {
 
     @SuppressLint("SetTextI18n")
     private fun initObservers(){
-        tripViewModel.getFuelInTank().observe(requireActivity()) {binding.fuelLevel.text = "$it"}
+        tripViewModel.getFuelInTank().observe(requireActivity()) {binding.fuelLevel.text = it}
     }
 
     private fun inflateFragmentArrayLists() {
@@ -126,11 +126,9 @@ class TripFragment: Fragment(), BottomSheetCallBack {
                         showDialogOverFuel()
                     else {
                         val fuelLevel = SharedPreferencesHolder.formattedNumber(tankFuelLevel.text.toString().toFloat())
-                        editor.putFloat(FUEL_LEVEL_OLD, fuelLevel)
-                        editor.putFloat(FUEL_LEVEL, fuelLevel)
-                        editor.apply()
+                        editor.putFloat(FUEL_LEVEL, fuelLevel).apply()
                         bottomSheetDialogFuelInTank.dismiss()
-                        tripViewModel.setFuelInTank()
+                        binding.fuelLevel.text = fuelLevel.toString()
                     }
                 } else {
                     bottomSheetDialogFuelInTank.dismiss()

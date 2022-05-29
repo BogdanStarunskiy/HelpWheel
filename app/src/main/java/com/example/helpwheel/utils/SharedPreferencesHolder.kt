@@ -10,14 +10,12 @@ object SharedPreferencesHolder {
         App.instance.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = fuelStats.edit()
 
-    fun countFuelInTank() {
-        val fuelLevelOld =
-            fuelStats.getFloat(FUEL_LEVEL_OLD, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f))
+    fun fuelInTank(): Float {
+        val fuelLevelOld = fuelStats.getFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f))
         val spentFuel = fuelStats.getFloat(SPENT_FUEL_LAST_RIDE, 0.0f)
         val fuelLevel = fuelLevelOld - spentFuel
-        editor.putFloat(FUEL_LEVEL_OLD, formattedNumber(fuelLevel))
-        editor.putFloat(FUEL_LEVEL, formattedNumber(fuelLevel))
-        editor.apply()
+        editor.putFloat(FUEL_LEVEL, formattedNumber(fuelLevel)).apply()
+        return formattedNumber(fuelLevel)
     }
 
     fun remainsFuel(): Float {
@@ -31,8 +29,7 @@ object SharedPreferencesHolder {
     fun co2GasolineEmissionLastRide(): Float {
         val spentFuel = fuelStats.getFloat(SPENT_FUEL_LAST_RIDE, 0.0f)
         val gasolineEmissions = co2EmissionPer1LiterOfGasoline * spentFuel
-        editor.putFloat(GASOLINE_EMISSIONS_LAST_RIDE, formattedNumber(gasolineEmissions))
-            .apply()
+        editor.putFloat(GASOLINE_EMISSIONS_LAST_RIDE, formattedNumber(gasolineEmissions)).apply()
         return formattedNumber(gasolineEmissions)
     }
 
@@ -69,17 +66,15 @@ object SharedPreferencesHolder {
         return formattedNumber(willBeUsed)
     }
 
-    fun priceNewRide(): Float {
+    fun priceNewRide(priceFromEditText: Float): Float {
         val distance = fuelStats.getFloat(DISTANCE_NEW_RIDE, 0.0f)
-        val priceFromEditText = fuelStats.getFloat(COST_NEW_RIDE, 0.0f)
         val price = consumptionPer1km() * distance * priceFromEditText
         editor.putFloat(COST_NEW_RIDE, formattedNumber(price)).apply()
         return formattedNumber(price)
     }
 
-    fun priceLastRide(): Float {
+    fun priceLastRide(priceFromEditText: Float): Float {
         val distance = fuelStats.getFloat(DISTANCE_LAST_RIDE, 0.0f)
-        val priceFromEditText = fuelStats.getFloat(COST_LAST_RIDE, 0.0f)
         val price = consumptionPer1km() * distance * priceFromEditText
         editor.putFloat(COST_LAST_RIDE, formattedNumber(price)).apply()
         return formattedNumber(price)

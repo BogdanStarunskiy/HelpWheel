@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.helpwheel.App
-import com.example.helpwheel.utils.COST_NEW_RIDE
 import com.example.helpwheel.utils.APP_PREFERENCES
 import com.example.helpwheel.utils.COST_LAST_RIDE
 import com.example.helpwheel.utils.SharedPreferencesHolder
@@ -18,8 +17,8 @@ class CostLastRideViewModel: ViewModel() {
         costLastRide.postValue(fuelStats.getFloat(COST_LAST_RIDE, 0.0f).toString())
     }
 
-    fun setCostLastRide(){
-        costLastRide.postValue(SharedPreferencesHolder.priceLastRide().toString())
+    fun setCostLastRide(cost: Float){
+        costLastRide.postValue(SharedPreferencesHolder.priceLastRide(cost).toString())
     }
 
     fun getCostLastRide(): LiveData<String> {

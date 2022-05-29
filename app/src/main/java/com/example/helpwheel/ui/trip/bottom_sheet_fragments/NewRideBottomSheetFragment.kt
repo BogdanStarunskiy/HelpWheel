@@ -19,7 +19,6 @@ import com.example.helpwheel.ui.trip.new_ride_fragments.spendFuel.SpendFuelNewRi
 import com.example.helpwheel.utils.APP_PREFERENCES
 import com.example.helpwheel.utils.COST_NEW_RIDE
 import com.example.helpwheel.utils.DISTANCE_NEW_RIDE
-import com.example.helpwheel.utils.PRE_COST_NEW_RIDE
 
 class NewRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : Fragment() {
     private lateinit var binding: FragmentNewRideBottomSheetBinding
@@ -50,10 +49,10 @@ class NewRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : Fr
             val price = binding.priceNewRideText.text.toString()
             if (distance.isNotEmpty() && price.isNotEmpty()) {
                 editor.putFloat(DISTANCE_NEW_RIDE, distance.toFloat())
-                editor.putFloat(PRE_COST_NEW_RIDE, price.toFloat())
+                editor.putFloat(COST_NEW_RIDE, price.toFloat())
                 editor.apply()
                 distanceNewRideViewModel.setDistanceNewRide(distance.toFloat())
-                costNewRideViewModel.setCostNewRide()
+                costNewRideViewModel.setCostNewRide(price.toFloat())
                 callMethods()
                 callBack.dismissBottomSheet()
             } else if (distance.isNotEmpty()) {

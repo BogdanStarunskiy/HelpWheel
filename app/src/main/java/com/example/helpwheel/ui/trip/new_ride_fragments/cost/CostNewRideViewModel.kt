@@ -17,8 +17,8 @@ class CostNewRideViewModel: ViewModel() {
         costNewRide.postValue(fuelStats.getFloat(COST_NEW_RIDE, 0.0f).toString())
     }
 
-    fun setCostNewRide(){
-        costNewRide.postValue(SharedPreferencesHolder.priceNewRide().toString())
+    fun setCostNewRide(cost: Float){
+        costNewRide.postValue(SharedPreferencesHolder.priceNewRide(cost).toString())
     }
 
     fun getCostNewRide(): LiveData<String> {

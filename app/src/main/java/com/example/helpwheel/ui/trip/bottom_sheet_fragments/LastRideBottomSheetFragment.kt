@@ -81,7 +81,6 @@ class LastRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : F
         spentFuelLastRideViewModel.setSpentFuelLastRide()
         ecologyLastRideViewModel.setCarEmissions()
         tripViewModel.setFuelInTank()
-
     }
 
     private fun checkOdometerReadingsTwoFields(odometer: Float) {
@@ -89,9 +88,8 @@ class LastRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : F
             showDialogOdometerError()
         } else {
             editor.putFloat(ODOMETER, odometerValue.toFloat())
-            editor.putFloat(COST_LAST_RIDE, priceValue.toFloat())
             distanceLastRideViewModel.setDistanceLastRide(odometerValue.toFloat())
-            costLastRideViewModel.setCostLastRide()
+            costLastRideViewModel.setCostLastRide(priceValue.toFloat())
             editor.apply()
             callMethods()
             callBack.dismissBottomSheet()

@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.helpwheel.App
-import com.example.helpwheel.utils.APP_PREFERENCES
-import com.example.helpwheel.utils.FUEL_LEVEL
-import com.example.helpwheel.utils.FUEL_TANK_CAPACITY
-import com.example.helpwheel.utils.SharedPreferencesHolder
+import com.example.helpwheel.utils.*
 
 class TripViewModel: ViewModel (){
     private val fuelInTank = MutableLiveData<String>()
@@ -24,6 +21,6 @@ class TripViewModel: ViewModel (){
     }
 
     fun setFuelInTank() {
-        fuelInTank.postValue(SharedPreferencesHolder.remainsFuel().toString())
+        fuelInTank.postValue(SharedPreferencesHolder.fuelInTank().toString())
     }
 }
