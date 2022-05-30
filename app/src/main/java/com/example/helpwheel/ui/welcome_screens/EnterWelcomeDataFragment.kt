@@ -16,7 +16,6 @@ import com.example.helpwheel.utils.APP_PREFERENCES
 import com.example.helpwheel.utils.CONSUMPTION_PER_100KM
 import com.example.helpwheel.utils.FUEL_TANK_CAPACITY
 import com.example.helpwheel.utils.USERNAME
-import java.util.*
 
 class EnterWelcomeDataFragment : Fragment() {
     lateinit var binding: FragmentEnterWelcomeDataBinding
@@ -41,19 +40,20 @@ class EnterWelcomeDataFragment : Fragment() {
 
     private fun putToSharedPreferences() {
         try {
-            val username = Objects.requireNonNull(binding.enterName.text).toString().trim()
-            val consumptionPer100km =
-                Objects.requireNonNull(binding.consumptionPer100km.text).toString().toFloat()
-            val fuelTankCapacity =
-                Objects.requireNonNull(binding.fuelTankCapacity.text).toString().toFloat()
-            editor.putString(USERNAME, username)
-            editor.putFloat(CONSUMPTION_PER_100KM, consumptionPer100km)
-            editor.putFloat(FUEL_TANK_CAPACITY, fuelTankCapacity)
-            editor.apply()
-            NavHostFragment.findNavController(this)
-                .navigate(R.id.action_enterWelcomeDataFragment_to_navigation_dashboard)
-        } catch (e: Exception) {
-            Toast.makeText(requireContext(), R.string.field_must_be_filled, Toast.LENGTH_SHORT).show()
+            val username = binding.enterName.text.toString().trim()
+            val consumptionPer100km = binding.consumptionPer100km.text.toString().toFloat()
+            val fuelTankCapacity = binding.fuelTankCapacity.text.toString().toFloat()
+            if (username.isNotEmpty() && consumptionPer100km.toString().isNotEmpty() && fuelTankCapacity.toString().isNotEmpty() && consumptionPer100km > 0.0f && fuelTankCapacity > 0.0f){
+                editor.putString(USERNAME, username)
+                editor.putFloat(CONSUMPTION_PER_100KM, consumptionPer100km)
+                editor.putFloat(FUEL_TANK_CAPACITY, fuelTankCapacity)
+                editor.apply()
+                NavHostFragment.findNavController(this).navigate(R.id.action_enterWelcomeDataFragment_to_navigation_dashboard)
+            }
+            else
+                Toast.makeText(requireContext(), getString(R.string.all_fields_must_be_filled), Toast.LENGTH_SHORT).show()
+        } catch (e: Exception){
+            Toast.makeText(requireContext(), getString(R.string.all_fields_must_be_filled), Toast.LENGTH_SHORT).show()
         }
     }
 

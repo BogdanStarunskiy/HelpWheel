@@ -100,4 +100,5 @@
     <string name="balloon_odometer_readings">You can remove your odometer readings here</string>
     <string name="internet_error">No internet connection</string>
     <string name="balloon_fuelStats">You can change type of ride by swiping there</string>
+    <string name="all_fields_must_be_filled">All fields must be filled</string>
 </resources>

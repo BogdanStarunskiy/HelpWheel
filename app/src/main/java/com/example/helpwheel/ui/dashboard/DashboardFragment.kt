@@ -107,7 +107,7 @@ class DashboardFragment : Fragment() {
     private fun initListeners() {
         binding.userGreetingEditButton.setOnClickListener { showEditDataFragment() }
         binding.weatherBtn.setOnClickListener {
-            if (Objects.requireNonNull(binding.enterCity.text).toString().trim() == "")
+            if (binding.enterCity.text.toString().trim() == "")
                 Toast.makeText(binding.root.context, R.string.enter_city_message, Toast.LENGTH_LONG).show()
             else {
                 getWeatherFromManualInput()
@@ -136,7 +136,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun getWeatherFromManualInput() {
-        val userCity = Objects.requireNonNull(binding.enterCity.text).toString().trim()
+        val userCity = binding.enterCity.text.toString().trim()
         binding.enterCityEditText.visibility = View.VISIBLE
         binding.enterCity.visibility = View.VISIBLE
         binding.weatherBtn.visibility = View.VISIBLE

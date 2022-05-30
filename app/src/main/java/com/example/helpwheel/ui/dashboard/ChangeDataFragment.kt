@@ -21,7 +21,6 @@ import com.example.helpwheel.utils.ViewModels.remainsFuelNewRideViewModel
 import com.example.helpwheel.utils.ViewModels.spendFuelNewRideViewModel
 import com.example.helpwheel.utils.ViewModels.spentFuelLastRideViewModel
 import com.example.helpwheel.utils.ViewModels.tripViewModel
-import java.util.*
 
 class ChangeDataFragment : Fragment() {
     lateinit var binding: FragmentChangeDataBinding
@@ -54,13 +53,11 @@ class ChangeDataFragment : Fragment() {
 
     private fun initListeners() {
         binding.buttonOK.setOnClickListener {
-            if (Objects.requireNonNull(binding.enterName.text).toString().trim().isNotEmpty()) {
+            if (binding.enterName.text.toString().trim().isNotEmpty()) {
                 editor.putString(USERNAME, binding.enterName.text.toString().trim())
                 editor.apply()
             }
-            if (Objects.requireNonNull(binding.consumptionPer100km.text).toString().trim()
-                    .isNotEmpty()
-            ) {
+            if (binding.consumptionPer100km.text.toString().isNotEmpty() && binding.consumptionPer100km.text.toString().toFloat() != 0.0f) {
                 editor.putFloat(CONSUMPTION_PER_100KM, binding.consumptionPer100km.text.toString().toFloat()).apply()
                 spentFuelLastRideViewModel.setSpentFuelLastRide()
                 spendFuelNewRideViewModel.setSpendFuelNewRide()
@@ -70,7 +67,7 @@ class ChangeDataFragment : Fragment() {
                 remainsFuelNewRideViewModel.setRemainsFuelNewRide()
 
             }
-            if (Objects.requireNonNull(binding.fuelTankCapacity.text).toString().isNotEmpty()) {
+            if (binding.fuelTankCapacity.text.toString().isNotEmpty() && binding.fuelTankCapacity.text.toString().toFloat() != 0.0f) {
                 val capacity = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f)
                 editor.putFloat(FUEL_TANK_CAPACITY_OLD, capacity)
                 val fuelInTank = binding.fuelTankCapacity.text.toString().toFloat()
