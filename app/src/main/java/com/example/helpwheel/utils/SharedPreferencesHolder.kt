@@ -100,6 +100,7 @@ object SharedPreferencesHolder {
         editor.remove(ODOMETER)
         editor.remove(DISTANCE_LAST_RIDE)
         editor.remove(COST_LAST_RIDE)
+        editor.remove(COST_PER_LITER_LAST_RIDE)
         editor.remove(DIESEL_EMISSIONS_LAST_RIDE)
         editor.remove(GASOLINE_EMISSIONS_LAST_RIDE)
         editor.remove(SPENT_FUEL_LAST_RIDE)

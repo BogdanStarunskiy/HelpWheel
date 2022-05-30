@@ -11,12 +11,11 @@ import com.example.helpwheel.R
 import com.example.helpwheel.databinding.FragmentNewRideBottomSheetBinding
 import com.example.helpwheel.ui.trip.inerface.BottomSheetCallBack
 import com.example.helpwheel.utils.*
-import com.example.helpwheel.utils.ViewModels.costNewRideViewModel
-import com.example.helpwheel.utils.ViewModels.distanceNewRideViewModel
-import com.example.helpwheel.utils.ViewModels.ecologyNewRideViewModel
-import com.example.helpwheel.utils.ViewModels.initViewModels
-import com.example.helpwheel.utils.ViewModels.remainsFuelNewRideViewModel
-import com.example.helpwheel.utils.ViewModels.spendFuelNewRideViewModel
+import com.example.helpwheel.utils.NewRideViewModels.costNewRideViewModel
+import com.example.helpwheel.utils.NewRideViewModels.distanceNewRideViewModel
+import com.example.helpwheel.utils.NewRideViewModels.ecologyNewRideViewModel
+import com.example.helpwheel.utils.NewRideViewModels.remainsFuelNewRideViewModel
+import com.example.helpwheel.utils.NewRideViewModels.spendFuelNewRideViewModel
 
 class NewRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : Fragment() {
     private lateinit var binding: FragmentNewRideBottomSheetBinding
@@ -29,7 +28,7 @@ class NewRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : Fr
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNewRideBottomSheetBinding.inflate(inflater, container, false)
-        initViewModels(requireActivity())
+        NewRideViewModels.initViewModelsNewRide(requireActivity())
         return binding.root
     }
 

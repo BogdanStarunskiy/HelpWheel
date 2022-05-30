@@ -11,8 +11,10 @@ class TripViewModel : ViewModel() {
     private val fuelInTank = MutableLiveData<String>()
     private val fuelStats = App.instance.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
     private val editor = fuelStats.edit()
-
-    fun setDefaultValue() {
+    init {
+        setDefaultValue()
+    }
+    private fun setDefaultValue() {
         fuelInTank.postValue(
             fuelStats.getFloat(
                 FUEL_LEVEL,

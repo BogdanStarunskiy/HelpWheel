@@ -12,9 +12,6 @@ import com.example.helpwheel.ui.trip.new_ride_fragments.distance.DistanceNewRide
 import com.example.helpwheel.ui.trip.new_ride_fragments.ecology.EcologyNewRideViewModel
 import com.example.helpwheel.ui.trip.new_ride_fragments.remains_fuel.RemainsFuelNewRideViewModel
 import com.example.helpwheel.ui.trip.new_ride_fragments.spendFuel.SpendFuelNewRideViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 object ViewModels {
     lateinit var remainsFuelNewRideViewModel: RemainsFuelNewRideViewModel
@@ -29,7 +26,6 @@ object ViewModels {
     lateinit var spentFuelLastRideViewModel: SpentFuelLastRideViewModel
 
     fun initViewModels(fragmentActivity: FragmentActivity) {
-        CoroutineScope(Dispatchers.IO).launch {
             remainsFuelNewRideViewModel =
                 ViewModelProvider(fragmentActivity)[RemainsFuelNewRideViewModel::class.java]
             tripViewModel = ViewModelProvider(fragmentActivity)[TripViewModel::class.java]
@@ -51,6 +47,5 @@ object ViewModels {
                 ViewModelProvider(fragmentActivity)[RemainsFuelNewRideViewModel::class.java]
             spendFuelNewRideViewModel =
                 ViewModelProvider(fragmentActivity)[SpendFuelNewRideViewModel::class.java]
-        }
     }
 }

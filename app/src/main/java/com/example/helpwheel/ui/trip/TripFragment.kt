@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.helpwheel.R
@@ -29,11 +30,9 @@ import com.example.helpwheel.ui.trip.new_ride_fragments.cost.CostNewRideFragment
 import com.example.helpwheel.ui.trip.new_ride_fragments.distance.DistanceNewRideFragment
 import com.example.helpwheel.ui.trip.new_ride_fragments.ecology.EcologyNewRideFragment
 import com.example.helpwheel.ui.trip.new_ride_fragments.remains_fuel.RemainsFuelNewRideFragment
+import com.example.helpwheel.ui.trip.new_ride_fragments.remains_fuel.RemainsFuelNewRideViewModel
 import com.example.helpwheel.ui.trip.new_ride_fragments.spendFuel.SpendFuelNewRideFragment
 import com.example.helpwheel.utils.*
-import com.example.helpwheel.utils.ViewModels.initViewModels
-import com.example.helpwheel.utils.ViewModels.remainsFuelNewRideViewModel
-import com.example.helpwheel.utils.ViewModels.tripViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
@@ -47,6 +46,8 @@ class TripFragment : Fragment(), BottomSheetCallBack {
     private lateinit var editor: SharedPreferences.Editor
     private val lastRideFragments = ArrayList<Fragment>()
     private val newRideFragments = ArrayList<Fragment>()
+    private lateinit var tripViewModel: TripViewModel
+    private lateinit var remainsFuelViewModel: RemainsFuelNewRideViewModel
 
 
     override fun onCreateView(
@@ -55,7 +56,8 @@ class TripFragment : Fragment(), BottomSheetCallBack {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFuelManagementBinding.inflate(inflater, container, false)
-        initViewModels(requireActivity())
+        tripViewModel = ViewModelProvider(requireActivity())[TripViewModel::class.java]
+        remainsFuelViewModel = ViewModelProvider(requireActivity())[RemainsFuelNewRideViewModel::class.java]
         return binding.root
     }
 
@@ -66,7 +68,6 @@ class TripFragment : Fragment(), BottomSheetCallBack {
         if (fuelStats.getFloat(ODOMETER, 0.0f) == 0.0f)
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment)
-        tripViewModel.setDefaultValue()
         inflateFragmentArrayLists()
         initViewPagersAndTabs()
         initBottomSheetDialogs()
@@ -158,7 +159,7 @@ class TripFragment : Fragment(), BottomSheetCallBack {
                         editor.putFloat(FUEL_LEVEL, fuelLevel).apply()
                         bottomSheetDialogFuelInTank.dismiss()
                         tripViewModel.setFuelInTankFromEditText(tankFuelLevel.text.toString().toFloat())
-                        remainsFuelNewRideViewModel.setRemainsFuelNewRide()
+                        remainsFuelViewModel.setRemainsFuelNewRide()
                     }
                 } else {
                     bottomSheetDialogFuelInTank.dismiss()

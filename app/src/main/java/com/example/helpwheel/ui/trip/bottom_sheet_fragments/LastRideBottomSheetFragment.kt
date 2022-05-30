@@ -13,13 +13,12 @@ import com.example.helpwheel.R
 import com.example.helpwheel.databinding.FragmentLastRideBottomSheetBinding
 import com.example.helpwheel.ui.trip.inerface.BottomSheetCallBack
 import com.example.helpwheel.utils.*
-import com.example.helpwheel.utils.ViewModels.costLastRideViewModel
-import com.example.helpwheel.utils.ViewModels.distanceLastRideViewModel
-import com.example.helpwheel.utils.ViewModels.ecologyLastRideViewModel
-import com.example.helpwheel.utils.ViewModels.initViewModels
-import com.example.helpwheel.utils.ViewModels.remainsFuelNewRideViewModel
-import com.example.helpwheel.utils.ViewModels.spentFuelLastRideViewModel
-import com.example.helpwheel.utils.ViewModels.tripViewModel
+import com.example.helpwheel.utils.LastRideViewModels.costLastRideViewModel
+import com.example.helpwheel.utils.LastRideViewModels.distanceLastRideViewModel
+import com.example.helpwheel.utils.LastRideViewModels.ecologyLastRideViewModel
+import com.example.helpwheel.utils.LastRideViewModels.spentFuelLastRideViewModel
+import com.example.helpwheel.utils.LastRideViewModels.tripViewModel
+import com.example.helpwheel.utils.LastRideViewModels.remainsFuelViewModel
 import java.util.*
 
 
@@ -36,7 +35,7 @@ class LastRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : F
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLastRideBottomSheetBinding.inflate(inflater, container, false)
-        initViewModels(requireActivity())
+        LastRideViewModels.initViewModelsLastRide(requireActivity())
         return binding.root
     }
 
@@ -96,7 +95,7 @@ class LastRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : F
         spentFuelLastRideViewModel.setSpentFuelLastRide()
         ecologyLastRideViewModel.setCarEmissions()
         tripViewModel.setFuelInTank()
-        remainsFuelNewRideViewModel.setRemainsFuelNewRide()
+        remainsFuelViewModel.setRemainsFuelNewRide()
     }
 
     private fun showDialogOdometerError() {
