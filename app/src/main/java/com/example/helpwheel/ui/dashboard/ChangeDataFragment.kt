@@ -14,6 +14,13 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.helpwheel.R
 import com.example.helpwheel.databinding.FragmentChangeDataBinding
 import com.example.helpwheel.utils.*
+import com.example.helpwheel.utils.ViewModels.costLastRideViewModel
+import com.example.helpwheel.utils.ViewModels.costNewRideViewModel
+import com.example.helpwheel.utils.ViewModels.initViewModels
+import com.example.helpwheel.utils.ViewModels.remainsFuelNewRideViewModel
+import com.example.helpwheel.utils.ViewModels.spendFuelNewRideViewModel
+import com.example.helpwheel.utils.ViewModels.spentFuelLastRideViewModel
+import com.example.helpwheel.utils.ViewModels.tripViewModel
 import java.util.*
 
 class ChangeDataFragment : Fragment() {
@@ -27,6 +34,7 @@ class ChangeDataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChangeDataBinding.inflate(inflater, container, false)
+        initViewModels(requireActivity())
         return binding.root
     }
 
@@ -53,16 +61,14 @@ class ChangeDataFragment : Fragment() {
             if (Objects.requireNonNull(binding.consumptionPer100km.text).toString().trim()
                     .isNotEmpty()
             ) {
-                editor.putFloat(
-                    CONSUMPTION_PER_100KM,
-                    binding.consumptionPer100km.text.toString().toFloat()
-                ).apply()
-//                SharedPreferencesHolder.countSpendFuel("new")
-//                SharedPreferencesHolder.countSpendFuel("last")
-//                SharedPreferencesHolder.countPrice("new")
-//                SharedPreferencesHolder.countPrice("last")
-//                SharedPreferencesHolder.countFuelInTank()
-//                SharedPreferencesHolder.calculateRemainsFuel()
+                editor.putFloat(CONSUMPTION_PER_100KM, binding.consumptionPer100km.text.toString().toFloat()).apply()
+                spentFuelLastRideViewModel.setSpentFuelLastRide()
+                spendFuelNewRideViewModel.setSpendFuelNewRide()
+                costLastRideViewModel.setCostLastRide(fuelStats.getFloat(COST_PER_LITER_LAST_RIDE, 0.0f))
+                costNewRideViewModel.setCostNewRide(fuelStats.getFloat(COST_PER_LITER_NEW_RIDE, 0.0f))
+                tripViewModel.setFuelInTank()
+                remainsFuelNewRideViewModel.setRemainsFuelNewRide()
+
             }
             if (Objects.requireNonNull(binding.fuelTankCapacity.text).toString().isNotEmpty()) {
                 val capacity = fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f)
@@ -71,7 +77,7 @@ class ChangeDataFragment : Fragment() {
                 editor.putFloat(FUEL_TANK_CAPACITY, fuelInTank)
                 editor.apply()
                 SharedPreferencesHolder.updateFuelTankCapacity()
-//                SharedPreferencesHolder.calculateRemainsFuel()
+                remainsFuelNewRideViewModel.setRemainsFuelNewRide()
             }
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_changeDataFragment_to_navigation_dashboard)
@@ -81,7 +87,11 @@ class ChangeDataFragment : Fragment() {
 
     private fun showBalloon() {
         if (fuelStats.getBoolean(IS_FIRST_LAUNCHED_CHANGE_DATA, true))
-            BuildBalloon(requireContext(), getString(R.string.balloon_odometer_readings), viewLifecycleOwner).balloon.showAlignBottom(binding.removeOdometerReadings)
+            BuildBalloon(
+                requireContext(),
+                getString(R.string.balloon_odometer_readings),
+                viewLifecycleOwner
+            ).balloon.showAlignBottom(binding.removeOdometerReadings)
     }
 
     private fun showDialog() {

@@ -111,7 +111,10 @@ object SharedPreferencesHolder {
         val fuelTankCapacityOld = fuelStats.getFloat(FUEL_TANK_CAPACITY_OLD, 0.0f)
         val differenceBetweenFuelTanks = fuelTankCapacity - fuelTankCapacityOld
         val currentFuelLevel = fuelStats.getFloat(FUEL_LEVEL, 0.0f) + differenceBetweenFuelTanks
-        editor.putFloat(FUEL_LEVEL, formattedNumber(currentFuelLevel)).apply()
+        if (currentFuelLevel > 0.0f)
+            editor.putFloat(FUEL_LEVEL, formattedNumber(currentFuelLevel)).apply()
+        else
+            editor.putFloat(FUEL_LEVEL, 0.0f)
     }
 
     fun formattedNumber(number: Float): Float {

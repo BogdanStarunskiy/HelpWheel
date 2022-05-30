@@ -29,7 +29,14 @@ class RemainsFuelNewRideFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         remainsFuelNewRideViewModel.getRemainsFuelNewRide().observe(viewLifecycleOwner) {
-            binding.remainsInTheTankCount.text = "$it ${getString(R.string.litres_symbol)}"
+            if (it.toFloat() > 0.0f) {
+                binding.remainsInTheTankCount.text = "$it ${getString(R.string.litres_symbol)}"
+                binding.remainsInTheTankCount.setTextColor(requireContext().getColor(R.color.white))
+            } else{
+                binding.remainsInTheTankCount.text = "$it ${getString(R.string.litres_symbol)}"
+                binding.remainsInTheTankCount.setTextColor(requireContext().getColor(R.color.red))
+            }
+
         }
     }
 }

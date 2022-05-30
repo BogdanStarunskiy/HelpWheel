@@ -9,16 +9,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.helpwheel.R
 import com.example.helpwheel.databinding.FragmentLastRideBottomSheetBinding
-import com.example.helpwheel.ui.trip.TripViewModel
 import com.example.helpwheel.ui.trip.inerface.BottomSheetCallBack
-import com.example.helpwheel.ui.trip.last_ride_fragments.cost.CostLastRideViewModel
-import com.example.helpwheel.ui.trip.last_ride_fragments.distance.DistanceLastRideViewModel
-import com.example.helpwheel.ui.trip.last_ride_fragments.ecology.EcologyLastRideViewModel
-import com.example.helpwheel.ui.trip.last_ride_fragments.spent_fuel.SpentFuelLastRideViewModel
 import com.example.helpwheel.utils.*
+import com.example.helpwheel.utils.ViewModels.costLastRideViewModel
+import com.example.helpwheel.utils.ViewModels.distanceLastRideViewModel
+import com.example.helpwheel.utils.ViewModels.ecologyLastRideViewModel
+import com.example.helpwheel.utils.ViewModels.initViewModels
+import com.example.helpwheel.utils.ViewModels.remainsFuelNewRideViewModel
+import com.example.helpwheel.utils.ViewModels.spentFuelLastRideViewModel
+import com.example.helpwheel.utils.ViewModels.tripViewModel
 import java.util.*
 
 
@@ -26,11 +27,6 @@ class LastRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : F
     lateinit var binding: FragmentLastRideBottomSheetBinding
     lateinit var fuelStats: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
-    private lateinit var costLastRideViewModel: CostLastRideViewModel
-    private lateinit var distanceLastRideViewModel: DistanceLastRideViewModel
-    private lateinit var ecologyLastRideViewModel: EcologyLastRideViewModel
-    private lateinit var spentFuelLastRideViewModel: SpentFuelLastRideViewModel
-    private lateinit var tripViewModel: TripViewModel
     private var odometerValue = ""
     private var priceValue = ""
 
@@ -40,7 +36,7 @@ class LastRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : F
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLastRideBottomSheetBinding.inflate(inflater, container, false)
-        initViewModels()
+        initViewModels(requireActivity())
         return binding.root
     }
 
@@ -51,14 +47,6 @@ class LastRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : F
         binding.lastOdometerText.text =
             fuelStats.getFloat(ODOMETER, 0.0f).toString()
         initListeners()
-    }
-
-    private fun initViewModels() {
-        costLastRideViewModel = ViewModelProvider(requireActivity())[CostLastRideViewModel::class.java]
-        distanceLastRideViewModel = ViewModelProvider(requireActivity())[DistanceLastRideViewModel::class.java]
-        ecologyLastRideViewModel = ViewModelProvider(requireActivity())[EcologyLastRideViewModel::class.java]
-        spentFuelLastRideViewModel = ViewModelProvider(requireActivity())[SpentFuelLastRideViewModel::class.java]
-        tripViewModel = ViewModelProvider(requireActivity())[TripViewModel::class.java]
     }
 
     private fun initListeners() {
@@ -76,18 +64,12 @@ class LastRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : F
         }
     }
 
-
-    private fun callMethods() {
-        spentFuelLastRideViewModel.setSpentFuelLastRide()
-        ecologyLastRideViewModel.setCarEmissions()
-        tripViewModel.setFuelInTank()
-    }
-
     private fun checkOdometerReadingsTwoFields(odometer: Float) {
         if (fuelStats.getFloat(ODOMETER, 0.0f) > odometer) {
             showDialogOdometerError()
         } else {
             editor.putFloat(ODOMETER, odometerValue.toFloat())
+            editor.putFloat(COST_PER_LITER_LAST_RIDE, priceValue.toFloat())
             distanceLastRideViewModel.setDistanceLastRide(odometerValue.toFloat())
             costLastRideViewModel.setCostLastRide(priceValue.toFloat())
             editor.apply()
@@ -102,11 +84,19 @@ class LastRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : F
         } else {
             distanceLastRideViewModel.setDistanceLastRide(odometerValue.toFloat())
             editor.putFloat(ODOMETER, odometerValue.toFloat())
+            editor.putFloat(COST_PER_LITER_LAST_RIDE, 0.0f)
             editor.putFloat(COST_LAST_RIDE, 0.0f)
             editor.apply()
             callMethods()
             callBack.dismissBottomSheet()
         }
+    }
+
+    private fun callMethods() {
+        spentFuelLastRideViewModel.setSpentFuelLastRide()
+        ecologyLastRideViewModel.setCarEmissions()
+        tripViewModel.setFuelInTank()
+        remainsFuelNewRideViewModel.setRemainsFuelNewRide()
     }
 
     private fun showDialogOdometerError() {

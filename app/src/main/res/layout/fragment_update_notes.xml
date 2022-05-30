@@ -53,7 +53,8 @@
             android:hint="@string/description"
             android:imeOptions="actionNext"
             android:inputType="date"
-            android:nextFocusDown="@id/web_ulr" />
+            android:nextFocusDown="@id/web_ulr"
+            android:maxLength="14"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 

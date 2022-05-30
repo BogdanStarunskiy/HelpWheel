@@ -13,7 +13,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.helpwheel.R
@@ -32,11 +31,14 @@ import com.example.helpwheel.ui.trip.new_ride_fragments.ecology.EcologyNewRideFr
 import com.example.helpwheel.ui.trip.new_ride_fragments.remains_fuel.RemainsFuelNewRideFragment
 import com.example.helpwheel.ui.trip.new_ride_fragments.spendFuel.SpendFuelNewRideFragment
 import com.example.helpwheel.utils.*
+import com.example.helpwheel.utils.ViewModels.initViewModels
+import com.example.helpwheel.utils.ViewModels.remainsFuelNewRideViewModel
+import com.example.helpwheel.utils.ViewModels.tripViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
 
-class TripFragment: Fragment(), BottomSheetCallBack {
+class TripFragment : Fragment(), BottomSheetCallBack {
 
     lateinit var binding: FragmentFuelManagementBinding
     private lateinit var bottomSheetDialogFuelStats: BottomSheetDialog
@@ -45,7 +47,7 @@ class TripFragment: Fragment(), BottomSheetCallBack {
     private lateinit var editor: SharedPreferences.Editor
     private val lastRideFragments = ArrayList<Fragment>()
     private val newRideFragments = ArrayList<Fragment>()
-    private lateinit var tripViewModel: TripViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +55,7 @@ class TripFragment: Fragment(), BottomSheetCallBack {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFuelManagementBinding.inflate(inflater, container, false)
-        tripViewModel = ViewModelProvider(requireActivity())[TripViewModel::class.java]
+        initViewModels(requireActivity())
         return binding.root
     }
 
@@ -62,7 +64,8 @@ class TripFragment: Fragment(), BottomSheetCallBack {
         fuelStats = requireContext().getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
         editor = fuelStats.edit()
         if (fuelStats.getFloat(ODOMETER, 0.0f) == 0.0f)
-            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment)
+            NavHostFragment.findNavController(this)
+                .navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment)
         tripViewModel.setDefaultValue()
         inflateFragmentArrayLists()
         initViewPagersAndTabs()
@@ -83,8 +86,15 @@ class TripFragment: Fragment(), BottomSheetCallBack {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initObservers(){
-        tripViewModel.getFuelInTank().observe(requireActivity()) {binding.fuelLevel.text = it}
+    private fun initObservers() {
+        tripViewModel.getFuelInTank().observe(viewLifecycleOwner) {
+            if (it.toFloat() > 0)
+                binding.fuelLevel.setTextColor(requireActivity().getColor(R.color.white))
+            else
+                binding.fuelLevel.setTextColor(requireActivity().getColor(R.color.red))
+
+            binding.fuelLevel.text = "$it ${getString(R.string.litres_have_left)}"
+        }
     }
 
     private fun inflateFragmentArrayLists() {
@@ -102,64 +112,86 @@ class TripFragment: Fragment(), BottomSheetCallBack {
 
     private fun showBalloon() {
         if (fuelStats.getBoolean(IS_FIRST_LAUNCHED_FUEL_MANAGEMENT, true)) {
-            BuildBalloon(requireContext(), getString(R.string.balloon_refueling), viewLifecycleOwner).balloon.showAlignBottom(binding.editButton)
-            BuildBalloon(requireContext(), getString(R.string.balloon_fuelStats), viewLifecycleOwner).balloon.showAlignTop(binding.fuelInputButton)
+            BuildBalloon(
+                requireContext(),
+                getString(R.string.balloon_refueling),
+                viewLifecycleOwner
+            ).balloon.showAlignBottom(binding.editButton)
+            BuildBalloon(
+                requireContext(),
+                getString(R.string.balloon_fuelStats),
+                viewLifecycleOwner
+            ).balloon.showAlignTop(binding.fuelInputButton)
         }
     }
 
     private fun initListeners() {
-        binding.fuelInputButton.setOnClickListener{
+        binding.fuelInputButton.setOnClickListener {
             bottomSheetDialogFuelStats.show()
-            val viewPager2BottomSheet = bottomSheetDialogFuelStats.findViewById<ViewPager2>(R.id.view_pager_bottom_sheet)
+            val viewPager2BottomSheet =
+                bottomSheetDialogFuelStats.findViewById<ViewPager2>(R.id.view_pager_bottom_sheet)
             viewPager2BottomSheet!!.adapter = BottomSheetViewPagerAdapter(this)
-            TabLayoutMediator(Objects.requireNonNull(bottomSheetDialogFuelStats.findViewById(R.id.tab)), viewPager2BottomSheet) { _, _ -> }.attach()
+            TabLayoutMediator(
+                Objects.requireNonNull(bottomSheetDialogFuelStats.findViewById(R.id.tab)),
+                viewPager2BottomSheet
+            ) { _, _ -> }.attach()
         }
 
-        binding.editButton.setOnClickListener{
+        binding.editButton.setOnClickListener {
             bottomSheetDialogFuelInTank.show()
-            val tankFuelLevel = bottomSheetDialogFuelInTank.findViewById<EditText>(R.id.fuel_in_tank_text)
-            val submit = bottomSheetDialogFuelInTank.findViewById<Button>(R.id.submit_btn_fuel_in_tank)
-            val container = bottomSheetDialogFuelInTank.findViewById<ConstraintLayout>(R.id.full_tank)
-            submit!!.setOnClickListener{
+            val tankFuelLevel =
+                bottomSheetDialogFuelInTank.findViewById<EditText>(R.id.fuel_in_tank_text)
+            val submit =
+                bottomSheetDialogFuelInTank.findViewById<Button>(R.id.submit_btn_fuel_in_tank)
+            val container =
+                bottomSheetDialogFuelInTank.findViewById<ConstraintLayout>(R.id.full_tank)
+            submit!!.setOnClickListener {
                 if (tankFuelLevel!!.text.toString().isNotEmpty()) {
-                    if (tankFuelLevel.text.toString().toFloat() > fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f))
+                    if (tankFuelLevel.text.toString().toFloat() > fuelStats.getFloat(
+                            FUEL_TANK_CAPACITY,
+                            0.0f
+                        )
+                    )
                         showDialogOverFuel()
                     else {
                         val fuelLevel = SharedPreferencesHolder.formattedNumber(tankFuelLevel.text.toString().toFloat())
                         editor.putFloat(FUEL_LEVEL, fuelLevel).apply()
                         bottomSheetDialogFuelInTank.dismiss()
-                        binding.fuelLevel.text = fuelLevel.toString()
+                        tripViewModel.setFuelInTankFromEditText(tankFuelLevel.text.toString().toFloat())
+                        remainsFuelNewRideViewModel.setRemainsFuelNewRide()
                     }
                 } else {
                     bottomSheetDialogFuelInTank.dismiss()
                 }
             }
-            container!!.setOnClickListener{
+            container!!.setOnClickListener {
                 tankFuelLevel!!.setText(fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f).toString())
             }
         }
     }
 
-    private fun initBottomSheetDialogs(){
+    private fun initBottomSheetDialogs() {
         bottomSheetDialogFuelStats = BottomSheetDialog(requireContext())
         bottomSheetDialogFuelStats.setContentView(R.layout.bottom_sheet_dialog_fuel_stats)
         bottomSheetDialogFuelInTank = BottomSheetDialog(requireContext())
         bottomSheetDialogFuelInTank.setContentView(R.layout.bottom_sheet_fuel_in_tank)
     }
 
-    private fun initViewPagersAndTabs(){
+    private fun initViewPagersAndTabs() {
         binding.viewPagerLastRide.adapter = LastRideAdapter(this, lastRideFragments)
         binding.viewPagerNewRide.adapter = NewRideAdapter(this, newRideFragments)
         TabLayoutMediator(binding.tabLastRide, binding.viewPagerLastRide) { _, _ -> }.attach()
         TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide) { _, _ -> }.attach()
     }
 
-    private fun showDialogOverFuel(){
-        val dialog = AlertDialog.Builder(requireContext()).setView(R.layout.edit_fuel_level_error_diallog).create()
+    private fun showDialogOverFuel() {
+        val dialog =
+            AlertDialog.Builder(requireContext()).setView(R.layout.edit_fuel_level_error_diallog)
+                .create()
         dialog.show()
         dialog.window!!.setBackgroundDrawableResource(R.color.transparent)
         val okBtn = dialog.findViewById<Button>(R.id.ok_button)
-        okBtn!!.setOnClickListener{dialog.dismiss()}
+        okBtn!!.setOnClickListener { dialog.dismiss() }
     }
 
     override fun dismissBottomSheet() {

@@ -7,28 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.helpwheel.R
 import com.example.helpwheel.databinding.FragmentNewRideBottomSheetBinding
 import com.example.helpwheel.ui.trip.inerface.BottomSheetCallBack
-import com.example.helpwheel.ui.trip.new_ride_fragments.cost.CostNewRideViewModel
-import com.example.helpwheel.ui.trip.new_ride_fragments.distance.DistanceNewRideViewModel
-import com.example.helpwheel.ui.trip.new_ride_fragments.ecology.EcologyNewRideViewModel
-import com.example.helpwheel.ui.trip.new_ride_fragments.remains_fuel.RemainsFuelNewRideViewModel
-import com.example.helpwheel.ui.trip.new_ride_fragments.spendFuel.SpendFuelNewRideViewModel
-import com.example.helpwheel.utils.APP_PREFERENCES
-import com.example.helpwheel.utils.COST_NEW_RIDE
-import com.example.helpwheel.utils.DISTANCE_NEW_RIDE
+import com.example.helpwheel.utils.*
+import com.example.helpwheel.utils.ViewModels.costNewRideViewModel
+import com.example.helpwheel.utils.ViewModels.distanceNewRideViewModel
+import com.example.helpwheel.utils.ViewModels.ecologyNewRideViewModel
+import com.example.helpwheel.utils.ViewModels.initViewModels
+import com.example.helpwheel.utils.ViewModels.remainsFuelNewRideViewModel
+import com.example.helpwheel.utils.ViewModels.spendFuelNewRideViewModel
 
 class NewRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : Fragment() {
     private lateinit var binding: FragmentNewRideBottomSheetBinding
     private lateinit var fuelStats: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
-    private lateinit var costNewRideViewModel: CostNewRideViewModel
-    private lateinit var distanceNewRideViewModel: DistanceNewRideViewModel
-    private lateinit var ecologyNewRideViewModel: EcologyNewRideViewModel
-    private lateinit var remainsFuelNewRideViewModel: RemainsFuelNewRideViewModel
-    private lateinit var spendFuelNewRideViewModel: SpendFuelNewRideViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,7 +29,7 @@ class NewRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : Fr
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNewRideBottomSheetBinding.inflate(inflater, container, false)
-        initViewModels()
+        initViewModels(requireActivity())
         return binding.root
     }
 
@@ -49,7 +42,7 @@ class NewRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : Fr
             val price = binding.priceNewRideText.text.toString()
             if (distance.isNotEmpty() && price.isNotEmpty()) {
                 editor.putFloat(DISTANCE_NEW_RIDE, distance.toFloat())
-                editor.putFloat(COST_NEW_RIDE, price.toFloat())
+                editor.putFloat(COST_PER_LITER_NEW_RIDE, price.toFloat())
                 editor.apply()
                 distanceNewRideViewModel.setDistanceNewRide(distance.toFloat())
                 costNewRideViewModel.setCostNewRide(price.toFloat())
@@ -57,6 +50,7 @@ class NewRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : Fr
                 callBack.dismissBottomSheet()
             } else if (distance.isNotEmpty()) {
                 editor.putFloat(DISTANCE_NEW_RIDE, distance.toFloat())
+                editor.putFloat(COST_PER_LITER_NEW_RIDE, 0.0f)
                 editor.putFloat(COST_NEW_RIDE, 0.0f)
                 editor.apply()
                 distanceNewRideViewModel.setDistanceNewRide(distance.toFloat())
@@ -67,19 +61,6 @@ class NewRideBottomSheetFragment(private val callBack: BottomSheetCallBack) : Fr
             } else
                 callBack.dismissBottomSheet()
         }
-    }
-
-    private fun initViewModels() {
-        costNewRideViewModel =
-            ViewModelProvider(requireActivity())[CostNewRideViewModel::class.java]
-        distanceNewRideViewModel =
-            ViewModelProvider(requireActivity())[DistanceNewRideViewModel::class.java]
-        ecologyNewRideViewModel =
-            ViewModelProvider(requireActivity())[EcologyNewRideViewModel::class.java]
-        remainsFuelNewRideViewModel =
-            ViewModelProvider(requireActivity())[RemainsFuelNewRideViewModel::class.java]
-        spendFuelNewRideViewModel =
-            ViewModelProvider(requireActivity())[SpendFuelNewRideViewModel::class.java]
     }
 
     private fun callMethods() {
