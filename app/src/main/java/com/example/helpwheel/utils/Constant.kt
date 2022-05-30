@@ -28,3 +28,4 @@ const val co2EmissionPer1LiterOfGasoline = 2.347f
 const val co2EmissionPer1LiterOfDiesel = 2.689f
 const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 const val KEY = "a98ca7720a8fd711bb8548bf2373e263"
+const val MIN_SCALE = 0.85f
