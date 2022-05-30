@@ -104,6 +104,7 @@ object SharedPreferencesHolder {
         editor.remove(DIESEL_EMISSIONS_LAST_RIDE)
         editor.remove(GASOLINE_EMISSIONS_LAST_RIDE)
         editor.remove(SPENT_FUEL_LAST_RIDE)
+        editor.putFloat(FUEL_LEVEL, fuelStats.getFloat(FUEL_TANK_CAPACITY, 0.0f))
         editor.apply()
     }
 
