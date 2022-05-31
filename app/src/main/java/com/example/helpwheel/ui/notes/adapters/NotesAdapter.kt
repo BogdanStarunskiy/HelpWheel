@@ -1,7 +1,5 @@
 package com.example.helpwheel.ui.notes.adapters
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -20,10 +18,9 @@ import com.google.android.material.button.MaterialButton
 
 class NotesAdapter(
     var context: Context?,
-    var activity: Activity?,
-    var notesList: MutableList<NotesModel>?,
-    var callback: NotesInterface?,
-    var longClick: RecyclerViewLongClick?
+    private var notesList: MutableList<NotesModel>?,
+    private var callback: NotesInterface?,
+    private var longClick: RecyclerViewLongClick?
 ) : RecyclerView.Adapter<NotesAdapter.MyViewHolder>() {
 
 
@@ -35,7 +32,7 @@ class NotesAdapter(
 
     override fun onBindViewHolder(
         holder: MyViewHolder,
-        @SuppressLint("RecyclerView") position: Int
+        position: Int
     ) {
         holder.title.text = notesList!![position].title
         val splitDesc = notesList!![position].description.split(" ").toTypedArray()
@@ -72,7 +69,7 @@ class NotesAdapter(
         var layout: ConstraintLayout
         var button: ConstraintLayout
         var openUrl: MaterialButton
-        var deleteButton: LottieAnimationView
+        private var deleteButton: LottieAnimationView
 
         init {
             title = itemView.findViewById(R.id.title)
@@ -81,9 +78,9 @@ class NotesAdapter(
             button = itemView.findViewById(R.id.link_button)
             openUrl = itemView.findViewById(R.id.openURL)
             deleteButton = itemView.findViewById(R.id.delete_note)
-            itemView.setOnLongClickListener { view: View? ->
+            itemView.setOnLongClickListener {
                 deleteButton.visibility = View.VISIBLE
-                deleteButton.setOnClickListener { v: View? ->
+                deleteButton.setOnClickListener {
                     callback!!.onRecyclerViewLongClick(
                         layoutPosition
                     )

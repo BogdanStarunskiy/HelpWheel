@@ -2,7 +2,6 @@ package com.example.helpwheel.ui.notes.notesFragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ public class AddNotesFragment extends Fragment {
     Button addNote;
     FragmentAddNotesBinding binding;
     private MaterialDatePicker<Long> materialDatePicker;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,11 +49,12 @@ public class AddNotesFragment extends Fragment {
         webURL = binding.webUlr;
         initListeners();
     }
-    private void getDate(Long selection){
+
+    private void getDate(Long selection) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTimeInMillis(selection);
         @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        String formattedDate  = format.format(calendar.getTime());
+        String formattedDate = format.format(calendar.getTime());
         binding.description.setText(formattedDate);
     }
 
@@ -63,18 +64,23 @@ public class AddNotesFragment extends Fragment {
         requireActivity().findViewById(R.id.customBnb).setVisibility(View.GONE);
     }
 
-    private void initListeners(){
+    private void initListeners() {
         addNote.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(title.getText().toString()) && !TextUtils.isEmpty(description.getText().toString())) {
+            if (!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty() && !webURL.getText().toString().isEmpty()) {
                 String descUrl = description.getText().toString().trim() + " " + webURL.getText().toString().trim();
                 DatabaseClass db = new DatabaseClass(getContext());
                 db.addNotes(title.getText().toString().trim(), descUrl, String.valueOf(System.currentTimeMillis()));
                 NavHostFragment.findNavController(this).navigate(R.id.action_addNotesFragment_to_navigation_home);
+            } else if (!title.getText().toString().isEmpty() && !description.getText().toString().isEmpty()) {
+                String descUrl = description.getText().toString().trim();
+                DatabaseClass db = new DatabaseClass(getContext());
+                db.addNotes(title.getText().toString().trim(), descUrl, String.valueOf(System.currentTimeMillis()));
+                NavHostFragment.findNavController(this).navigate(R.id.action_addNotesFragment_to_navigation_home);
             }
-            if (title.getText().toString().isEmpty()){
+            if (title.getText().toString().isEmpty()) {
                 binding.titleEditText.setError(getString(R.string.field_must_be_filled));
             }
-            if (description.getText().toString().isEmpty()){
+            if (description.getText().toString().isEmpty()) {
                 binding.descriptionEditText.setError(getString(R.string.field_must_be_filled));
             }
 

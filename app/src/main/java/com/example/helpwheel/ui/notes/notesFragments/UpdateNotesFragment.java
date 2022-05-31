@@ -1,7 +1,7 @@
 package com.example.helpwheel.ui.notes.notesFragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +54,13 @@ public class UpdateNotesFragment extends Fragment {
 
     private void initListeners() {
         binding.updateNote.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(Objects.requireNonNull(binding.title.getText()).toString()) && !TextUtils.isEmpty(Objects.requireNonNull(binding.description.getText()).toString())) {
+            if (!Objects.requireNonNull(binding.title.getText()).toString().isEmpty() && !Objects.requireNonNull(binding.description.getText()).toString().isEmpty() && !Objects.requireNonNull(binding.webUlr.getText()).toString().isEmpty()) {
                 String descWebUrlCombined = binding.description.getText().toString().trim() + " " + Objects.requireNonNull(binding.webUlr.getText()).toString().trim();
+                DatabaseClass db = new DatabaseClass(getContext());
+                db.updateNotes(binding.title.getText().toString().trim(), descWebUrlCombined, id);
+                NavHostFragment.findNavController(this).navigate(R.id.action_updateNotesFragment_to_navigation_home);
+            } else if (!Objects.requireNonNull(binding.title.getText()).toString().isEmpty() && !Objects.requireNonNull(binding.description.getText()).toString().isEmpty()) {
+                String descWebUrlCombined = binding.description.getText().toString().trim();
                 DatabaseClass db = new DatabaseClass(getContext());
                 db.updateNotes(binding.title.getText().toString().trim(), descWebUrlCombined, id);
                 NavHostFragment.findNavController(this).navigate(R.id.action_updateNotesFragment_to_navigation_home);
@@ -75,7 +80,7 @@ public class UpdateNotesFragment extends Fragment {
     private void getDate(Long selection) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.setTimeInMillis(selection);
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         String formattedDate = format.format(calendar.getTime());
         binding.description.setText(formattedDate);
     }

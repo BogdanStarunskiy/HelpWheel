@@ -49,7 +49,7 @@ public class NotesFragment extends Fragment implements NotesInterface, RecyclerV
         databaseClass = new DatabaseClass(getContext());
         fetchAllNotesFromDatabase();
 
-        adapter = new NotesAdapter(getContext(), getActivity(), notesList, this, this);
+        adapter = new NotesAdapter(getContext(), notesList, this, this);
         binding.recyclerView.setAdapter(adapter);
 
         showEmptyPlaceHolder();
