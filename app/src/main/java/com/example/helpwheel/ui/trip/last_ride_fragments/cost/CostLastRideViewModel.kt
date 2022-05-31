@@ -13,8 +13,16 @@ class CostLastRideViewModel: ViewModel() {
     private val costLastRide = MutableLiveData<String>()
     private val fuelStats = App.instance.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
 
-    fun setDefaultCost(){
+    init{
+        setDefaultCost()
+    }
+
+    private fun setDefaultCost(){
         costLastRide.postValue(fuelStats.getFloat(COST_LAST_RIDE, 0.0f).toString())
+    }
+
+    fun removeCost(){
+        costLastRide.postValue("0.0")
     }
 
     fun setCostLastRide(cost: Float){

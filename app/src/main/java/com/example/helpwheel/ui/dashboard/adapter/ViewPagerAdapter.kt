@@ -1,4 +1,4 @@
-package com.example.helpwheel.ui.dashboard
+package com.example.helpwheel.ui.dashboard.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

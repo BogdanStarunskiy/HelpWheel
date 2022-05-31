@@ -19,7 +19,6 @@ class CostLastRideFragment: Fragment() {
     ): View {
         binding = FragmentCostOfLastRideBinding.inflate(inflater, container, false)
         costLastRideViewModel = ViewModelProvider(requireActivity())[CostLastRideViewModel::class.java]
-        costLastRideViewModel.setDefaultCost()
         return binding.root
     }
 

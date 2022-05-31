@@ -14,13 +14,12 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.helpwheel.R
 import com.example.helpwheel.databinding.FragmentChangeDataBinding
 import com.example.helpwheel.utils.*
-import com.example.helpwheel.utils.ViewModels.costLastRideViewModel
-import com.example.helpwheel.utils.ViewModels.costNewRideViewModel
-import com.example.helpwheel.utils.ViewModels.initViewModels
-import com.example.helpwheel.utils.ViewModels.remainsFuelNewRideViewModel
-import com.example.helpwheel.utils.ViewModels.spendFuelNewRideViewModel
-import com.example.helpwheel.utils.ViewModels.spentFuelLastRideViewModel
-import com.example.helpwheel.utils.ViewModels.tripViewModel
+import com.example.helpwheel.utils.ViewModelsForChangeData.costLastRideViewModel
+import com.example.helpwheel.utils.ViewModelsForChangeData.costNewRideViewModel
+import com.example.helpwheel.utils.ViewModelsForChangeData.remainsFuelNewRideViewModel
+import com.example.helpwheel.utils.ViewModelsForChangeData.spendFuelNewRideViewModel
+import com.example.helpwheel.utils.ViewModelsForChangeData.spentFuelLastRideViewModel
+import com.example.helpwheel.utils.ViewModelsForChangeData.tripViewModel
 
 class ChangeDataFragment : Fragment() {
     lateinit var binding: FragmentChangeDataBinding
@@ -33,7 +32,7 @@ class ChangeDataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChangeDataBinding.inflate(inflater, container, false)
-        initViewModels(requireActivity())
+        ViewModelsForChangeData.initViewModels(requireActivity())
         return binding.root
     }
 
@@ -63,8 +62,8 @@ class ChangeDataFragment : Fragment() {
                 spendFuelNewRideViewModel.setSpendFuelNewRide()
                 costLastRideViewModel.setCostLastRide(fuelStats.getFloat(COST_PER_LITER_LAST_RIDE, 0.0f))
                 costNewRideViewModel.setCostNewRide(fuelStats.getFloat(COST_PER_LITER_NEW_RIDE, 0.0f))
-                tripViewModel.setFuelInTank()
                 remainsFuelNewRideViewModel.setRemainsFuelNewRide()
+                tripViewModel.setFuelInTank()
 
             }
             if (binding.fuelTankCapacity.text.toString().isNotEmpty() && binding.fuelTankCapacity.text.toString().toFloat() != 0.0f) {
@@ -75,6 +74,7 @@ class ChangeDataFragment : Fragment() {
                 editor.apply()
                 SharedPreferencesHolder.updateFuelTankCapacity()
                 remainsFuelNewRideViewModel.setRemainsFuelNewRide()
+                tripViewModel.setFuelInTank()
             }
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_changeDataFragment_to_navigation_dashboard)
@@ -102,6 +102,7 @@ class ChangeDataFragment : Fragment() {
         val noBtn = dialog.findViewById<Button>(R.id.no_btn)
         yesBtn!!.setOnClickListener {
             SharedPreferencesHolder.removeLastRideData()
+            costLastRideViewModel.removeCost()
             dialog.dismiss()
         }
         noBtn!!.setOnClickListener { dialog.dismiss() }

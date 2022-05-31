@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.helpwheel.R
 import com.example.helpwheel.databinding.FragmentDashboardBinding
+import com.example.helpwheel.ui.dashboard.adapter.ViewPagerAdapter
 import com.example.helpwheel.ui.dashboard.viewPagerFragments.DescriptionWeather
 import com.example.helpwheel.ui.dashboard.viewPagerFragments.WeatherWindSpeed
 import com.example.helpwheel.utils.*
@@ -53,7 +54,9 @@ class DashboardFragment : Fragment() {
         preferences = requireContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
         editor = preferences.edit()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        if (preferences.getString(USERNAME, "user").equals("user") || preferences.getString(USERNAME, "user").equals(""))
+        if (preferences.getString(USERNAME, "user")
+                .equals("user") || preferences.getString(USERNAME, "user").equals("")
+        )
             showWelcomeScreen()
         changeUi()
         initViewPager()
@@ -69,12 +72,13 @@ class DashboardFragment : Fragment() {
     }
 
     private fun initObservers() {
-        dashboardViewModel.getIsPermissionGranted().observe(viewLifecycleOwner) { updateUiWhenPermissionChanged(it) }
+        dashboardViewModel.getIsPermissionGranted()
+            .observe(viewLifecycleOwner) { updateUiWhenPermissionChanged(it) }
     }
 
     private fun showBalloon() {
         if (preferences.getBoolean(IS_FIRST_LAUNCHED_DASHBOARD, true))
-            BuildBalloon(requireContext(), getString(R.string.balloon_edit_profile_here), viewLifecycleOwner).balloon.showAlignBottom(binding.userGreetingEditButton)
+                BuildBalloon(requireContext(), getString(R.string.balloon_edit_profile_here), viewLifecycleOwner).balloon.showAlignBottom(binding.userGreetingEditButton)
     }
 
     private fun updateUiWhenPermissionChanged(isPermissionGranted: Boolean) {
@@ -89,7 +93,8 @@ class DashboardFragment : Fragment() {
             binding.enterCity.visibility = View.VISIBLE
             binding.weatherBtn.visibility = View.VISIBLE
             binding.enterCity.setText((preferences.getString(USER_CITY, getString(R.string.kyiv))))
-            preferences.getString(USER_CITY, getString(R.string.kyiv))?.let { dashboardViewModel.getWeatherDataManualInput(it, KEY) }
+            preferences.getString(USER_CITY, getString(R.string.kyiv))
+                ?.let { dashboardViewModel.getWeatherDataManualInput(it, KEY) }
         }
     }
 
@@ -108,7 +113,8 @@ class DashboardFragment : Fragment() {
         binding.userGreetingEditButton.setOnClickListener { showEditDataFragment() }
         binding.weatherBtn.setOnClickListener {
             if (binding.enterCity.text.toString().trim() == "")
-                Toast.makeText(binding.root.context, R.string.enter_city_message, Toast.LENGTH_LONG).show()
+                Toast.makeText(binding.root.context, R.string.enter_city_message, Toast.LENGTH_LONG)
+                    .show()
             else {
                 getWeatherFromManualInput()
                 editor.putString(USER_CITY, binding.enterCity.text.toString())
@@ -128,7 +134,10 @@ class DashboardFragment : Fragment() {
                         getString(R.string.kyiv)
                     ))
                 )
-                preferences.getString(USER_CITY, requireContext().resources.getString(R.string.kyiv))?.let { dashboardViewModel.getWeatherDataManualInput(it, KEY) }
+                preferences.getString(
+                    USER_CITY,
+                    requireContext().resources.getString(R.string.kyiv)
+                )?.let { dashboardViewModel.getWeatherDataManualInput(it, KEY) }
                 dashboardViewModel.setIsGpsTurnedOn(true)
             }
             changeInputTypeWeather()
@@ -162,7 +171,6 @@ class DashboardFragment : Fragment() {
 
                     override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
                         dashboardViewModel.setIsPermissionGranted(false)
-                        showBalloon()
                         editor.putBoolean(IS_FIRST_LAUNCHED_DASHBOARD, false).apply()
                     }
 
@@ -184,12 +192,17 @@ class DashboardFragment : Fragment() {
     }
 
     private fun showEditDataFragment() {
-        NavHostFragment.findNavController(this).navigate(R.id.action_navigation_dashboard_to_changeDataFragment)
+        NavHostFragment.findNavController(this)
+            .navigate(R.id.action_navigation_dashboard_to_changeDataFragment)
     }
 
     @SuppressLint("SetTextI18n")
     fun changeUi() {
-        binding.greetingText.text = getString(R.string.hello_user_text) + " " + preferences.getString(USERNAME, "user") + "!"
+        binding.greetingText.text =
+            getString(R.string.hello_user_text) + " " + preferences.getString(
+                USERNAME,
+                "user"
+            ) + "!"
     }
 
     private fun changeInputTypeWeather() {
