@@ -54,9 +54,7 @@ class DashboardFragment : Fragment() {
         preferences = requireContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
         editor = preferences.edit()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        if (preferences.getString(USERNAME, "user")
-                .equals("user") || preferences.getString(USERNAME, "user").equals("")
-        )
+        if (preferences.getString(USERNAME, "user") == "user" || preferences.getString(USERNAME, "user") == "")
             showWelcomeScreen()
         changeUi()
         initViewPager()
@@ -78,7 +76,11 @@ class DashboardFragment : Fragment() {
 
     private fun showBalloon() {
         if (preferences.getBoolean(IS_FIRST_LAUNCHED_DASHBOARD, true))
-                BuildBalloon(requireContext(), getString(R.string.balloon_edit_profile_here), viewLifecycleOwner).balloon.showAlignBottom(binding.userGreetingEditButton)
+            BuildBalloon(
+                requireContext(),
+                getString(R.string.balloon_edit_profile_here),
+                viewLifecycleOwner
+            ).balloon.showAlignBottom(binding.userGreetingEditButton)
     }
 
     private fun updateUiWhenPermissionChanged(isPermissionGranted: Boolean) {
