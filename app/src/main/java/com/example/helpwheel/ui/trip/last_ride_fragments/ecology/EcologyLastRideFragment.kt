@@ -20,7 +20,6 @@ class EcologyLastRideFragment: Fragment() {
     ): View {
         binding = FragmentEcologyImpactBinding.inflate(inflater, container, false)
         ecologyLastRideViewModel = ViewModelProvider(requireActivity())[EcologyLastRideViewModel::class.java]
-        ecologyLastRideViewModel.setCarEmissions()
         return binding.root
     }
 

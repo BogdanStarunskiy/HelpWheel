@@ -21,7 +21,6 @@ class RemainsFuelNewRideFragment: Fragment() {
     ): View {
         binding = FragmentFuelInTankNewRideBinding.inflate(inflater, container, false)
         remainsFuelNewRideViewModel = ViewModelProvider(requireActivity())[RemainsFuelNewRideViewModel::class.java]
-        remainsFuelNewRideViewModel.setDefaultRemainsFuel()
         return binding.root
     }
 

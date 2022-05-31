@@ -20,7 +20,6 @@ class CostNewRideFragment: Fragment() {
     ): View {
         binding = FragmentCostOfNewRideBinding.inflate(inflater, container, false)
         costNewRideViewModel = ViewModelProvider(requireActivity())[CostNewRideViewModel::class.java]
-        costNewRideViewModel.setDefaultCost()
         return binding.root
     }
 

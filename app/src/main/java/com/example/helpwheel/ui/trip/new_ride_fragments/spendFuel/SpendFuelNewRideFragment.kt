@@ -21,7 +21,6 @@ class SpendFuelNewRideFragment : Fragment() {
     ): View {
         binding = FragmentSpendFuelNewRideBinding.inflate(inflater, container, false)
         spendFuelNewRideViewModel = ViewModelProvider(requireActivity())[SpendFuelNewRideViewModel::class.java]
-        spendFuelNewRideViewModel.setDefaultSpendFuel()
         return binding.root
     }
 

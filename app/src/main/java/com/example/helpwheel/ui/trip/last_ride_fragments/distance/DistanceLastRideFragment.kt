@@ -21,7 +21,6 @@ class DistanceLastRideFragment: Fragment() {
     ): View {
         binding = FragmentDistanceOfLastRideBinding.inflate(inflater, container, false)
         distanceLastRideViewModel = ViewModelProvider(requireActivity())[DistanceLastRideViewModel::class.java]
-        distanceLastRideViewModel.setDefaultDistance()
         return binding.root
     }
 

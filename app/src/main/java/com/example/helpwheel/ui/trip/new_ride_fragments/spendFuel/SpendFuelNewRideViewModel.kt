@@ -13,7 +13,11 @@ class SpendFuelNewRideViewModel: ViewModel() {
     private val spendFuelNewRide = MutableLiveData<String>()
     private val fuelStats = App.instance.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
 
-    fun setDefaultSpendFuel(){
+    init {
+        setDefaultSpendFuel()
+    }
+
+    private fun setDefaultSpendFuel(){
         spendFuelNewRide.postValue(fuelStats.getFloat(WILL_BE_USED_FUEL, 0.0f).toString())
     }
     fun setSpendFuelNewRide(){

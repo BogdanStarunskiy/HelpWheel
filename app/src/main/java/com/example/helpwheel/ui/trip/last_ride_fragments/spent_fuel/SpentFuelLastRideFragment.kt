@@ -21,7 +21,6 @@ class SpentFuelLastRideFragment: Fragment() {
     ): View {
         binding = FragmentSpentFuelBinding.inflate(inflater, container, false)
         spentFuelLastRideViewModel = ViewModelProvider(requireActivity())[SpentFuelLastRideViewModel::class.java]
-        spentFuelLastRideViewModel.setDefaultSpentFuel()
         return binding.root
     }
 

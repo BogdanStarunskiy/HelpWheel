@@ -6,14 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.helpwheel.App
 import com.example.helpwheel.utils.APP_PREFERENCES
-import com.example.helpwheel.utils.COST_NEW_RIDE
 import com.example.helpwheel.utils.DISTANCE_NEW_RIDE
 
 class DistanceNewRideViewModel: ViewModel() {
     private val distanceNewRide = MutableLiveData<String>()
     private val fuelStats = App.instance.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
 
-    fun setDefaultDistance(){
+    init {
+        setDefaultDistance()
+    }
+
+    private fun setDefaultDistance(){
         distanceNewRide.postValue(fuelStats.getFloat(DISTANCE_NEW_RIDE, 0.0f).toString())
     }
     fun setDistanceNewRide(distance: Float){

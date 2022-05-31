@@ -14,8 +14,10 @@ class EcologyLastRideViewModel: ViewModel() {
     private val dieselEmissions = MutableLiveData<String>()
     private val gasolineEmissions = MutableLiveData<String>()
     private val fuelStats = App.instance.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
-
-    fun setDefaultCarEmissions(){
+    init {
+        setDefaultCarEmissions()
+    }
+    private fun setDefaultCarEmissions(){
         dieselEmissions.postValue(fuelStats.getFloat(DIESEL_EMISSIONS_LAST_RIDE, 0.0f).toString())
         gasolineEmissions.postValue(fuelStats.getFloat(GASOLINE_EMISSIONS_LAST_RIDE, 0.0f).toString())
     }

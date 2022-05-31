@@ -22,7 +22,6 @@ class DistanceNewRideFragment: Fragment() {
     ): View {
         binding = FragmentDistanceOfNewRideBinding.inflate(inflater, container, false)
         distanceNewRideViewModel = ViewModelProvider(requireActivity())[DistanceNewRideViewModel::class.java]
-        distanceNewRideViewModel.setDefaultDistance()
         return binding.root
     }
 

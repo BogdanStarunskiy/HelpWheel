@@ -22,7 +22,6 @@ class EcologyNewRideFragment: Fragment() {
     ): View {
         binding = FragmentEcologyImpactNewRideBinding.inflate(inflater, container, false)
         ecologyNewRideViewModel = ViewModelProvider(requireActivity())[EcologyNewRideViewModel::class.java]
-        ecologyNewRideViewModel.setDefaultEmissions()
         return binding.root
     }
 
