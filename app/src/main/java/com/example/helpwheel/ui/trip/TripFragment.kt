@@ -22,16 +22,7 @@ import com.example.helpwheel.ui.trip.adapter.BottomSheetViewPagerAdapter
 import com.example.helpwheel.ui.trip.adapter.LastRideAdapter
 import com.example.helpwheel.ui.trip.adapter.NewRideAdapter
 import com.example.helpwheel.ui.trip.inerface.BottomSheetCallBack
-import com.example.helpwheel.ui.trip.last_ride_fragments.cost.CostLastRideFragment
-import com.example.helpwheel.ui.trip.last_ride_fragments.distance.DistanceLastRideFragment
-import com.example.helpwheel.ui.trip.last_ride_fragments.ecology.EcologyLastRideFragment
-import com.example.helpwheel.ui.trip.last_ride_fragments.spent_fuel.SpentFuelLastRideFragment
-import com.example.helpwheel.ui.trip.new_ride_fragments.cost.CostNewRideFragment
-import com.example.helpwheel.ui.trip.new_ride_fragments.distance.DistanceNewRideFragment
-import com.example.helpwheel.ui.trip.new_ride_fragments.ecology.EcologyNewRideFragment
-import com.example.helpwheel.ui.trip.new_ride_fragments.remains_fuel.RemainsFuelNewRideFragment
 import com.example.helpwheel.ui.trip.new_ride_fragments.remains_fuel.RemainsFuelNewRideViewModel
-import com.example.helpwheel.ui.trip.new_ride_fragments.spendFuel.SpendFuelNewRideFragment
 import com.example.helpwheel.utils.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
@@ -44,8 +35,6 @@ class TripFragment : Fragment(), BottomSheetCallBack {
     private lateinit var bottomSheetDialogFuelInTank: BottomSheetDialog
     private lateinit var fuelStats: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
-    private val lastRideFragments = ArrayList<Fragment>()
-    private val newRideFragments = ArrayList<Fragment>()
     private lateinit var tripViewModel: TripViewModel
     private lateinit var remainsFuelViewModel: RemainsFuelNewRideViewModel
 
@@ -68,7 +57,6 @@ class TripFragment : Fragment(), BottomSheetCallBack {
         if (fuelStats.getFloat(ODOMETER, 0.0f) == 0.0f)
             NavHostFragment.findNavController(this)
                 .navigate(R.id.action_navigation_notifications_to_firstOdometerReadingFragment)
-        inflateFragmentArrayLists()
         initViewPagersAndTabs()
         initBottomSheetDialogs()
         initListeners()
@@ -96,19 +84,6 @@ class TripFragment : Fragment(), BottomSheetCallBack {
 
             binding.fuelLevel.text = "$it ${getString(R.string.litres_have_left)}"
         }
-    }
-
-    private fun inflateFragmentArrayLists() {
-        lastRideFragments.add(DistanceLastRideFragment())
-        lastRideFragments.add(CostLastRideFragment())
-        lastRideFragments.add(SpentFuelLastRideFragment())
-        lastRideFragments.add(EcologyLastRideFragment())
-
-        newRideFragments.add(DistanceNewRideFragment())
-        newRideFragments.add(RemainsFuelNewRideFragment())
-        newRideFragments.add(CostNewRideFragment())
-        newRideFragments.add(SpendFuelNewRideFragment())
-        newRideFragments.add(EcologyNewRideFragment())
     }
 
     private fun showBalloon() {
@@ -179,8 +154,8 @@ class TripFragment : Fragment(), BottomSheetCallBack {
     }
 
     private fun initViewPagersAndTabs() {
-        binding.viewPagerLastRide.adapter = LastRideAdapter(this, lastRideFragments)
-        binding.viewPagerNewRide.adapter = NewRideAdapter(this, newRideFragments)
+        binding.viewPagerLastRide.adapter = LastRideAdapter(this, tripViewModel.inflateLastRideFragments())
+        binding.viewPagerNewRide.adapter = NewRideAdapter(this, tripViewModel.inflateNewRideFragments())
         TabLayoutMediator(binding.tabLastRide, binding.viewPagerLastRide) { _, _ -> }.attach()
         TabLayoutMediator(binding.tabNewRide, binding.viewPagerNewRide) { _, _ -> }.attach()
     }
