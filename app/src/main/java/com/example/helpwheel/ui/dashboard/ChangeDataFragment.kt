@@ -16,7 +16,6 @@ import com.example.helpwheel.databinding.FragmentChangeDataBinding
 import com.example.helpwheel.utils.*
 import com.example.helpwheel.utils.ViewModelsForChangeData.costLastRideViewModel
 import com.example.helpwheel.utils.ViewModelsForChangeData.costNewRideViewModel
-import com.example.helpwheel.utils.ViewModelsForChangeData.initViewModels
 import com.example.helpwheel.utils.ViewModelsForChangeData.remainsFuelNewRideViewModel
 import com.example.helpwheel.utils.ViewModelsForChangeData.spendFuelNewRideViewModel
 import com.example.helpwheel.utils.ViewModelsForChangeData.spentFuelLastRideViewModel
@@ -33,7 +32,7 @@ class ChangeDataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChangeDataBinding.inflate(inflater, container, false)
-        initViewModels(requireActivity())
+        ViewModelsForChangeData.initViewModels(requireActivity())
         return binding.root
     }
 
@@ -103,6 +102,7 @@ class ChangeDataFragment : Fragment() {
         val noBtn = dialog.findViewById<Button>(R.id.no_btn)
         yesBtn!!.setOnClickListener {
             SharedPreferencesHolder.removeLastRideData()
+            costLastRideViewModel.removeCost()
             dialog.dismiss()
         }
         noBtn!!.setOnClickListener { dialog.dismiss() }

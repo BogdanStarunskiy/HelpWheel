@@ -21,6 +21,10 @@ class CostLastRideViewModel: ViewModel() {
         costLastRide.postValue(fuelStats.getFloat(COST_LAST_RIDE, 0.0f).toString())
     }
 
+    fun removeCost(){
+        costLastRide.postValue("0.0")
+    }
+
     fun setCostLastRide(cost: Float){
         costLastRide.postValue(SharedPreferencesHolder.priceLastRide(cost).toString())
     }
