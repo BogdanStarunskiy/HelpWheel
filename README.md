@@ -18,3 +18,17 @@ to get to your destination or have to stop at a "pit stop". Its interface consis
 automatically from the user's data on his car. In the lower blocks, the user is given statistics on fuel consumption and carbon dioxide emissions. 
 By clicking on the "+" button, the user calls up a menu where it is possible to plan a trip for the future, see the possible amount of fuel spent, funds to be spent and CO2
 emissions into the atmosphere.
+
+Technology Stack:
+- Java
+- Kotlin
+- Coroutines
+- Retrofit
+- Sqlite (soon will be replaced with Room)
+- Retrofit
+- Shared Preferences
+- Navigation Component
+- Singlle Activity Architecture
+- Partically MVVM Architecture
+- Lottie Animations
+- Firebase Crashlytics
