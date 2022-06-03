@@ -3,7 +3,7 @@ HelpWheel is an application for car owners.
 HelpWheel allows the car owner to control the cost of fuel, auto parts and repairs, provides information on weather conditions along the way or in current location of user.
 The application itself consists of three tabs: weather, notes and fuel manager.
 
-[![Watch the video]](https://youtu.be/TuaMXF-7AEM)
+[[Watch the video]](https://youtu.be/TuaMXF-7AEM)
 
 The first tab automatically displays the weather conditions depending on the location of the user, or the user can specify the location in which he wants to know the weather 
 at the moment. Therefore, thick fog or some other bad weather will not be a surprise for you.
