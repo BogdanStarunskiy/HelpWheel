@@ -11,7 +11,7 @@ import com.example.helpwheel.R
 import com.example.helpwheel.ui.notes.NotesFragment
 import com.example.helpwheel.ui.notes.model.NoteModel
 
-class NoteAdapter(val notesFragment: NotesFragment): RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(private val notesFragment: NotesFragment): RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
         private var listNote = emptyList<NoteModel>()
 

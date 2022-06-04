@@ -10,7 +10,7 @@ import com.example.helpwheel.ui.trip.new_ride_fragments.remains_fuel.RemainsFuel
 import com.example.helpwheel.ui.trip.new_ride_fragments.spendFuel.SpendFuelNewRideViewModel
 
 object NewRideViewModels {
-    lateinit var tripViewModel: TripViewModel
+    private lateinit var tripViewModel: TripViewModel
     lateinit var remainsFuelNewRideViewModel: RemainsFuelNewRideViewModel
     lateinit var costNewRideViewModel: CostNewRideViewModel
     lateinit var distanceNewRideViewModel: DistanceNewRideViewModel
