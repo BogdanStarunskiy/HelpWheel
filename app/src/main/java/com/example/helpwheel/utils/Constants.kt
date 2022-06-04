@@ -1,4 +1,7 @@
 package com.example.helpwheel.utils
+
+import com.example.helpwheel.ui.notes.database.repository.NoteRepository
+
 const val APP_PREFERENCES = "fuelStats"
 const val USERNAME = "username"
 const val CONSUMPTION_PER_100KM = "consumptionPer100km"
@@ -29,3 +32,4 @@ const val co2EmissionPer1LiterOfDiesel = 2.689f
 const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 const val KEY = "a98ca7720a8fd711bb8548bf2373e263"
 const val MIN_SCALE = 0.85f
+lateinit var REPOSITORY: NoteRepository
