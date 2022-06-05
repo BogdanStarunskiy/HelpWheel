@@ -20,15 +20,14 @@ By clicking on the "+" button, the user calls up a menu where it is possible to 
 emissions into the atmosphere.
 
 Technology Stack:
-- Java
 - Kotlin
 - Coroutines
 - Retrofit
-- Sqlite (soon will be replaced with Room)
+- Room
 - Retrofit
 - Shared Preferences
 - Navigation Component
-- Singlle Activity Architecture
-- Partically MVVM Architecture
+- Single Activity Architecture
+- MVVM Architecture
 - Lottie Animations
 - Firebase Crashlytics
