@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.helpwheel.R
 import com.example.helpwheel.databinding.FragmentUpdateNotesBinding
 import com.example.helpwheel.ui.notes.model.NoteModel
+import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,7 +21,7 @@ class UpdateNotesFragment: Fragment() {
     private lateinit var binding: FragmentUpdateNotesBinding
     private lateinit var updateNotesViewModel: UpdateNotesViewModel
     private lateinit var currentNote: NoteModel
-    // private lateinit var materialDatePicker: MaterialDatePicker<Long>
+    private lateinit var materialDatePicker: MaterialDatePicker<Long>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +36,9 @@ class UpdateNotesFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         currentNote = arguments?.getSerializable("note") as NoteModel
-        //materialDatePicker = MaterialDatePicker()
+        materialDatePicker =  MaterialDatePicker.Builder.datePicker()
+            .setTitleText(getString(R.string.select_a_date))
+            .build()
         binding.title.setText(currentNote.title)
         binding.description.setText(currentNote.description)
         binding.webUlr.setText(currentNote.web_site)
@@ -56,25 +59,25 @@ class UpdateNotesFragment: Fragment() {
         binding.description.setText(formattedDate)
     }
 
-
-
     private fun initListeners() {
         binding.updateNote.setOnClickListener{
-            val title = binding.title
-            val description = binding.description
-            val webURL = binding.webUlr
-            if (title.text.toString().isNotEmpty() && description.text.toString().isNotEmpty() && webURL.text.toString().isNotEmpty()) {
-                NavHostFragment.findNavController(this).navigate(R.id.action_addNotesFragment_to_navigation_home)
-            } else if (title.text.toString().isNotEmpty() && description.text.toString().isNotEmpty()) {
-                 NavHostFragment.findNavController(this).navigate(R.id.action_addNotesFragment_to_navigation_home)
+            val title = binding.title.text.toString()
+            val description = binding.description.text.toString()
+            val webURL = binding.webUlr.text.toString()
+            if (title.isNotEmpty() && description.isNotEmpty() && webURL.isNotEmpty()) {
+                updateNotesViewModel.update(NoteModel(id = currentNote.id ,title = title, description = description, web_site = webURL))
+                NavHostFragment.findNavController(this).navigate(R.id.action_updateNotesFragment_to_navigation_home)
+            } else if (title.isNotEmpty() && description.isNotEmpty()) {
+                updateNotesViewModel.update(NoteModel(id = currentNote.id, title = title, description = description))
+                NavHostFragment.findNavController(this).navigate(R.id.action_updateNotesFragment_to_navigation_home)
             }
-            if (title.text.toString().isEmpty())
+            if (title.isEmpty())
                 binding.titleEditText.error = getString(R.string.field_must_be_filled)
-            if (description.text.toString().isEmpty())
+            if (description.isEmpty())
                 binding.descriptionEditText.error = getString(R.string.field_must_be_filled)
         }
-        //binding.descriptionEditText.setEndIconOnClickListener{materialDatePicker.show(childFragmentManager, "MATERIAL_DATE_PICKER")}
+        binding.descriptionEditText.setEndIconOnClickListener{materialDatePicker.show(childFragmentManager, "MATERIAL_DATE_PICKER")}
         binding.description.setOnClickListener{ binding.descriptionEditText.error = null }
-        //materialDatePicker.addOnPositiveButtonClickListener(this::getDate)
+        materialDatePicker.addOnPositiveButtonClickListener(this::getDate)
     }
 }

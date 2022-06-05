@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.example.helpwheel.R
 import com.example.helpwheel.ui.notes.NotesFragment
 import com.example.helpwheel.ui.notes.model.NoteModel
+import com.google.android.material.button.MaterialButton
 
 class NoteAdapter(private val notesFragment: NotesFragment): RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
@@ -27,6 +30,22 @@ class NoteAdapter(private val notesFragment: NotesFragment): RecyclerView.Adapte
             holder.itemView.findViewById<TextView>(R.id.description).text = listNote[position].description
             holder.itemView.findViewById<CardView>(R.id.item_notes_card_view).setOnClickListener {
                 notesFragment.onRecyclerViewClick(listNote[position])
+            }
+            holder.itemView.findViewById<CardView>(R.id.item_notes_card_view).setOnLongClickListener {
+                holder.itemView.findViewById<LottieAnimationView>(R.id.delete_note).visibility = View.VISIBLE
+                holder.itemView.findViewById<LottieAnimationView>(R.id.delete_note).setOnClickListener {
+                    notesFragment.onRecyclerViewLongClick(notesModel = listNote[position])
+                }
+                true
+            }
+            var url = listNote[position].web_site
+            if (url.isNotEmpty()){
+                holder.itemView.findViewById<ConstraintLayout>(R.id.link_button).visibility = View.VISIBLE
+                holder.itemView.findViewById<MaterialButton>(R.id.openURL).setOnClickListener {
+                    if (!url.startsWith("http://") || !url.startsWith("https://"))
+                        url = "http://$url"
+                    notesFragment.openLink(url)
+                }
             }
         }
 
@@ -50,4 +69,8 @@ class NoteAdapter(private val notesFragment: NotesFragment): RecyclerView.Adapte
         override fun onViewDetachedFromWindow(holder: NoteViewHolder) {
             holder.itemView.setOnClickListener(null)
         }
+
+        fun removeAt(position: Int):NoteModel {
+            return listNote[position]
+         }
     }
